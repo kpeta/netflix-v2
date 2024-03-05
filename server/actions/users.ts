@@ -1,6 +1,5 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import supabase from "../db";
 import { User } from "../db/schema";
 
@@ -16,10 +15,9 @@ export async function createUser(name: string, password: string) {
   const { data, error } = await supabase.from("users").insert(newUser);
 
   if (error) {
-    console.error(error);
+    console.error("Error creating user", error);
+    throw error;
   } else {
     console.log(data);
   }
-
-  revalidatePath("/");
 }
