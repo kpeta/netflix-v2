@@ -16,7 +16,7 @@ async function encrypt(payload: any) {
   return await new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
-    .setExpirationTime(`${TOKEN_EXPIRATION} sec from now`) // expiration is set to 10 seconds only for security reasons (jwt can't be reused 10s after its deletion if stolen)
+    .setExpirationTime(`${TOKEN_EXPIRATION} sec from now`) // expiration is set to 50 seconds only for security reasons (jwt can't be reused 10s after its deletion if stolen)
     .sign(key);
 }
 
@@ -28,7 +28,7 @@ async function decrypt(input: string): Promise<any> {
 }
 
 export async function createToken(user: TokenPayload) {
-  const expires = new Date(Date.now() + 10 * 1000);
+  const expires = new Date(Date.now() + TOKEN_EXPIRATION * 1000);
   const token = await encrypt({ user, expires });
 
   cookies().set("token", token, { expires, httpOnly: true });
@@ -49,7 +49,7 @@ export async function updateToken(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
   if (!token) return;
 
-  // refresh the token so it doesn't expire (10 seconds), this function is called on every request in middleware to keep the token alive
+  // refresh the token so it doesn't expire (50 seconds), this function is called on every request in middleware to keep the token alive
   const parsed = await decrypt(token);
   parsed.expires = new Date(Date.now() + TOKEN_EXPIRATION * 1000);
   const res = NextResponse.next();
