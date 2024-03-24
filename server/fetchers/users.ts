@@ -15,16 +15,15 @@ export async function getUsers(): Promise<{
 }
 
 export async function getUser(
-  userId: User["id"]
+  username: User["name"]
 ): Promise<{ data: User | null; error: PostgrestError | null }> {
   const { data, error } = await supabase
     .from("users")
     .select("*")
-    .eq("id", userId)
+    .eq("name", username)
     .single();
   if (error) {
     console.error("Error fetching user:", error);
-    throw new Error("Failed to fetch user");
   }
   return { data, error: null };
 }
