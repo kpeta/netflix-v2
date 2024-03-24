@@ -12,12 +12,19 @@ const TOKEN_EXPIRATION = 50; // 50 seconds
 const secretKey = "secret";
 const key = new TextEncoder().encode(secretKey);
 
-async function encrypt(payload: any) {
-  return await new SignJWT(payload)
-    .setProtectedHeader({ alg: "HS256" })
-    .setIssuedAt()
-    .setExpirationTime(`${TOKEN_EXPIRATION} sec from now`) // expiration is set to 50 seconds only for security reasons (jwt can't be reused 10s after its deletion if stolen)
-    .sign(key);
+export async function encrypt(payload: any) {
+  try {
+    const signedJWT = await new SignJWT(payload)
+      .setProtectedHeader({ alg: "HS256" })
+      .setIssuedAt()
+      .setExpirationTime(`${TOKEN_EXPIRATION} sec from now`)
+      .sign(key);
+
+    return signedJWT;
+  } catch (error) {
+    console.error("An error occurred while encrypting the token:", error);
+    throw error;
+  }
 }
 
 async function decrypt(input: string): Promise<any> {
@@ -28,10 +35,15 @@ async function decrypt(input: string): Promise<any> {
 }
 
 export async function createToken(user: TokenPayload) {
-  const expires = new Date(Date.now() + TOKEN_EXPIRATION * 1000);
-  const token = await encrypt({ user, expires });
+  try {
+    const expires = new Date(Date.now() + TOKEN_EXPIRATION * 1000);
+    const token = await encrypt({ user, expires });
 
-  cookies().set("token", token, { expires, httpOnly: true });
+    cookies().set("token", token, { expires, httpOnly: true });
+  } catch (error) {
+    console.error("An error occurred while creating the token:", error);
+    throw error;
+  }
 }
 
 export async function removeToken() {
