@@ -73,5 +73,5 @@ export default async function signup(
     };
   }
 
-  return redirect("/login");
+  return redirect("/");
 }
