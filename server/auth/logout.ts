@@ -1,7 +1,8 @@
+"use server";
 import { redirect } from "next/navigation";
 import { removeToken } from ".";
 
-export default function logout() {
+export default async function logout() {
   removeToken();
   return redirect("/");
 }
