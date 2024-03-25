@@ -4,7 +4,12 @@ import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 type TokenPayload = {
-  username: string;
+  user: {
+    username: string;
+  };
+  expires: string;
+  iat: number;
+  exp: number;
 };
 
 const TOKEN_EXPIRATION = 50; // 50 seconds
@@ -34,7 +39,7 @@ async function decrypt(input: string): Promise<any> {
   return payload;
 }
 
-export async function createToken(user: TokenPayload) {
+export async function createToken(user: string) {
   try {
     const expires = new Date(Date.now() + TOKEN_EXPIRATION * 1000);
     const token = await encrypt({ user, expires });

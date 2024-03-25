@@ -66,7 +66,7 @@ export default async function login(formData: FormData): Promise<ActionResult> {
 
   // create token
   try {
-    await createToken({ username: username as string });
+    await createToken(username as string);
   } catch (error) {
     console.error("An error occurred while creating token:", error);
     return {

@@ -65,7 +65,7 @@ export default async function signup(
 
   // create JWT for the user
   try {
-    await createToken({ username: username as string });
+    await createToken(username as string);
   } catch (error) {
     console.error(`Failed to create token: ${error}`);
     return {
