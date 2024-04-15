@@ -2,12 +2,8 @@
 import login from "@/server/auth/login";
 import { useFormState } from "react-dom";
 
-const initialState = {
-  error: "",
-};
-
 export default function Page() {
-  const [state, formAction] = useFormState(login, initialState);
+  const [state, formAction] = useFormState(login, null);
 
   return (
     <>
