@@ -9,7 +9,10 @@ interface ActionResult {
   error: string;
 }
 
-export default async function login(formData: FormData): Promise<ActionResult> {
+export default async function login(
+  prevState: any, //this argument is not used in this function, but it is required by the useFormState hook
+  formData: FormData
+): Promise<ActionResult> {
   const username = formData.get("username")?.toString();
 
   if (!checkIfValidUsername(username)) {
