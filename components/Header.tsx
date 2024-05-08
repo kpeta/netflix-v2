@@ -1,6 +1,5 @@
 import { getToken } from "@/server/auth";
 import Link from "next/link";
-import styles from "../styles/Header.module.css";
 import LogOutButton from "./LogOutButton";
 
 const headerStyle = {
@@ -17,7 +16,6 @@ const headerRightStyle = {
 
 export default async function Header() {
   const token = await getToken();
-  console.log(token);
 
   return (
     <header style={headerStyle}>

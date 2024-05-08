@@ -10,7 +10,7 @@ type TokenPayload = {
   exp: number;
 };
 
-const TOKEN_EXPIRATION = 50; // 50 seconds
+const TOKEN_EXPIRATION = 300; // 300 seconds
 
 const secretKey = "secret";
 const key = new TextEncoder().encode(secretKey);
@@ -64,7 +64,7 @@ export async function updateToken(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
   if (!token) return;
 
-  // refresh the token so it doesn't expire (50 seconds), this function is called on every request in middleware to keep the token alive
+  // refresh the token so it doesn't expire (TOKEN_EXPIRATION seconds), this function is called on every request in middleware to keep the token alive
   const parsed = await decrypt(token);
   parsed.expires = new Date(Date.now() + TOKEN_EXPIRATION * 1000);
   const res = NextResponse.next();
