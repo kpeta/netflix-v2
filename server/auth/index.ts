@@ -4,9 +4,7 @@ import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 type TokenPayload = {
-  user: {
-    username: string;
-  };
+  user: string;
   expires: string;
   iat: number;
   exp: number;

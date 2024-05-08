@@ -17,6 +17,7 @@ const headerRightStyle = {
 
 export default async function Header() {
   const token = await getToken();
+  console.log(token);
 
   return (
     <header style={headerStyle}>
@@ -26,7 +27,7 @@ export default async function Header() {
       <div style={headerRightStyle}>
         {token ? (
           <>
-            <p>Hi, {token.user.username}</p>
+            <p>Hi, {token.user}</p>
             <LogOutButton />
           </>
         ) : (
