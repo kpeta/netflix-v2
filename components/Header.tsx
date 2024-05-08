@@ -3,27 +3,35 @@ import Link from "next/link";
 import styles from "../styles/Header.module.css";
 import LogOutButton from "./LogOutButton";
 
+const headerStyle = {
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+};
+
+const headerRightStyle = {
+  display: "flex",
+  alignItems: "center",
+  gap: "10px",
+};
+
 export default async function Header() {
   const token = await getToken();
 
   return (
-    <header className={styles.header}>
-      <div className={styles.leftContent}>
-        <button className={styles.buttonWrapper}>
-          <Link href="/">Logo</Link>
-        </button>
-      </div>
-      <div className={styles.rightContent}>
+    <header style={headerStyle}>
+      <button>
+        <Link href="/">Logo</Link>
+      </button>
+      <div style={headerRightStyle}>
         {token ? (
           <>
             <p>Hi, {token.user.username}</p>
-            <div className={styles.buttonWrapper}>
-              <LogOutButton />
-            </div>
+            <LogOutButton />
           </>
         ) : (
           <>
-            <button className={styles.buttonWrapper}>
+            <button>
               <Link href="/signup">Sign up</Link>
             </button>
             <button>
