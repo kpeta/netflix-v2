@@ -25,7 +25,7 @@ export default async function Header() {
       <div style={headerRightStyle}>
         {token ? (
           <>
-            <p>Hi, {token.user}</p>
+            <div>Hi, {token.user}</div>
             <LogOutButton />
           </>
         ) : (
