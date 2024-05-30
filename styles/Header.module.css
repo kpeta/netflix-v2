@@ -1,0 +1,29 @@
+.notificationIcon {
+  color: black;
+}
+
+.menuItemsContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.menuButtonContainer {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .notificationIcon {
+    display: none;
+  }
+
+  .menuItemsContainer {
+    display: none;
+  }
+
+  .menuButtonContainer {
+    display: flex;
+    color: black;
+  }
+}
