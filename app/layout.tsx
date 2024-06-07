@@ -1,10 +1,15 @@
 import Footer from "@/components/Footer";
-import Header from "@/components/Header";
+import Header from "@/components/header/Header";
 import type { Metadata } from "next";
+import "../styles/globals.css";
 
 export const metadata: Metadata = {
   title: "Netflix v2",
   description: "Next version of Netflix",
+};
+
+const bodyStyle: React.CSSProperties = {
+  paddingTop: "100px",
 };
 
 export default function RootLayout({
@@ -14,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body style={bodyStyle}>
         <Header />
         {children}
         <Footer />

@@ -1,10 +1,27 @@
-.notificationIcon {
-  color: black;
+.notificationsIcon {
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+  color: white;
+  transition: opacity 0.2s;
+}
+
+.notificationsIcon:hover {
+  opacity: 0.75;
+}
+
+.notificationsIcon:active {
+  transform: scale(0.95);
+}
+
+.notificationsIconButton {
+  background-color: transparent;
+  border: none;
 }
 
 .menuItemsContainer {
   display: flex;
-  justify-content: space-between;
+  gap: 20px;
   align-items: center;
   width: 100%;
 }
@@ -13,8 +30,68 @@
   display: none;
 }
 
+.netflixLogoImage {
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
+.netflixLogoImage:hover {
+  opacity: 0.8;
+}
+
+.menuItem,
+.menuItemSelected {
+  color: rgb(224, 232, 241);
+  text-decoration: none;
+  font-family: "Roboto Black";
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
+.menuItemSelected {
+  font-weight: bold;
+}
+
+.menuItem:hover {
+  opacity: 0.8;
+}
+
+.searchIcon {
+  color: white;
+  transition: opacity 0.2s;
+  height: 20px;
+  width: 20px;
+  background-color: transparent;
+}
+
+.searchIcon:hover {
+  opacity: 0.75;
+  cursor: pointer;
+}
+
+.searchIcon:active {
+  transform: scale(0.95);
+}
+
+.redButton {
+  background-color: rgb(190, 10, 10);
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.redButton:hover {
+  background-color: darkred;
+}
+
+.redButton:active {
+  transform: scale(0.95);
+}
+
 @media (max-width: 1024px) {
-  .notificationIcon {
+  .notificationsIconButton {
     display: none;
   }
 
