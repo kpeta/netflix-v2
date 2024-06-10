@@ -3,7 +3,6 @@ import Link from "next/link";
 import LogOutButton from "../LogOutButton";
 import styles from "../../styles/Header.module.css";
 import Image from "next/image";
-import "../../styles/fonts.css";
 import MenuItems from "./MenuItems";
 import SearchIcon from "./SearchIcon";
 import NotificationsIcon from "./NotificationsIcon";
@@ -14,8 +13,8 @@ const headerContainer: React.CSSProperties = {
   left: 0,
   right: 0,
   paddingTop: "10px",
-  paddingLeft: "200px",
-  paddingRight: "200px",
+  paddingLeft: "280px",
+  paddingRight: "280px",
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
@@ -49,7 +48,7 @@ const redButtonLinkStyle = {
 };
 
 const redButtonTextStyle = {
-  fontWeight: "bold",
+  fontWeight: 900,
   color: "white",
 };
 
@@ -65,8 +64,8 @@ export default async function Header() {
               className={styles.netflixLogoImage}
               src="/netflix-logo.svg"
               alt="Netflix Logo"
-              width={140}
-              height={50}
+              width={120}
+              height={40}
             />
           </Link>
         </button>

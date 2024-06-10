@@ -22,7 +22,6 @@ function MenuItems() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const basePath = pathname.split("/")[1];
     setSelectedItem(pathname);
   }, [pathname]);
 

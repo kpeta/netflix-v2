@@ -43,13 +43,14 @@
 .menuItemSelected {
   color: rgb(224, 232, 241);
   text-decoration: none;
-  font-family: "Roboto Black";
+  font-family: inherit;
   transition: opacity 0.3s ease;
   opacity: 1;
+  font-size: 13.5px;
 }
 
 .menuItemSelected {
-  font-weight: bold;
+  font-weight: 900;
 }
 
 .menuItem:hover {
@@ -80,6 +81,7 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-family: inherit;
 }
 
 .redButton:hover {
