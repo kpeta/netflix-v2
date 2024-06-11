@@ -20,6 +20,7 @@ const searchIconButtonStyle: React.CSSProperties = {
 
 function Search() {
   const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -32,6 +33,7 @@ function Search() {
         !buttonRef.current.contains(event.target as Node)
       ) {
         setIsOpen(false);
+        setSearchTerm(""); // clearing the input field when clicking outside
       }
     };
 
@@ -43,10 +45,15 @@ function Search() {
 
   const handleIconClick = () => {
     setIsOpen(!isOpen);
+    setSearchTerm(""); // clear the search term when opening or closing the input field
   };
 
   const handleInputClick = (event: React.MouseEvent<HTMLInputElement>) => {
     event.stopPropagation();
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
   };
 
   return (
@@ -61,6 +68,8 @@ function Search() {
       <input
         ref={inputRef}
         type="text"
+        value={searchTerm}
+        onChange={handleInputChange}
         className={isOpen ? styles.searchInputOpen : styles.searchInput}
         placeholder="Search..."
         style={{ paddingLeft: isOpen ? "40px" : "10px" }}
