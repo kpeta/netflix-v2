@@ -41,6 +41,7 @@
 .notificationsIconButton {
   background-color: transparent;
   border: none;
+  padding-top: 2px;
 }
 
 .menuItemsContainer {

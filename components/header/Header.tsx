@@ -13,8 +13,8 @@ const headerContainer: React.CSSProperties = {
   left: 0,
   right: 0,
   paddingTop: "10px",
-  paddingLeft: "280px",
-  paddingRight: "280px",
+  marginLeft: "280px",
+  marginRight: "280px",
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
@@ -30,7 +30,8 @@ const headerLeftContainer = {
 const headerRightContainer = {
   display: "flex",
   alignItems: "center",
-  gap: "10px",
+  justifyContent: "center",
+  gap: "20px",
 };
 
 const logoStyle = {
@@ -77,9 +78,9 @@ export default async function Header() {
         <button style={searchIconButtonStyle}>
           <SearchIcon />
         </button>
-        <button className={styles.notificationsIconButton}>
+        <Link href="/notifications" className={styles.notificationsIconButton}>
           <NotificationsIcon />
-        </button>
+        </Link>
         {token ? (
           <UserAvatarButton token={token} />
         ) : (
