@@ -117,6 +117,25 @@
   transform: scale(0.95);
 }
 
+.searchInput,
+.searchInputOpen {
+  visibility: hidden;
+  width: 0;
+  transition: width 1s ease, visibility 1s ease;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  outline: none;
+  font-size: 16px;
+  background-color: transparent;
+}
+
+.searchInputOpen {
+  width: 150px;
+  transition: width 1s ease;
+  visibility: visible;
+}
+
 @media (max-width: 1024px) {
   .notificationsIconButton {
     display: none;

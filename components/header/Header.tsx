@@ -3,9 +3,9 @@ import Link from "next/link";
 import styles from "../../styles/Header.module.css";
 import Image from "next/image";
 import MenuItems from "./MenuItems";
-import SearchIcon from "./SearchIcon";
 import NotificationsIcon from "./NotificationsIcon";
 import UserAvatarButton from "./UserAvatarButton";
+import Search from "./Search";
 
 const headerContainer: React.CSSProperties = {
   position: "fixed",
@@ -39,11 +39,6 @@ const logoStyle = {
   background: "none",
 };
 
-const searchIconButtonStyle = {
-  backgroundColor: "transparent",
-  border: "none",
-};
-
 const redButtonLinkStyle = {
   textDecoration: "none",
 };
@@ -75,9 +70,7 @@ export default async function Header() {
       </div>
 
       <div style={headerRightContainer}>
-        <button style={searchIconButtonStyle}>
-          <SearchIcon />
-        </button>
+        <Search />
         <Link href="/notifications" className={styles.notificationsIconButton}>
           <NotificationsIcon />
         </Link>
