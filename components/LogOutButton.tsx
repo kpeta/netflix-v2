@@ -1,16 +1,27 @@
 import logout from "@/server/auth/logout";
+import styles from "/styles/Header.module.css";
 
-const logoutButtonStyle = {
-  cursor: "pointer",
-  color: "blue",
-  textDecoration: "underline",
+const buttonStyle = {
+  marginBottom: "10px",
+  width: "64px",
+  height: "30px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+};
+
+const buttonTextStyle = {
+  fontWeight: 900,
+  color: "white",
+  fontSize: "13px",
+  whiteSpace: "nowrap",
 };
 
 function LogOutButton(): JSX.Element {
   return (
     <form action={logout}>
-      <button style={logoutButtonStyle} type="submit">
-        Log out
+      <button className={styles.redButton} style={buttonStyle} type="submit">
+        <div style={buttonTextStyle}>Sign Out</div>
       </button>
     </form>
   );

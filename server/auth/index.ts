@@ -3,7 +3,7 @@ import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-type TokenPayload = {
+export type TokenPayload = {
   user: string;
   expires: string;
   iat: number;

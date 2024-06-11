@@ -14,6 +14,30 @@
   transform: scale(0.95);
 }
 
+.userAvatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: rgb(190, 10, 10);
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.userAvatar:hover {
+  background-color: darkred;
+}
+
+.userAvatar:active {
+  transform: scale(0.95);
+}
+
 .notificationsIconButton {
   background-color: transparent;
   border: none;

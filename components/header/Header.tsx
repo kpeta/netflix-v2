@@ -1,11 +1,11 @@
 import { getToken } from "@/server/auth";
 import Link from "next/link";
-import LogOutButton from "../LogOutButton";
 import styles from "../../styles/Header.module.css";
 import Image from "next/image";
 import MenuItems from "./MenuItems";
 import SearchIcon from "./SearchIcon";
 import NotificationsIcon from "./NotificationsIcon";
+import UserAvatarButton from "./UserAvatarButton";
 
 const headerContainer: React.CSSProperties = {
   position: "fixed",
@@ -81,10 +81,7 @@ export default async function Header() {
           <NotificationsIcon />
         </button>
         {token ? (
-          <>
-            <div>Hi, {token.user}</div>
-            <LogOutButton />
-          </>
+          <UserAvatarButton token={token} />
         ) : (
           <>
             <Link href="/signup" style={redButtonLinkStyle}>
