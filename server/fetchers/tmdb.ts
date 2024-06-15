@@ -1,3 +1,5 @@
+"use server";
+
 import { TMDB_BASE_URL } from "@/lib/constants";
 import { TMDBMovie, TMDBVideo } from "@/types";
 
@@ -52,6 +54,22 @@ export const getTMDBMovieTrailers = async (
     return videos;
   } catch (error) {
     console.error("Error fetching movie videos:", error);
+    return [];
+  }
+};
+
+export const searchTMDBMovies = async (query: string): Promise<TMDBMovie[]> => {
+  try {
+    const response = await fetch(
+      `${TMDB_BASE_URL}/search/movie?api_key=${process.env.TMDB_API_KEY}&query=${query}`
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch search results: " + response.statusText);
+    }
+    const data = await response.json();
+    return data.results as TMDBMovie[];
+  } catch (error) {
+    console.error("Error fetching search results:", error);
     return [];
   }
 };

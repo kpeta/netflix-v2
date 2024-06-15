@@ -12,7 +12,7 @@ async function Page({ params }: { params: { id: string } }) {
   const trailers: TMDBVideo[] = await getTMDBMovieTrailers(parseInt(params.id));
 
   return (
-    <>
+    <div style={{ color: "white" }}>
       <div>
         <h1>{movie.title}</h1>
         <p>{movie.overview}</p>
@@ -42,7 +42,7 @@ async function Page({ params }: { params: { id: string } }) {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
 
