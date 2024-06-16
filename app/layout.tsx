@@ -18,6 +18,10 @@ const bodyStyle: React.CSSProperties = {
   paddingTop: "100px",
 };
 
+const childrenStyle: React.CSSProperties = {
+  margin: "0 280px",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -27,7 +31,7 @@ export default function RootLayout({
     <html lang="en" className={font.className}>
       <body style={bodyStyle}>
         <Header />
-        {children}
+        <div style={childrenStyle}>{children}</div>
         <Footer />
       </body>
     </html>
