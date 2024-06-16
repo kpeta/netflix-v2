@@ -86,7 +86,6 @@ export default function Search() {
         !buttonRef.current.contains(event.target as Node)
       ) {
         setIsOpen(false);
-        setSearchTerm(""); // clearing the input field when clicking outside
         setSearchResults([]); // clearing the search results when clicking outside
       }
     };
@@ -113,8 +112,10 @@ export default function Search() {
   }, [searchTerm]);
 
   const handleIconClick = () => {
+    if (isOpen) {
+      handleOnSubmit();
+    }
     setIsOpen(!isOpen);
-    setSearchTerm(""); // clear the search term when opening or closing the input field
   };
 
   const handleInputClick = (event: React.MouseEvent<HTMLInputElement>) => {
@@ -126,11 +127,19 @@ export default function Search() {
   };
 
   const handleOnSubmit = () => {
+    if (!(searchTerm.length > 0)) {
+      event?.preventDefault();
+      return;
+    }
+
     window.history.pushState(
       {},
       "",
       `/search/${searchTerm.replace(/\s+/g, "-")}`
     );
+
+    //refresh the page
+    window.location.reload();
   };
 
   return (
