@@ -6,6 +6,7 @@ import styles from "../../styles/Header.module.css";
 import { searchTMDBMovies } from "@/server/fetchers/tmdb";
 import { TMDBMovie } from "@/types";
 import Link from "next/link";
+import { v4 as uuidv4 } from "uuid";
 
 const containerStyle: React.CSSProperties = {
   display: "flex",
@@ -13,7 +14,6 @@ const containerStyle: React.CSSProperties = {
   alignItems: "center",
   justifyContent: "center",
   gap: "1px",
-  marginRight: "10px",
   position: "relative",
 };
 
@@ -42,7 +42,7 @@ const searchResultStyle: React.CSSProperties = {
   backgroundColor: "black",
   boxShadow: "0px 1px 2px rgb(163, 164, 167)",
   borderRadius: "8px",
-  zIndex: 1000,
+  zIndex: 1,
 };
 
 const searchResultItemStyle: React.CSSProperties = {
@@ -70,7 +70,7 @@ const movieThumbnailStyle: React.CSSProperties = {
   cursor: "pointer",
 };
 
-function Search() {
+export default function Search() {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState<TMDBMovie[]>([]);
@@ -125,6 +125,14 @@ function Search() {
     setSearchTerm(event.target.value);
   };
 
+  const handleOnSubmit = () => {
+    window.history.pushState(
+      {},
+      "",
+      `/search/${searchTerm.replace(/\s+/g, "-")}`
+    );
+  };
+
   return (
     <div style={containerStyle}>
       <div style={buttonInputStyle}>
@@ -135,15 +143,17 @@ function Search() {
         >
           <SearchIcon />
         </button>
-        <input
-          ref={inputRef}
-          type="text"
-          value={searchTerm}
-          onChange={handleInputChange}
-          className={isOpen ? styles.searchInputOpen : styles.searchInput}
-          placeholder="Search..."
-          onClick={handleInputClick}
-        />
+        <form onSubmit={handleOnSubmit}>
+          <input
+            ref={inputRef}
+            type="text"
+            value={searchTerm}
+            onChange={handleInputChange}
+            className={isOpen ? styles.searchInputOpen : styles.searchInput}
+            placeholder="Search..."
+            onClick={handleInputClick}
+          />
+        </form>
       </div>
       {isOpen && searchResults.length > 0 && (
         <div style={searchResultStyle}>
@@ -155,12 +165,13 @@ function Search() {
               className={styles.netflixLogoImage}
             >
               <img
-                key={movie.id}
+                key={uuidv4()}
                 src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
                 alt={movie.title}
                 style={movieThumbnailStyle}
               />
-              <div key={movie.id} style={searchResultItemStyle}>
+
+              <div key={uuidv4()} style={searchResultItemStyle}>
                 {movie.title} ({new Date(movie.release_date).getFullYear()})
               </div>
             </Link>
@@ -170,5 +181,3 @@ function Search() {
     </div>
   );
 }
-
-export default Search;
