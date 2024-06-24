@@ -6,6 +6,7 @@ import MenuItems from "./MenuItems";
 import NotificationsIcon from "./NotificationsIcon";
 import UserAvatarButton from "./UserAvatarButton";
 import Search from "./Search";
+import ResponsiveMenu from "./ResponsiveMenu";
 
 const headerContainer: React.CSSProperties = {
   position: "fixed",
@@ -13,18 +14,18 @@ const headerContainer: React.CSSProperties = {
   left: 0,
   right: 0,
   paddingTop: "10px",
-  marginLeft: "280px",
-  marginRight: "280px",
   display: "flex",
-  justifyContent: "space-between",
+  justifyContent: "center",
   alignItems: "center",
-  backgroundColor: "transparent",
+  zIndex: 100,
 };
 
 const headerLeftContainer = {
   display: "flex",
   alignItems: "center",
-  gap: "30px",
+  justifyContent: "center",
+  gap: "20px",
+  width: "100%",
 };
 
 const headerRightContainer = {
@@ -32,11 +33,7 @@ const headerRightContainer = {
   alignItems: "center",
   justifyContent: "center",
   gap: "20px",
-};
-
-const logoStyle = {
-  border: "none",
-  background: "none",
+  width: "100%",
 };
 
 const redButtonLinkStyle = {
@@ -54,18 +51,16 @@ export default async function Header() {
   return (
     <header style={headerContainer}>
       <div style={headerLeftContainer}>
-        <button style={logoStyle}>
-          <Link href="/">
-            <Image
-              className={styles.netflixLogoImage}
-              src="/netflix-logo.svg"
-              alt="Netflix Logo"
-              width={120}
-              height={40}
-            />
-          </Link>
-        </button>
-        <button className={styles.menuButtonContainer}>Menu</button>
+        <Link href="/">
+          <Image
+            className={styles.netflixLogoImage}
+            src="/netflix-logo.svg"
+            alt="Netflix Logo"
+            width={120}
+            height={40}
+          />
+        </Link>
+        <ResponsiveMenu />
         <MenuItems />
       </div>
 
@@ -83,7 +78,11 @@ export default async function Header() {
                 <div style={redButtonTextStyle}>Sign up</div>
               </button>
             </Link>
-            <Link href="/login" style={redButtonLinkStyle}>
+            <Link
+              href="/login"
+              style={redButtonLinkStyle}
+              className={styles.loginButton}
+            >
               <button className={styles.redButton}>
                 <div style={redButtonTextStyle}>Log in</div>
               </button>

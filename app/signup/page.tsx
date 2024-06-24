@@ -4,6 +4,7 @@ import { useFormState } from "react-dom";
 import { useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { verifyCaptcha } from "@/server/actions/recaptcha";
+import Link from "next/link";
 
 export default function Page() {
   const [state, formAction] = useFormState(signup, null);
@@ -23,6 +24,10 @@ export default function Page() {
       <form action={formAction}>
         <label htmlFor="username">Username</label>
         <input name="username" id="username" />
+        {/* ... */}
+        <div>
+          Already have an account? <Link href="/login">Log in</Link>
+        </div>
         {/* ... */}
         <p aria-live="polite" className="sr-only">
           {state?.error}

@@ -3,19 +3,7 @@ import Link from "next/link";
 import styles from "../../styles/Header.module.css";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-
-type MenuItem = {
-  name: string;
-  link: string;
-};
-
-const menuItems: MenuItem[] = [
-  { name: "Home", link: "/" },
-  { name: "TV Shows", link: "/tv-shows" },
-  { name: "Movies", link: "/movies" },
-  { name: "New & Popular", link: "/new-and-popular" },
-  { name: "My List", link: "/my-list" },
-];
+import { menuItems } from "@/constants";
 
 function MenuItems() {
   const [selectedItem, setSelectedItem] = useState<string>("");

@@ -20,6 +20,7 @@ const bodyStyle: React.CSSProperties = {
 
 const childrenStyle: React.CSSProperties = {
   margin: "0 280px",
+  color: "white",
 };
 
 export default function RootLayout({

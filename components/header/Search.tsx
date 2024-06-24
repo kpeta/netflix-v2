@@ -35,9 +35,12 @@ const searchResultsButtonStyle: React.CSSProperties = {
 
 const searchResultStyle: React.CSSProperties = {
   position: "absolute",
-  top: "100%",
+  top: "130%",
   left: 0,
   right: 0,
+  display: "flex",
+  flexDirection: "column",
+  width: "10rem",
   paddingLeft: "10px",
   backgroundColor: "black",
   boxShadow: "0px 1px 2px rgb(163, 164, 167)",
@@ -52,7 +55,7 @@ const searchResultItemStyle: React.CSSProperties = {
   padding: "15px",
   color: "rgb(224, 232, 241)",
   fontFamily: "inherit",
-  fontSize: "14px",
+  fontSize: "0.8rem",
   cursor: "pointer",
   width: "100%",
   textAlign: "center",

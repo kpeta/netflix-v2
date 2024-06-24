@@ -1,6 +1,6 @@
 "use server";
 
-import { TMDB_BASE_URL } from "@/lib/constants";
+import { TMDB_BASE_URL } from "@/constants";
 import { TMDBMovie, TMDBVideo } from "@/types";
 
 export const getTMDBPopularMovies = async (): Promise<TMDBMovie[]> => {

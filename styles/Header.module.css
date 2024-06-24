@@ -46,9 +46,9 @@
 
 .menuItemsContainer {
   display: flex;
-  gap: 20px;
+  gap: 16px;
+  justify-content: center;
   align-items: center;
-  width: 100%;
 }
 
 .menuButtonContainer {
@@ -99,6 +99,13 @@
   transform: scale(0.95);
 }
 
+.responsiveMenuIcon {
+  color: red;
+  height: 24px;
+  width: 24px;
+  background-color: transparent;
+}
+
 .redButton {
   background-color: rgb(190, 10, 10);
   border: none;
@@ -137,7 +144,16 @@
   transition: width 1s ease, visibility 1s ease, margin-left 1s ease;
 }
 
+@media (min-width: 1024px) {
+  .responsiveDropdownMenuHidden {
+    display: none !important;
+  }
+}
+
 @media (max-width: 1024px) {
+  .netflixLogoImage {
+    display: none;
+  }
   .notificationsIconButton {
     display: none;
   }
@@ -148,6 +164,33 @@
 
   .menuButtonContainer {
     display: flex;
-    color: black;
+    align-items: center;
+    gap: 5px;
+    color: white;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 5px;
+    transition: background-color 0.3s ease;
+  }
+
+  .menuButtonContainer:hover {
+    background-color: rgb(49, 49, 49);
+  }
+
+  .menuButtonContainer:active {
+    transform: scale(0.95);
+  }
+
+  .searchInputOpen {
+    visibility: visible;
+    width: 4rem;
+    margin-left: 0;
+    transition: width 1s ease, visibility 1s ease, margin-left 1s ease;
+  }
+
+  .loginButton {
+    display: none;
   }
 }

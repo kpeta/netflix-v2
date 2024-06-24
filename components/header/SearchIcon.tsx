@@ -1,5 +1,3 @@
-"use client";
-
 import styles from "../../styles/Header.module.css";
 
 function SearchIcon() {
