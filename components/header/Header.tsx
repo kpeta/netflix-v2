@@ -3,7 +3,7 @@ import Link from "next/link";
 import styles from "../../styles/Header.module.css";
 import Image from "next/image";
 import MenuItems from "./MenuItems";
-import NotificationsIcon from "./NotificationsIcon";
+import NotificationsIcon from "./icons/NotificationsIcon";
 import UserAvatarButton from "./UserAvatarButton";
 import Search from "./Search";
 import ResponsiveMenu from "./ResponsiveMenu";

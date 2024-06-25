@@ -106,6 +106,13 @@
   background-color: transparent;
 }
 
+.responsiveMenuItemIcon {
+  color: white;
+  height: 20px;
+  width: 20px;
+  background-color: transparent;
+}
+
 .redButton {
   background-color: rgb(190, 10, 10);
   border: none;

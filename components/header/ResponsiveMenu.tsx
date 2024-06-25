@@ -1,6 +1,6 @@
 "use client";
 
-import ResponsiveMenuIcon from "./ResponsiveMenuIcon";
+import ResponsiveMenuIcon from "./icons/ResponsiveMenuIcon";
 import styles from "../../styles/Header.module.css";
 import { menuItems } from "@/constants";
 import Link from "next/link";
@@ -89,7 +89,17 @@ function ResponsiveMenu() {
               key={index}
               onClick={() => setSelectedItem(item.name)}
             >
-              {item.name}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: "10px",
+                }}
+              >
+                {item.icon}
+                {item.name}
+              </div>
             </Link>
           ))}
         </div>

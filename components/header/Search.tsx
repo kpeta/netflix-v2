@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import SearchIcon from "./SearchIcon";
+import SearchIcon from "./icons/SearchIcon";
 import styles from "../../styles/Header.module.css";
 import { searchTMDBMovies } from "@/server/fetchers/tmdb";
 import { TMDBMovie } from "@/types";
