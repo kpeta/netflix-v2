@@ -19,7 +19,8 @@ const bodyStyle: React.CSSProperties = {
 };
 
 const childrenStyle: React.CSSProperties = {
-  margin: "0 280px",
+  display: "flex",
+  justifyContent: "center",
   color: "white",
 };
 
