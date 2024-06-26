@@ -14,7 +14,13 @@ export const metadata: Metadata = {
   description: "Next version of Netflix",
 };
 
+const htmlStyle: React.CSSProperties = {
+  msOverflowStyle: "none", // IE and Edge
+  scrollbarWidth: "none",
+};
+
 const bodyStyle: React.CSSProperties = {
+  backgroundColor: "rgb(23 23 23)",
   paddingTop: "100px",
 };
 
@@ -30,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={font.className}>
+    <html lang="en" style={htmlStyle} className={font.className}>
       <body style={bodyStyle}>
         <Header />
         <div style={childrenStyle}>{children}</div>
