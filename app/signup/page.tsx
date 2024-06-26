@@ -25,10 +25,6 @@ export default function Page() {
         <label htmlFor="username">Username</label>
         <input name="username" id="username" />
         {/* ... */}
-        <div>
-          Already have an account? <Link href="/login">Log in</Link>
-        </div>
-        {/* ... */}
         <p aria-live="polite" className="sr-only">
           {state?.error}
         </p>

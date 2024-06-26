@@ -113,6 +113,13 @@
   background-color: transparent;
 }
 
+.userIcon {
+  color: white;
+  height: 20px;
+  width: 20px;
+  background-color: transparent;
+}
+
 .redButton {
   background-color: rgb(190, 10, 10);
   border: none;
@@ -154,6 +161,10 @@
 @media (min-width: 1024px) {
   .responsiveDropdownMenuHidden {
     display: none !important;
+  }
+
+  .userAvatarHide {
+    display: none;
   }
 }
 

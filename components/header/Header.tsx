@@ -13,10 +13,11 @@ const headerContainer: React.CSSProperties = {
   top: 0,
   left: 0,
   right: 0,
-  paddingTop: "10px",
+  padding: "10px 0",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  backgroundColor: "rgb(23 23 23)",
   zIndex: 100,
 };
 
@@ -73,7 +74,14 @@ export default async function Header() {
           <UserAvatarButton token={token} />
         ) : (
           <>
-            <Link href="/signup" style={redButtonLinkStyle}>
+            <div className={styles.userAvatarHide}>
+              <UserAvatarButton />
+            </div>
+            <Link
+              href="/signup"
+              style={redButtonLinkStyle}
+              className={styles.loginButton}
+            >
               <button className={styles.redButton}>
                 <div style={redButtonTextStyle}>Sign up</div>
               </button>

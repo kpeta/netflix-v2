@@ -5,9 +5,10 @@ import { TokenPayload } from "@/server/auth";
 import styles from "../../styles/Header.module.css";
 import LogOutButton from "../LogOutButton";
 import Link from "next/link";
+import UserIcon from "./icons/UserIcon";
 
 type UserAvatarButtonProps = {
-  token: TokenPayload;
+  token?: TokenPayload;
 };
 
 const containerStyle: React.CSSProperties = {
@@ -31,7 +32,9 @@ const menuStyle: React.CSSProperties = {
   position: "absolute",
   top: "101%",
   right: 0,
-  width: "150px",
+  display: "flex",
+  flexDirection: "column",
+  width: "6.5rem",
   borderRadius: "8px",
   backgroundColor: "black",
   boxShadow: "0px 1px 2px rgb(163, 164, 167)",
@@ -40,10 +43,10 @@ const menuStyle: React.CSSProperties = {
 };
 
 const usernameStyle: React.CSSProperties = {
-  paddingLeft: "6px",
+  paddingLeft: "1px",
   fontSize: "14px",
   fontWeight: 700,
-  padding: "10px",
+  padding: "8px",
   color: "rgb(224, 232, 241)",
   whiteSpace: "nowrap",
 };
@@ -54,6 +57,7 @@ const optionsStyle: React.CSSProperties = {
   alignItems: "flex-end",
   gap: "10px",
   paddingRight: "6px",
+  whiteSpace: "nowrap",
 };
 
 const menuItemStyle: React.CSSProperties = {
@@ -99,39 +103,64 @@ function UserAvatarButton({ token }: UserAvatarButtonProps) {
       >
         <div className={styles.userAvatar}>
           <div style={buttonTextStyle}>
-            {token.user
-              .split(" ")
-              .map((word) => word.charAt(0))
-              .join("")}
+            {token ? (
+              token.user
+                .split(" ")
+                .map((word) => word.charAt(0))
+                .join("")
+            ) : (
+              <UserIcon />
+            )}
           </div>
         </div>
       </button>
       {menuVisible && (
         <div ref={menuRef} style={menuStyle}>
-          <div style={usernameStyle}>Hi, {token.user}!</div>
+          {token && <div style={usernameStyle}>Hi, {token.user}!</div>}
           <div style={optionsStyle}>
-            <Link
-              href="/new-and-popular"
-              className={styles.menuItem}
-              style={menuItemStyle}
-            >
-              New & Popular
-            </Link>
-            <Link
-              href="/my-list"
-              className={styles.menuItem}
-              style={menuItemStyle}
-            >
-              My List
-            </Link>
-            <Link
-              href="/notifications"
-              className={styles.menuItem}
-              style={menuItemStyle}
-            >
-              Notifications
-            </Link>
-            <LogOutButton />
+            {token ? (
+              <>
+                <Link
+                  href="/new-and-popular"
+                  className={styles.menuItem}
+                  style={menuItemStyle}
+                >
+                  New & Popular
+                </Link>
+                <Link
+                  href="/my-list"
+                  className={styles.menuItem}
+                  style={menuItemStyle}
+                >
+                  My List
+                </Link>
+                <Link
+                  href="/notifications"
+                  className={styles.menuItem}
+                  style={menuItemStyle}
+                >
+                  Notifications
+                </Link>
+                <LogOutButton />
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/signup"
+                  className={styles.menuItem}
+                  style={menuItemStyle}
+                >
+                  Sign up
+                </Link>
+                <Link
+                  href="/login"
+                  className={styles.menuItem}
+                  style={menuItemStyle}
+                >
+                  Log in
+                </Link>
+              </>
+            )}
           </div>
         </div>
       )}
