@@ -1,0 +1,17 @@
+.hoverElement {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.hoverTarget:hover > .hoverElement {
+  opacity: 1;
+}
+
+.imageContainer {
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.thumbnail:hover > .imageContainer {
+  opacity: 0.5;
+}

@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, ReactNode } from "react";
+import styles from "../styles/Carousel.module.css";
 
 interface CarouselProps {
-  items: string[];
+  items: ReactNode[];
 }
 
 const carouselOuterContainerStyle: React.CSSProperties = {
@@ -21,7 +22,8 @@ const carouselContainerStyle: React.CSSProperties = {
   alignItems: "center",
   overflow: "hidden",
   width: "100%",
-  backgroundColor: "rebeccapurple",
+  backgroundColor: "black",
+  borderRadius: "0.5rem",
 };
 
 const carouselItemsContainerStyle: React.CSSProperties = {
@@ -33,9 +35,8 @@ const carouselItemsContainerStyle: React.CSSProperties = {
 };
 
 const carouselItemStyle: React.CSSProperties = {
-  border: "1px solid black",
   boxSizing: "border-box", // padding and border are included in the width
-  padding: "1rem",
+  padding: "0.4rem 0.4rem",
 };
 
 const buttonStyle: React.CSSProperties = {
@@ -47,6 +48,7 @@ const buttonStyle: React.CSSProperties = {
   padding: "0.5rem",
   height: "100%",
   zIndex: 1,
+  borderRadius: "0.5rem",
 };
 
 const prevButtonStyle: React.CSSProperties = {
@@ -87,10 +89,6 @@ function Carousel({ items }: CarouselProps) {
     };
   }, []);
 
-  useEffect(() => {
-    console.log("currentIndex", currentIndex);
-  }, [currentIndex]);
-
   const handlePrev = () => {
     if (currentIndex > 0) {
       setCurrentIndex((prevIndex) => prevIndex - 1);
@@ -104,9 +102,10 @@ function Carousel({ items }: CarouselProps) {
   };
 
   return (
-    <div style={carouselOuterContainerStyle}>
+    <div style={carouselOuterContainerStyle} className={styles.hoverTarget}>
       <button
         style={currentIndex === 0 ? disabledButtonStyle : prevButtonStyle}
+        className={styles.hoverElement}
         onClick={handlePrev}
       >
         {"<"}
@@ -135,6 +134,7 @@ function Carousel({ items }: CarouselProps) {
             ? disabledButtonStyle
             : nextButtonStyle
         }
+        className={styles.hoverElement}
         onClick={handleNext}
       >
         {">"}
