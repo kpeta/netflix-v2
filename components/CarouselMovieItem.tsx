@@ -39,8 +39,8 @@ const subInfoStyle: React.CSSProperties = {
   height: "10%",
   display: "flex",
   flexDirection: "row",
-  gap: "0.5rem",
   alignItems: "center",
+  justifyContent: "space-between",
   ...titleStyle,
 };
 
@@ -90,7 +90,7 @@ function CarouselMovieItem({ movie }: CarouselMovieItemProps) {
           {movie.title}
         </div>
         <div style={subInfoStyle} className={styles.hoverElement}>
-          <div>
+          <div style={{ whiteSpace: "nowrap" }}>
             {new Date(movie.release_date).toLocaleDateString("en-GB", {
               day: "2-digit",
               month: "short",

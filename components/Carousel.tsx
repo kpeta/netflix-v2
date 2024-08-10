@@ -3,6 +3,8 @@
 import React, { useState, useRef, useEffect, ReactNode } from "react";
 import styles from "../styles/Carousel.module.css";
 
+const TOLERANCE_FACTOR_PX = 3; // tolerance factor to account for rounding errors
+
 interface CarouselProps {
   items: ReactNode[];
 }
@@ -20,7 +22,9 @@ const carouselContainerStyle: React.CSSProperties = {
   flexDirection: "row",
   justifyContent: "center",
   alignItems: "center",
-  overflow: "hidden",
+  overflowX: "scroll",
+  msOverflowStyle: "none", // IE and Edge
+  scrollbarWidth: "none",
   width: "100%",
   backgroundColor: "black",
   borderRadius: "0.5rem",
@@ -30,7 +34,6 @@ const carouselItemsContainerStyle: React.CSSProperties = {
   display: "flex",
   justifyContent: "flex-start",
   alignItems: "center",
-  transition: "transform 0.5s ease",
   width: "100%",
 };
 
@@ -66,74 +69,79 @@ const disabledButtonStyle: React.CSSProperties = {
 };
 
 function Carousel({ items }: CarouselProps) {
-  const [visibleItemsCount, setVisibleItemsCount] = useState(5);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const itemRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const itemRef = useRef<HTMLDivElement>(null);
   const [itemWidth, setItemWidth] = useState(0);
+  const [prevButtonVisible, setPrevButtonVisible] = useState(false);
+  const [nextButtonVisible, setNextButtonVisible] = useState(false);
 
+  // Calculate carousel item width on mount and resize
   useEffect(() => {
-    const calculateVisibleItemsCount = () => {
-      if (containerRef.current && itemRef.current) {
+    const calculateItemWidth = () => {
+      if (itemRef.current) {
         setItemWidth(itemRef.current.offsetWidth);
-        const visibleCount =
-          containerRef.current.offsetWidth / itemRef.current.offsetWidth;
-        setVisibleItemsCount(visibleCount);
       }
     };
 
-    calculateVisibleItemsCount();
-    window.addEventListener("resize", calculateVisibleItemsCount);
+    calculateItemWidth();
+    window.addEventListener("resize", calculateItemWidth);
+
+    //when component unmounts, remove event listener
     return () => {
-      window.removeEventListener("resize", calculateVisibleItemsCount);
+      window.removeEventListener("resize", calculateItemWidth);
+    };
+  }, []);
+
+  // Update button visibility based on scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      if (containerRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
+
+        // Calculate whether buttons should be visible
+        setPrevButtonVisible(scrollLeft > 0);
+        setNextButtonVisible(
+          scrollLeft < scrollWidth - clientWidth - TOLERANCE_FACTOR_PX
+        );
+      }
+    };
+
+    handleScroll(); // Initial check
+    containerRef.current?.addEventListener("scroll", handleScroll);
+
+    return () => {
+      containerRef.current?.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   const handlePrev = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex((prevIndex) => prevIndex - 1);
-    }
+    containerRef.current?.scrollBy({ left: -itemWidth, behavior: "smooth" });
   };
 
   const handleNext = () => {
-    if (currentIndex < items.length - visibleItemsCount) {
-      setCurrentIndex((prevIndex) => prevIndex + 1);
-    }
+    containerRef.current?.scrollBy({ left: itemWidth, behavior: "smooth" });
   };
 
   return (
     <div style={carouselOuterContainerStyle} className={styles.hoverTarget}>
       <button
-        style={currentIndex === 0 ? disabledButtonStyle : prevButtonStyle}
+        style={prevButtonVisible ? prevButtonStyle : disabledButtonStyle}
         className={styles.hoverElement}
         onClick={handlePrev}
       >
         {"<"}
       </button>
       <div style={carouselContainerStyle} ref={containerRef}>
-        <div
-          style={{
-            ...carouselItemsContainerStyle,
-            transform: `translateX(-${currentIndex * itemWidth}px)`,
-          }}
-        >
+        <div style={carouselItemsContainerStyle}>
           {items.map((item, index) => (
-            <div
-              key={index}
-              style={{ ...carouselItemStyle, flex: `0 0 ${itemWidth}px` }}
-              ref={itemRef}
-            >
+            <div key={index} style={carouselItemStyle} ref={itemRef}>
               {item}
             </div>
           ))}
         </div>
       </div>
       <button
-        style={
-          currentIndex >= items.length - visibleItemsCount
-            ? disabledButtonStyle
-            : nextButtonStyle
-        }
+        style={nextButtonVisible ? nextButtonStyle : disabledButtonStyle}
         className={styles.hoverElement}
         onClick={handleNext}
       >
