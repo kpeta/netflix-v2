@@ -5,8 +5,7 @@ import SearchIcon from "./icons/SearchIcon";
 import styles from "../../styles/Header.module.css";
 import { searchTMDBMovies } from "@/server/fetchers/tmdb";
 import { TMDBMovie } from "@/types";
-import Link from "next/link";
-import { v4 as uuidv4 } from "uuid";
+import SearchResult from "./SearchResult";
 
 const containerStyle: React.CSSProperties = {
   display: "flex",
@@ -20,17 +19,6 @@ const containerStyle: React.CSSProperties = {
 const searchIconButtonStyle: React.CSSProperties = {
   backgroundColor: "transparent",
   border: "none",
-};
-
-const searchResultsButtonStyle: React.CSSProperties = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  gap: "10px",
-  backgroundColor: "transparent",
-  border: "none",
-  width: "100%",
-  textDecoration: "none",
 };
 
 const searchResultStyle: React.CSSProperties = {
@@ -48,29 +36,10 @@ const searchResultStyle: React.CSSProperties = {
   zIndex: 1,
 };
 
-const searchResultItemStyle: React.CSSProperties = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  padding: "15px",
-  color: "rgb(224, 232, 241)",
-  fontFamily: "inherit",
-  fontSize: "0.8rem",
-  cursor: "pointer",
-  width: "100%",
-  textAlign: "center",
-};
-
 const buttonInputStyle: React.CSSProperties = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-};
-
-const movieThumbnailStyle: React.CSSProperties = {
-  width: "80px",
-  height: "50px",
-  cursor: "pointer",
 };
 
 export default function Search() {
@@ -170,23 +139,7 @@ export default function Search() {
       {isOpen && searchResults.length > 0 && (
         <div style={searchResultStyle}>
           {searchResults.map((movie) => (
-            <Link
-              href={`/movie/${movie.id}`}
-              key={movie.id}
-              style={searchResultsButtonStyle}
-              className={styles.netflixLogoImage}
-            >
-              <img
-                key={uuidv4()}
-                src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-                alt={movie.title}
-                style={movieThumbnailStyle}
-              />
-
-              <div key={uuidv4()} style={searchResultItemStyle}>
-                {movie.title} ({new Date(movie.release_date).getFullYear()})
-              </div>
-            </Link>
+            <SearchResult searchResult={movie} />
           ))}
         </div>
       )}
