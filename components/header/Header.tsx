@@ -7,34 +7,38 @@ import NotificationsIcon from "./icons/NotificationsIcon";
 import UserAvatarButton from "./UserAvatarButton";
 import Search from "./Search";
 import ResponsiveMenu from "./ResponsiveMenu";
+import HeaderScrollEffect from "./HeaderScrollEffect";
 
 const headerContainer: React.CSSProperties = {
   position: "fixed",
   top: 0,
   left: 0,
   right: 0,
-  padding: "10px 0",
+  padding: "10px 13vw",
   display: "flex",
-  justifyContent: "center",
+  justifyContent: "space-between",
   alignItems: "center",
-  backgroundColor: "rgb(23 23 23)",
   zIndex: 100,
 };
 
-const headerLeftContainer = {
+const headerLeftContainer: React.CSSProperties = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   gap: "20px",
-  width: "100%",
 };
 
-const headerRightContainer = {
+const headerRightContainer: React.CSSProperties = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   gap: "20px",
-  width: "100%",
+};
+
+const netflixLogoStyle = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
 };
 
 const redButtonLinkStyle = {
@@ -50,9 +54,10 @@ export default async function Header() {
   const token = await getToken();
 
   return (
-    <header style={headerContainer}>
+    <header style={headerContainer} className={styles.header}>
+      <HeaderScrollEffect />
       <div style={headerLeftContainer}>
-        <Link href="/">
+        <Link href="/" style={netflixLogoStyle}>
           <Image
             className={styles.netflixLogoImage}
             src="/netflix-logo.svg"
