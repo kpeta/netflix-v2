@@ -26,7 +26,7 @@ const carouselContainerStyle: React.CSSProperties = {
   msOverflowStyle: "none", // IE and Edge
   scrollbarWidth: "none",
   width: "100%",
-  backgroundColor: "black",
+  backgroundColor: "rgb(23,23,23)",
   borderRadius: "0.5rem",
 };
 
