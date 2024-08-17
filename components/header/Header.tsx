@@ -14,7 +14,7 @@ const headerContainer: React.CSSProperties = {
   top: 0,
   left: 0,
   right: 0,
-  padding: "10px 13vw",
+  padding: "10px 13.5vw",
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",

@@ -1,0 +1,36 @@
+.button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background-color: white;
+  color: black;
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 5px;
+  width: 80px;
+  margin-top: 10px;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.1s ease;
+}
+
+.button:hover {
+  background-color: rgb(23, 23, 23);
+  color: white;
+}
+
+.button:active {
+  transform: scale(0.95);
+}
+
+.title {
+  font-size: clamp(40px, 5vh, 100px);
+}
+
+.rating {
+  font-size: clamp(16px, 1.6vh, 80px);
+}

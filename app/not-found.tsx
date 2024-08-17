@@ -1,4 +1,5 @@
 import NotFoundIcon from "@/components/icons/NotFoundIcon";
+import { pageContainer } from "./page";
 
 const notFoundStyle: React.CSSProperties = {
   display: "flex",
@@ -14,9 +15,11 @@ const textStyle: React.CSSProperties = {};
 
 function NotFound() {
   return (
-    <div style={notFoundStyle}>
-      <NotFoundIcon />
-      <div style={textStyle}> | This page could not be found</div>
+    <div style={pageContainer()}>
+      <div style={notFoundStyle}>
+        <NotFoundIcon />
+        <div style={textStyle}> | This page could not be found</div>
+      </div>
     </div>
   );
 }

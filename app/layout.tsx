@@ -21,7 +21,7 @@ const htmlStyle: React.CSSProperties = {
 
 const bodyStyle: React.CSSProperties = {
   backgroundColor: "rgb(23 23 23)",
-  paddingTop: "100px",
+  margin: 0,
 };
 
 const childrenStyle: React.CSSProperties = {

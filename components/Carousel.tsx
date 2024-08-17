@@ -11,7 +11,7 @@ interface CarouselProps {
 
 const carouselOuterContainerStyle: React.CSSProperties = {
   position: "relative",
-  width: "70%",
+  width: "100%",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",

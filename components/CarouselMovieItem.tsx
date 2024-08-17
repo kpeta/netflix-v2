@@ -50,13 +50,13 @@ const imageStyle: React.CSSProperties = {
   borderRadius: "0.5rem",
 };
 
-const circleStyle: React.CSSProperties = {
+export const circleStyle: React.CSSProperties = {
   width: "10px",
   height: "10px",
   borderRadius: "50%",
 };
 
-function getColorFromRating(rating: number): string {
+export function getColorFromRating(rating: number): string {
   // Ensure rating is between 4 and 10
   rating = Math.max(4, Math.min(rating, 10));
 
@@ -97,13 +97,18 @@ function CarouselMovieItem({ movie }: CarouselMovieItemProps) {
               year: "numeric",
             })}
           </div>
-          <div>{movie.vote_average.toFixed(2)}</div>
-          <div
-            style={{
-              ...circleStyle,
-              backgroundColor: getColorFromRating(movie.vote_average),
-            }}
-          ></div>
+          {/* Hide rating for unreleased movies */}
+          {movie.vote_average > 0 && (
+            <>
+              <div>{movie.vote_average.toFixed(2)}</div>
+              <div
+                style={{
+                  ...circleStyle,
+                  backgroundColor: getColorFromRating(movie.vote_average),
+                }}
+              ></div>
+            </>
+          )}
         </div>
       </div>
     </Link>
