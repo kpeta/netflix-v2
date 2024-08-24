@@ -1,6 +1,6 @@
 "use client";
 
-import { TMDBMovie } from "@/types";
+import { TMDBMovie, TMDBTVShow } from "@/types";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
@@ -8,7 +8,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import styles from "../../styles/Header.module.css";
 
 interface SearchResultsProps {
-  searchResult: TMDBMovie;
+  searchResult: TMDBMovie | TMDBTVShow;
 }
 
 const searchResultsButtonStyle: React.CSSProperties = {
@@ -26,6 +26,7 @@ const searchResultItemStyle: React.CSSProperties = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  flexDirection: "column",
   padding: "15px",
   color: "rgb(224, 232, 241)",
   fontFamily: "inherit",
@@ -35,11 +36,18 @@ const searchResultItemStyle: React.CSSProperties = {
   textAlign: "center",
 };
 
-const movieThumbnailStyle: React.CSSProperties = {
+const thumbnailStyle: React.CSSProperties = {
   width: "80px",
   height: "50px",
   cursor: "pointer",
   marginBottom: "0.5rem",
+};
+
+const labelStyle: React.CSSProperties = {
+  fontSize: "11px",
+  marginTop: "3px",
+  borderRadius: "20%",
+  padding: "1px 2px",
 };
 
 function SearchResult({ searchResult }: SearchResultsProps) {
@@ -50,32 +58,48 @@ function SearchResult({ searchResult }: SearchResultsProps) {
     setImageError(false);
   }, [searchResult]);
 
+  const isMovie = "release_date" in searchResult;
+  const title = isMovie ? searchResult.title : searchResult.name;
+  const releaseDate = isMovie
+    ? searchResult.release_date
+    : searchResult.first_air_date;
+  const linkHref = isMovie
+    ? `/movie/${searchResult.id}`
+    : `/tvshow/${searchResult.id}`;
+
   return (
-    <>
-      <Link
-        href={`/movie/${searchResult.id}`}
-        key={searchResult.id}
-        style={searchResultsButtonStyle}
-        className={styles.netflixLogoImage}
-      >
-        {imageError ? (
-          <Skeleton width={50} height={40} style={{ filter: "invert(1)" }} />
-        ) : (
-          !imageError && (
-            <img
-              src={`https://image.tmdb.org/t/p/w500/${searchResult.poster_path}`}
-              alt={searchResult.title}
-              style={movieThumbnailStyle}
-              onError={() => setImageError(true)}
-            />
-          )
-        )}
-        <div style={searchResultItemStyle}>
-          {searchResult.title} (
-          {new Date(searchResult.release_date).getFullYear()})
+    <Link
+      href={linkHref}
+      key={searchResult.id}
+      style={searchResultsButtonStyle}
+      className={styles.netflixLogoImage}
+    >
+      {imageError ? (
+        <Skeleton width={50} height={40} style={{ filter: "invert(1)" }} />
+      ) : (
+        !imageError && (
+          <img
+            src={`https://image.tmdb.org/t/p/w500/${searchResult.poster_path}`}
+            alt={title}
+            style={thumbnailStyle}
+            onError={() => setImageError(true)}
+          />
+        )
+      )}
+      <div style={searchResultItemStyle}>
+        <div>{title}</div>
+        <div>({new Date(releaseDate).getFullYear()})</div>
+        <div
+          style={{
+            ...labelStyle,
+            color: isMovie ? "purple" : "green",
+            border: `1px solid ${isMovie ? "purple" : "green"}`,
+          }}
+        >
+          {isMovie ? "Movie" : "TV Show"}
         </div>
-      </Link>
-    </>
+      </div>
+    </Link>
   );
 }
 

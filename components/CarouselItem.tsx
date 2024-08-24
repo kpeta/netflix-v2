@@ -1,9 +1,9 @@
-import { TMDBMovie } from "@/types";
+import { TMDBMovie, TMDBTVShow } from "@/types";
 import styles from "../styles/Carousel.module.css";
 import Link from "next/link";
 
-interface CarouselMovieItemProps {
-  movie: TMDBMovie;
+interface CarouselItemProps {
+  item: TMDBMovie | TMDBTVShow;
 }
 
 const containerStyle: React.CSSProperties = {
@@ -67,44 +67,46 @@ export function getColorFromRating(rating: number): string {
   const red = Math.round(255 * (1 - ratio));
   const green = Math.round(255 * ratio);
 
-  // Return the color as an RGB string
   return `rgb(${red}, ${green}, 0)`;
 }
 
-function CarouselMovieItem({ movie }: CarouselMovieItemProps) {
+function CarouselItem({ item }: CarouselItemProps) {
+  const isMovie = "release_date" in item;
+
+  const title = isMovie ? item.title : item.name;
+  const date = isMovie ? item.release_date : item.first_air_date;
+  const linkHref = isMovie ? `/movie/${item.id}` : `/tvshow/${item.id}`;
+
   return (
-    <Link
-      href={`/movie/${movie.id}`}
-      style={containerStyle}
-      className={styles.thumbnail}
-    >
+    <Link href={linkHref} style={containerStyle} className={styles.thumbnail}>
       <div className={styles.imageContainer}>
         <img
-          src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-          alt={movie.title}
+          src={`https://image.tmdb.org/t/p/w500/${item.poster_path}`}
+          alt={title}
           style={imageStyle}
         />
       </div>
+
       <div style={infoStyle} className={styles.hoverTarget}>
         <div style={titleStyle} className={styles.hoverElement}>
-          {movie.title}
+          {title}
         </div>
         <div style={subInfoStyle} className={styles.hoverElement}>
           <div style={{ whiteSpace: "nowrap" }}>
-            {new Date(movie.release_date).toLocaleDateString("en-GB", {
+            {new Date(date).toLocaleDateString("en-GB", {
               day: "2-digit",
               month: "short",
               year: "numeric",
             })}
           </div>
           {/* Hide rating for unreleased movies */}
-          {movie.vote_average > 0 && (
+          {new Date(date) < new Date() && (
             <>
-              <div>{movie.vote_average.toFixed(2)}</div>
+              <div>{item.vote_average.toFixed(2)}</div>
               <div
                 style={{
                   ...circleStyle,
-                  backgroundColor: getColorFromRating(movie.vote_average),
+                  backgroundColor: getColorFromRating(item.vote_average),
                 }}
               ></div>
             </>
@@ -115,4 +117,4 @@ function CarouselMovieItem({ movie }: CarouselMovieItemProps) {
   );
 }
 
-export default CarouselMovieItem;
+export default CarouselItem;

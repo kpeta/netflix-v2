@@ -1,8 +1,9 @@
 import Carousel from "@/components/Carousel";
-import CarouselMovieItem from "@/components/CarouselMovieItem";
+import CarouselItem from "@/components/CarouselItem";
 import MovieInfoButton from "@/components/MovieInfoButton";
 import MovieInfoCard from "@/components/MovieInfoCard";
 import { getTMDBData } from "@/server/fetchers/tmdb";
+import { TMDBMovie } from "@/types";
 import Link from "next/link";
 
 export const revalidate = 60 * 60 * 24 * 7; // fetch movies once a day
@@ -27,6 +28,7 @@ const mainStyle: React.CSSProperties = {
 const carouselTitleStyle: React.CSSProperties = {
   fontSize: "20px",
   fontWeight: 900,
+  marginTop: "35px",
 };
 
 export default async function Home() {
@@ -44,6 +46,21 @@ export default async function Home() {
 
   const upcomingMovies = await getTMDBData({
     type: "movie",
+    category: "upcoming",
+  });
+
+  const trendingTVShows = await getTMDBData({
+    type: "tv",
+    category: "trending",
+  });
+
+  const topRatedTVShows = await getTMDBData({
+    type: "tv",
+    category: "top_rated",
+  });
+
+  const upcomingTVShows = await getTMDBData({
+    type: "tv",
     category: "upcoming",
   });
 
@@ -68,48 +85,55 @@ export default async function Home() {
     <main style={mainStyle}>
       <div style={backgroundImageStyle} />
       <div style={pageContainer(11)}>
-        <MovieInfoCard movie={randomTrendingMovie} />
-        <MovieInfoButton movie={randomTrendingMovie} />
+        <MovieInfoCard movie={randomTrendingMovie as TMDBMovie} />
+        <MovieInfoButton movie={randomTrendingMovie as TMDBMovie} />
 
         <div
           style={{
-            marginTop: "75px",
             ...carouselTitleStyle,
+            marginTop: "75px",
           }}
         >
           Trending Movies
         </div>
         <Carousel
           items={trendingMovies.map((movie) => (
-            <CarouselMovieItem key={movie.id} movie={movie} />
+            <CarouselItem key={movie.id} item={movie} />
           ))}
         />
 
-        <div
-          style={{
-            marginTop: "35px",
-            ...carouselTitleStyle,
-          }}
-        >
-          Top Rated Movies
-        </div>
+        <div style={carouselTitleStyle}>Top Rated Movies</div>
         <Carousel
           items={topRatedMovies.map((movie) => (
-            <CarouselMovieItem key={movie.id} movie={movie} />
+            <CarouselItem key={movie.id} item={movie} />
           ))}
         />
 
-        <div
-          style={{
-            marginTop: "35px",
-            ...carouselTitleStyle,
-          }}
-        >
-          Upcoming Movies
-        </div>
+        <div style={carouselTitleStyle}>Upcoming Movies</div>
         <Carousel
           items={upcomingMovies.map((movie) => (
-            <CarouselMovieItem key={movie.id} movie={movie} />
+            <CarouselItem key={movie.id} item={movie} />
+          ))}
+        />
+
+        <div style={carouselTitleStyle}>Trending TV Shows</div>
+        <Carousel
+          items={trendingTVShows.map((tvshow) => (
+            <CarouselItem key={tvshow.id} item={tvshow} />
+          ))}
+        />
+
+        <div style={carouselTitleStyle}>Top Rated TV Shows</div>
+        <Carousel
+          items={topRatedTVShows.map((tvshow) => (
+            <CarouselItem key={tvshow.id} item={tvshow} />
+          ))}
+        />
+
+        <div style={carouselTitleStyle}>Upcoming TV Shows</div>
+        <Carousel
+          items={upcomingTVShows.map((tvshow) => (
+            <CarouselItem key={tvshow.id} item={tvshow} />
           ))}
         />
 

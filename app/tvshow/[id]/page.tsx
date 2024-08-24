@@ -2,33 +2,35 @@ import {
   getTMDBContentDetails,
   getTMDBContentTrailers,
 } from "@/server/fetchers/tmdb";
-import { TMDBMovie, TMDBVideo } from "@/types";
+import { TMDBTVShow, TMDBVideo } from "@/types";
 
 async function Page({ params }: { params: { id: string } }) {
-  const movie = (await getTMDBContentDetails(
+  const tvShow = (await getTMDBContentDetails(
     parseInt(params.id),
-    "movie"
-  )) as TMDBMovie;
-  if (!movie) {
-    return <div>Movie not found</div>;
+    "tv"
+  )) as TMDBTVShow;
+  if (!tvShow) {
+    return <div>TV Show not found</div>;
   }
 
   const trailers: TMDBVideo[] = await getTMDBContentTrailers(
     parseInt(params.id),
-    "movie"
+    "tv"
   );
 
   return (
     <div style={{ color: "white" }}>
       <div>
-        <h1>{movie.title}</h1>
-        <p>{movie.overview}</p>
-        <p>Rating: {movie.vote_average}</p>
-        <p>Release Date: {movie.release_date}</p>
+        <h1>{tvShow.name}</h1>
+        <p>{tvShow.overview}</p>
+        <p>Rating: {tvShow.vote_average}</p>
+        <p>First Air Date: {tvShow.first_air_date}</p>
+        <p>Seasons: {tvShow.number_of_seasons}</p>
+        <p>Episodes: {tvShow.number_of_episodes}</p>
 
         <img
-          src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-          alt={movie.title}
+          src={`https://image.tmdb.org/t/p/w500/${tvShow.poster_path}`}
+          alt={tvShow.name}
         />
       </div>
 

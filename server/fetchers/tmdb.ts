@@ -1,13 +1,15 @@
 "use server";
 
 import { TMDB_BASE_URL } from "@/constants";
-import { TMDBMovie, TMDBVideo } from "@/types";
+import { TMDBMovie, TMDBTVShow, TMDBVideo } from "@/types";
 
 interface TMDBDataParams {
   type: "movie" | "tv";
   category: "trending" | "top_rated" | "upcoming" | "genre";
   genre?: "action" | "comedy" | "scary" | "romance" | "documentaries";
 }
+
+type TMDBContentType = "movie" | "tv";
 
 const genreIds = {
   action: 28,
@@ -21,7 +23,7 @@ export const getTMDBData = async ({
   type,
   category,
   genre,
-}: TMDBDataParams): Promise<TMDBMovie[]> => {
+}: TMDBDataParams): Promise<TMDBMovie[] | TMDBTVShow[]> => {
   try {
     let url = `${TMDB_BASE_URL}`;
 
@@ -33,14 +35,11 @@ export const getTMDBData = async ({
         url += `/discover/${type}?sort_by=vote_average.desc&vote_count.gte=10000`;
         break;
       case "upcoming":
-        // Use Discover API to get upcoming movies and TV shows by filtering for future first_air_date
         const today = new Date().toISOString().split("T")[0];
         if (type === "movie") {
-          url += `/discover/movie?primary_release_date.gte=${today}&sort_by=popularity.desc`;
+          url += `/discover/movie?primary_release_date.gte=${today}&sort_by=popularity.desc&include_adult=false`;
         } else if (type === "tv") {
-          url += `/discover/tv?first_air_date.gte=${today}&sort_by=first_air_date.asc`;
-        } else {
-          throw new Error("Invalid type provided for upcoming category.");
+          url += `/discover/tv?first_air_date.gte=${today}&sort_by=popularity.desc&include_adult=false`;
         }
         break;
       case "genre":
@@ -56,6 +55,7 @@ export const getTMDBData = async ({
         throw new Error("Invalid category provided.");
     }
 
+    // add the `api_key` to the `url`, using "&" if query parameters exist, otherwise "?"
     url += `${url.includes("?") ? "&" : "?"}api_key=${
       process.env.TMDB_API_KEY
     }`;
@@ -66,40 +66,44 @@ export const getTMDBData = async ({
     }
 
     const data = await response.json();
-    return data.results as TMDBMovie[];
+    return type === "tv"
+      ? (data.results as TMDBTVShow[])
+      : (data.results as TMDBMovie[]);
   } catch (error) {
     console.error(`Error fetching ${category} ${type}s:`, error);
     return [];
   }
 };
 
-export const getTMDBMovieDetails = async (
-  movieId: number
-): Promise<TMDBMovie> => {
+export const getTMDBContentDetails = async (
+  id: number,
+  contentType: TMDBContentType
+): Promise<TMDBMovie | TMDBTVShow> => {
   try {
     const response = await fetch(
-      `${TMDB_BASE_URL}/movie/${movieId}?api_key=${process.env.TMDB_API_KEY}`
+      `${TMDB_BASE_URL}/${contentType}/${id}?api_key=${process.env.TMDB_API_KEY}`
     );
     if (!response.ok) {
-      throw new Error("Failed to fetch movie details");
+      throw new Error(`Failed to fetch ${contentType} details`);
     }
     const data = await response.json();
-    return data as TMDBMovie;
+    return contentType === "tv" ? (data as TMDBTVShow) : (data as TMDBMovie);
   } catch (error) {
-    console.error("Error fetching movie details:", error);
-    return {} as TMDBMovie;
+    console.error(`Error fetching ${contentType} details:`, error);
+    return {} as TMDBMovie | TMDBTVShow;
   }
 };
 
-export const getTMDBMovieTrailers = async (
-  movieId: number
+export const getTMDBContentTrailers = async (
+  id: number,
+  contentType: TMDBContentType
 ): Promise<TMDBVideo[]> => {
   try {
     const response = await fetch(
-      `${TMDB_BASE_URL}/movie/${movieId}/videos?api_key=${process.env.TMDB_API_KEY}`
+      `${TMDB_BASE_URL}/${contentType}/${id}/videos?api_key=${process.env.TMDB_API_KEY}`
     );
     if (!response.ok) {
-      throw new Error("Failed to fetch movie videos");
+      throw new Error(`Failed to fetch ${contentType} videos`);
     }
     const data = await response.json();
     const videos: TMDBVideo[] = data.results.filter(
@@ -107,21 +111,51 @@ export const getTMDBMovieTrailers = async (
     );
     return videos;
   } catch (error) {
-    console.error("Error fetching movie videos:", error);
+    console.error(`Error fetching ${contentType} videos:`, error);
     return [];
   }
 };
 
-export const searchTMDBMovies = async (query: string): Promise<TMDBMovie[]> => {
+export const searchTMDBContent = async (
+  query: string
+): Promise<(TMDBMovie | TMDBTVShow)[]> => {
   try {
-    const response = await fetch(
-      `${TMDB_BASE_URL}/search/movie?api_key=${process.env.TMDB_API_KEY}&query=${query}`
+    const movieResponse = await fetch(
+      `${TMDB_BASE_URL}/search/movie?api_key=${
+        process.env.TMDB_API_KEY
+      }&query=${encodeURIComponent(query)}`
     );
-    if (!response.ok) {
-      throw new Error("Failed to fetch search results: " + response.statusText);
+    if (!movieResponse.ok) {
+      throw new Error(
+        `Failed to fetch movie search results: ${movieResponse.statusText}`
+      );
     }
-    const data = await response.json();
-    return data.results as TMDBMovie[];
+    const movieData = await movieResponse.json();
+    const movies: TMDBMovie[] = movieData.results as TMDBMovie[];
+
+    const tvShowResponse = await fetch(
+      `${TMDB_BASE_URL}/search/tv?api_key=${
+        process.env.TMDB_API_KEY
+      }&query=${encodeURIComponent(query)}`
+    );
+    if (!tvShowResponse.ok) {
+      throw new Error(
+        `Failed to fetch TV show search results: ${tvShowResponse.statusText}`
+      );
+    }
+    const tvShowData = await tvShowResponse.json();
+    const tvShows: TMDBTVShow[] = tvShowData.results as TMDBTVShow[];
+
+    const combinedResults: (TMDBMovie | TMDBTVShow)[] = [...movies, ...tvShows];
+
+    // sort combined results by popularity in descending order
+    const sortedResults = combinedResults.sort((a, b) => {
+      const aPopularity = "popularity" in a ? a.popularity : 0;
+      const bPopularity = "popularity" in b ? b.popularity : 0;
+      return bPopularity - aPopularity;
+    });
+
+    return sortedResults;
   } catch (error) {
     console.error("Error fetching search results:", error);
     return [];

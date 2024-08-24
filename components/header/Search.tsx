@@ -3,9 +3,13 @@
 import { useState, useRef, useEffect } from "react";
 import SearchIcon from "./icons/SearchIcon";
 import styles from "../../styles/Header.module.css";
-import { searchTMDBMovies } from "@/server/fetchers/tmdb";
-import { TMDBMovie } from "@/types";
+import { searchTMDBContent } from "@/server/fetchers/tmdb";
+import { TMDBMovie, TMDBTVShow } from "@/types";
 import SearchResult from "./SearchResult";
+
+const NUMBER_OF_DROPDOWN_SEARCH_RESULTS = 3;
+
+type SearchResultItem = TMDBMovie | TMDBTVShow;
 
 const containerStyle: React.CSSProperties = {
   display: "flex",
@@ -45,7 +49,7 @@ const buttonInputStyle: React.CSSProperties = {
 export default function Search() {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState<TMDBMovie[]>([]);
+  const [searchResults, setSearchResults] = useState<SearchResultItem[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -58,7 +62,7 @@ export default function Search() {
         !buttonRef.current.contains(event.target as Node)
       ) {
         setIsOpen(false);
-        setSearchResults([]); // clearing the search results when clicking outside
+        setSearchResults([]); // Clearing the search results when clicking outside
       }
     };
 
@@ -72,10 +76,10 @@ export default function Search() {
     (async () => {
       if (searchTerm) {
         try {
-          const data = await searchTMDBMovies(searchTerm);
-          setSearchResults(data.slice(0, 3));
+          const data = await searchTMDBContent(searchTerm);
+          setSearchResults(data.slice(0, NUMBER_OF_DROPDOWN_SEARCH_RESULTS));
         } catch (error) {
-          console.error("Failed to fetch movies:", error);
+          console.error("Failed to fetch content:", error);
         }
       } else {
         setSearchResults([]);
@@ -138,8 +142,8 @@ export default function Search() {
       </div>
       {isOpen && searchResults.length > 0 && (
         <div style={searchResultStyle}>
-          {searchResults.map((movie) => (
-            <SearchResult searchResult={movie} />
+          {searchResults.map((item) => (
+            <SearchResult searchResult={item} key={item.id} />
           ))}
         </div>
       )}

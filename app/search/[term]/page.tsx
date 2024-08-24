@@ -1,7 +1,7 @@
-import { searchTMDBMovies } from "@/server/fetchers/tmdb";
-import { TMDBMovie } from "@/types";
+import { searchTMDBContent } from "@/server/fetchers/tmdb";
 import styles from "../../../styles/Header.module.css";
 import Link from "next/link";
+import { pageContainer } from "@/app/page";
 
 const searchResultStyle: React.CSSProperties = {
   display: "flex",
@@ -15,46 +15,80 @@ const searchResultStyle: React.CSSProperties = {
   color: "white",
   backgroundColor: "rgb(13, 11, 11)",
   borderRadius: "14px",
+  width: "100%",
 };
 
 const searchResultImageStyle: React.CSSProperties = {
-  width: "100px",
-  height: "150px",
+  width: "80px",
+  height: "120px",
+  borderRadius: "14px",
+};
+
+const infoStyle: React.CSSProperties = {
+  width: "50%",
+};
+
+const labelStyle: React.CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  fontSize: "11px",
+  marginTop: "3px",
+  borderRadius: "20%",
+  padding: "1px 2px",
+  marginLeft: "5vw",
 };
 
 async function Page({ params }: { params: { term: string } }) {
-  const movies: TMDBMovie[] = await searchTMDBMovies(params.term);
+  const results = await searchTMDBContent(params.term);
 
-  if (movies.length === 0) {
+  if (results.length === 0) {
     return (
       <div style={{ color: "white" }}>
-        <h2>No movies found.</h2>
+        <h2>No results found.</h2>
       </div>
     );
   }
 
   return (
-    <div style={{ color: "white" }}>
-      <h1>Search Results</h1>
-      {movies.map((movie: TMDBMovie) => (
-        <Link
-          href={`/movie/${movie.id}`}
-          key={movie.id}
-          style={searchResultStyle}
-          className={styles.netflixLogoImage}
-        >
-          <img
-            src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-            alt={movie.title}
-            style={searchResultImageStyle}
-          />
-          <div>
-            <h2>{movie.title}</h2>
-            <p>Rating: {movie.vote_average}</p>
-            <p>Release Date: {movie.release_date}</p>
-          </div>
-        </Link>
-      ))}
+    <div style={pageContainer()}>
+      <div>Search Results</div>
+      {results.map((item) => {
+        const isMovie = "release_date" in item;
+
+        return (
+          <Link
+            href={`/${isMovie ? "movie" : "tvshow"}/${item.id}`}
+            key={item.id}
+            style={searchResultStyle}
+            className={styles.netflixLogoImage}
+          >
+            <img
+              src={`https://image.tmdb.org/t/p/w500/${item.poster_path}`}
+              alt={isMovie ? item.title : item.name}
+              style={searchResultImageStyle}
+            />
+            <div style={infoStyle}>
+              <div>{isMovie ? item.title : item.name}</div>
+              <div>Rating: {item.vote_average}</div>
+              <div>
+                {isMovie
+                  ? `Release Date: ${item.release_date}`
+                  : `First Air Date: ${item.first_air_date}`}
+              </div>
+            </div>
+            <div
+              style={{
+                ...labelStyle,
+                color: isMovie ? "purple" : "green",
+                border: `1px solid ${isMovie ? "purple" : "green"}`,
+              }}
+            >
+              {isMovie ? "Movie" : "TV Show"}
+            </div>
+          </Link>
+        );
+      })}
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { TMDBMovie } from "../types";
-import { circleStyle, getColorFromRating } from "./CarouselMovieItem";
+import { circleStyle, getColorFromRating } from "./CarouselItem";
 import styles from "../styles/MovieInfoCard.module.css";
 import React from "react";
 
