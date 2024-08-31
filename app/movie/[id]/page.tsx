@@ -1,8 +1,15 @@
+import MediaImage from "@/components/MediaImage";
 import {
   getTMDBContentDetails,
   getTMDBContentTrailers,
 } from "@/server/fetchers/tmdb";
 import { TMDBMovie, TMDBVideo } from "@/types";
+
+const thumbnailStyle: React.CSSProperties = {
+  width: "250px",
+  height: "400px",
+  marginBottom: "0.5rem",
+};
 
 async function Page({ params }: { params: { id: string } }) {
   const movie = (await getTMDBContentDetails(
@@ -26,9 +33,11 @@ async function Page({ params }: { params: { id: string } }) {
         <p>Rating: {movie.vote_average}</p>
         <p>Release Date: {movie.release_date}</p>
 
-        <img
-          src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-          alt={movie.title}
+        <MediaImage
+          media={movie}
+          imageStyle={thumbnailStyle}
+          skeletonWidth={250}
+          skeletonHeight={400}
         />
       </div>
 

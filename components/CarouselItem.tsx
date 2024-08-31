@@ -1,6 +1,7 @@
 import { TMDBMovie, TMDBTVShow } from "@/types";
 import styles from "../styles/Carousel.module.css";
 import Link from "next/link";
+import MediaImage from "./MediaImage";
 
 interface CarouselItemProps {
   item: TMDBMovie | TMDBTVShow;
@@ -80,10 +81,11 @@ function CarouselItem({ item }: CarouselItemProps) {
   return (
     <Link href={linkHref} style={containerStyle} className={styles.thumbnail}>
       <div className={styles.imageContainer}>
-        <img
-          src={`https://image.tmdb.org/t/p/w500/${item.poster_path}`}
-          alt={title}
-          style={imageStyle}
+        <MediaImage
+          media={item}
+          imageStyle={imageStyle}
+          skeletonWidth={135}
+          skeletonHeight={195}
         />
       </div>
 

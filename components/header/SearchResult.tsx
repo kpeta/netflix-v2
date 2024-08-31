@@ -1,11 +1,9 @@
-"use client";
-
 import { TMDBMovie, TMDBTVShow } from "@/types";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Link from "next/link";
-import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import styles from "../../styles/Header.module.css";
+import MediaImage from "../MediaImage";
 
 interface SearchResultsProps {
   searchResult: TMDBMovie | TMDBTVShow;
@@ -51,13 +49,6 @@ const labelStyle: React.CSSProperties = {
 };
 
 function SearchResult({ searchResult }: SearchResultsProps) {
-  const [imageError, setImageError] = useState(false);
-
-  // Reset imageError state when searchResult prop changes
-  useEffect(() => {
-    setImageError(false);
-  }, [searchResult]);
-
   const isMovie = "release_date" in searchResult;
   const title = isMovie ? searchResult.title : searchResult.name;
   const releaseDate = isMovie
@@ -74,18 +65,12 @@ function SearchResult({ searchResult }: SearchResultsProps) {
       style={searchResultsButtonStyle}
       className={styles.netflixLogoImage}
     >
-      {imageError ? (
-        <Skeleton width={50} height={40} style={{ filter: "invert(1)" }} />
-      ) : (
-        !imageError && (
-          <img
-            src={`https://image.tmdb.org/t/p/w500/${searchResult.poster_path}`}
-            alt={title}
-            style={thumbnailStyle}
-            onError={() => setImageError(true)}
-          />
-        )
-      )}
+      <MediaImage
+        media={searchResult}
+        imageStyle={thumbnailStyle}
+        skeletonWidth={45}
+        skeletonHeight={55}
+      />
       <div style={searchResultItemStyle}>
         <div>{title}</div>
         <div>({new Date(releaseDate).getFullYear()})</div>

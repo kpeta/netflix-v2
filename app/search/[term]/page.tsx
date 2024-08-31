@@ -2,6 +2,7 @@ import { searchTMDBContent } from "@/server/fetchers/tmdb";
 import styles from "../../../styles/Header.module.css";
 import Link from "next/link";
 import { pageContainer } from "@/app/page";
+import MediaImage from "@/components/MediaImage";
 
 const searchResultStyle: React.CSSProperties = {
   display: "flex",
@@ -63,10 +64,11 @@ async function Page({ params }: { params: { term: string } }) {
             style={searchResultStyle}
             className={styles.netflixLogoImage}
           >
-            <img
-              src={`https://image.tmdb.org/t/p/w500/${item.poster_path}`}
-              alt={isMovie ? item.title : item.name}
-              style={searchResultImageStyle}
+            <MediaImage
+              media={item}
+              imageStyle={searchResultImageStyle}
+              skeletonWidth={80}
+              skeletonHeight={120}
             />
             <div style={infoStyle}>
               <div>{isMovie ? item.title : item.name}</div>

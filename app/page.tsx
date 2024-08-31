@@ -4,7 +4,6 @@ import MovieInfoButton from "@/components/MovieInfoButton";
 import MovieInfoCard from "@/components/MovieInfoCard";
 import { getTMDBData } from "@/server/fetchers/tmdb";
 import { TMDBMovie } from "@/types";
-import Link from "next/link";
 
 export const revalidate = 60 * 60 * 24 * 7; // fetch movies once a day
 
