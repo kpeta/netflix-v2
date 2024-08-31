@@ -136,16 +136,6 @@ export default async function Home() {
             <CarouselItem key={tvshow.id} item={tvshow} />
           ))}
         />
-
-        <button>
-          <Link href="/data">Go to data page</Link>
-        </button>
-        <button>
-          <Link href="/form">Go to form page</Link>
-        </button>
-        <button>
-          <Link href="/movies">Go to movies page</Link>
-        </button>
       </div>
     </main>
   );
