@@ -4,6 +4,8 @@ import { TMDBMovie, TMDBTVShow } from "@/types";
 import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 
+const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500/";
+
 interface MediaImageProps {
   media: TMDBMovie | TMDBTVShow;
   imageStyle: React.CSSProperties;
@@ -21,29 +23,38 @@ function MediaImage({
   const title = isMovie ? media.title : media.name;
 
   const [imageError, setImageError] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
-  // reset imageError state when media prop changes
   useEffect(() => {
+    setImageLoaded(false);
     setImageError(false);
+
+    if (media.poster_path) {
+      const img = new Image();
+      img.src = `${IMAGE_BASE_URL}${media.poster_path}`;
+      img.onload = () => {
+        setImageLoaded(true);
+      };
+      img.onerror = () => {
+        setImageError(true);
+      };
+    }
   }, [media]);
 
   return (
     <>
-      {imageError || !media.poster_path ? (
+      {imageError || !imageLoaded || !media.poster_path ? (
         <Skeleton
           width={skeletonWidth}
           height={skeletonHeight}
           style={{ filter: "invert(1)" }}
         />
       ) : (
-        !imageError && (
-          <img
-            src={`https://image.tmdb.org/t/p/w500/${media.poster_path}`}
-            alt={title}
-            style={imageStyle}
-            onError={() => setImageError(true)}
-          />
-        )
+        <img
+          src={`${IMAGE_BASE_URL}${media.poster_path}`}
+          alt={title}
+          style={imageStyle}
+        />
       )}
     </>
   );
