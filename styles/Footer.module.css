@@ -10,10 +10,15 @@
 .footerItem {
   text-decoration: none;
   color: rgb(152, 149, 149);
+  transition: color 0.3s ease, transform 0.1s ease;
 }
 
 .footerItem:hover {
-  text-decoration: underline;
+  color: white;
+}
+
+.footerItem:active {
+  transform: scale(0.9);
 }
 
 .socialButton {
