@@ -101,18 +101,20 @@ function CarouselItem({ item }: CarouselItemProps) {
               year: "numeric",
             })}
           </div>
-          {/* Hide rating for unreleased movies */}
-          {new Date(date) < new Date() && (
-            <>
-              <div>{item.vote_average.toFixed(2)}</div>
-              <div
-                style={{
-                  ...circleStyle,
-                  backgroundColor: getColorFromRating(item.vote_average),
-                }}
-              ></div>
-            </>
-          )}
+          {/* Hide rating for unreleased movies and movies with a vote of 0 or 10 */}
+          {new Date(date) < new Date() &&
+            item.vote_average > 0 &&
+            item.vote_average < 10 && (
+              <>
+                <div>{item.vote_average.toFixed(2)}</div>
+                <div
+                  style={{
+                    ...circleStyle,
+                    backgroundColor: getColorFromRating(item.vote_average),
+                  }}
+                ></div>
+              </>
+            )}
         </div>
       </div>
     </Link>
