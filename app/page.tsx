@@ -1,11 +1,12 @@
 import Carousel from "@/components/Carousel";
 import CarouselItem from "@/components/CarouselItem";
+import MainPageBackground from "@/components/MainPageBackground";
 import MovieInfoButton from "@/components/MovieInfoButton";
 import MovieInfoCard from "@/components/MovieInfoCard";
-import { getTMDBData } from "@/server/fetchers/tmdb";
+import { getTMDBContentTrailers, getTMDBData } from "@/server/fetchers/tmdb";
 import { TMDBMovie } from "@/types";
 
-export const revalidate = 60 * 60 * 24 * 7; // fetch movies once a day
+export const revalidate = 60 * 60 * 24 * 7; // fetch movies once a week
 
 export const pageContainer = (topPadding: number = 5): React.CSSProperties => ({
   display: "flex",
@@ -37,6 +38,9 @@ export default async function Home() {
   });
   const randomTrendingMovie =
     trendingMovies[Math.floor(Math.random() * trendingMovies.length)];
+  const randomTrendingMovieTrailerID = (
+    await getTMDBContentTrailers(randomTrendingMovie.id, "movie")
+  )[0].key;
 
   const topRatedMovies = await getTMDBData({
     type: "movie",
@@ -63,38 +67,20 @@ export default async function Home() {
     category: "upcoming",
   });
 
-  const backgroundImageStyle: React.CSSProperties = {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    backgroundImage: `
-      linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(23, 23, 23, 1) 100%),
-      url(https://image.tmdb.org/t/p/original/${randomTrendingMovie.poster_path})
-    `,
-    backgroundSize: "100%",
-    backgroundPosition: "top",
-    backgroundRepeat: "no-repeat",
-    opacity: 0.3,
-    zIndex: -1,
-  };
-
   return (
     <main style={mainStyle}>
-      <div style={backgroundImageStyle} />
+      <MainPageBackground
+        movie={randomTrendingMovie as TMDBMovie}
+        movieTrailerID={randomTrendingMovieTrailerID}
+      />
+
       <div style={pageContainer(11)}>
         <MovieInfoCard movie={randomTrendingMovie as TMDBMovie} />
         <MovieInfoButton movie={randomTrendingMovie as TMDBMovie} />
 
-        <div
-          style={{
-            ...carouselTitleStyle,
-            marginTop: "75px",
-          }}
-        >
-          Trending Movies
-        </div>
+        <div style={{ marginTop: "75px" }} />
+
+        <div style={carouselTitleStyle}>Trending Movies</div>
         <Carousel
           items={trendingMovies.map((movie) => (
             <CarouselItem key={movie.id} item={movie} />
@@ -135,6 +121,8 @@ export default async function Home() {
             <CarouselItem key={tvshow.id} item={tvshow} />
           ))}
         />
+
+        <div style={{ marginBottom: "75px" }} />
       </div>
     </main>
   );

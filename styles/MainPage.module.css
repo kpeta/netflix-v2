@@ -1,0 +1,69 @@
+.backgroundVideo {
+  margin-top: -5%; /* hides youtube video title */
+}
+
+.shadowTopHeight {
+  height: 350px;
+}
+
+.shadowBottomHeight {
+  height: 550px;
+}
+
+@media (max-width: 1400px) {
+  .shadowTopHeight {
+    height: 250px;
+  }
+
+  .shadowBottomHeight {
+    height: 500px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .shadowTopHeight {
+    height: 200px;
+  }
+
+  .shadowBottomHeight {
+    height: 400px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .shadowTopHeight {
+    height: 150px;
+  }
+
+  .shadowBottomHeight {
+    height: 400px;
+  }
+}
+
+@media (max-width: 800px) {
+  .backgroundVideo {
+    margin-top: -8%;
+  }
+
+  .shadowTopHeight {
+    height: 100px;
+  }
+
+  .shadowBottomHeight {
+    height: 250px;
+  }
+}
+
+@media (max-width: 500px) {
+  .backgroundVideo {
+    margin-top: -14%;
+  }
+
+  .shadowTopHeight {
+    height: 50px;
+  }
+
+  .shadowBottomHeight {
+    height: 140px;
+  }
+}
