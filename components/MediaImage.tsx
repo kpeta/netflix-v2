@@ -4,13 +4,14 @@ import { TMDBMovie, TMDBTVShow } from "@/types";
 import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 
-const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500/";
+const DEFAULT_IMAGE_QUALITY = "w500";
 
 interface MediaImageProps {
   media: TMDBMovie | TMDBTVShow;
   imageStyle: React.CSSProperties;
   skeletonWidth: number;
   skeletonHeight: number;
+  quality?: "w500" | "original";
 }
 
 function MediaImage({
@@ -18,6 +19,7 @@ function MediaImage({
   imageStyle,
   skeletonWidth,
   skeletonHeight,
+  quality = DEFAULT_IMAGE_QUALITY,
 }: MediaImageProps) {
   const isMovie = "release_date" in media;
   const title = isMovie ? media.title : media.name;
@@ -31,7 +33,7 @@ function MediaImage({
 
     if (media.poster_path) {
       const img = new Image();
-      img.src = `${IMAGE_BASE_URL}${media.poster_path}`;
+      img.src = `https://image.tmdb.org/t/p/${quality}/${media.poster_path}`;
       img.onload = () => {
         setImageLoaded(true);
       };
@@ -39,7 +41,7 @@ function MediaImage({
         setImageError(true);
       };
     }
-  }, [media]);
+  }, [media, quality]);
 
   return (
     <>
@@ -51,7 +53,7 @@ function MediaImage({
         />
       ) : (
         <img
-          src={`${IMAGE_BASE_URL}${media.poster_path}`}
+          src={`https://image.tmdb.org/t/p/${quality}/${media.poster_path}`}
           alt={title}
           style={imageStyle}
         />
