@@ -140,7 +140,7 @@ export default function Search() {
           />
         </form>
       </div>
-      {isOpen && searchResults.length > 0 && (
+      {isOpen && searchTerm && searchResults.length > 0 && (
         <div style={searchResultStyle}>
           {searchResults.map((item) => (
             <SearchResult searchResult={item} key={item.id} />
