@@ -76,9 +76,9 @@ function Carousel({ items }: CarouselProps) {
   const [itemWidth, setItemWidth] = useState(0);
   const [prevButtonVisible, setPrevButtonVisible] = useState(false);
   const [nextButtonVisible, setNextButtonVisible] = useState(false);
-  const [backgroundColor, setBackgroundColor] = useState("rgb(23,23,23)"); // Initial background color
+  const [backgroundColor, setBackgroundColor] = useState("rgb(23,23,23)");
 
-  const colors = ["rgb(23,23,23)", "rgb(46,46,46)"];
+  const colors = ["rgb(23,23,23)", "rgb(55,55,55)"];
 
   // cycle through colors every BACKGROUND_COLOR_CHANGE_INTERVAL_MS
   useEffect(() => {
