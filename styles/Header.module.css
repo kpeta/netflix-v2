@@ -192,17 +192,15 @@
   transition: width 1s ease, visibility 1s ease, margin-left 1s ease;
 }
 
-@media (min-width: 1024px) {
-  .responsiveDropdownMenuHidden {
-    display: none !important;
-  }
-
-  .userAvatarHide {
-    display: none;
-  }
+.responsiveDropdownMenuHidden {
+  display: none !important;
 }
 
-@media (max-width: 1024px) {
+.userAvatarHide {
+  display: none;
+}
+
+@media (max-width: 1250px) {
   .netflixLogoImage {
     display: none;
   }
@@ -244,5 +242,13 @@
 
   .loginButton {
     display: none;
+  }
+
+  .responsiveDropdownMenuHidden {
+    display: flex;
+  }
+
+  .userAvatarHide {
+    display: flex;
   }
 }
