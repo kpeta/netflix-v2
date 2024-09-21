@@ -54,15 +54,8 @@ const usernameStyle: React.CSSProperties = {
 const optionsStyle: React.CSSProperties = {
   display: "flex",
   flexDirection: "column",
-  alignItems: "flex-end",
   gap: "10px",
-  paddingRight: "6px",
   whiteSpace: "nowrap",
-};
-
-const menuItemStyle: React.CSSProperties = {
-  fontSize: "12px",
-  cursor: "pointer",
 };
 
 function UserAvatarButton({ token }: UserAvatarButtonProps) {
@@ -117,49 +110,29 @@ function UserAvatarButton({ token }: UserAvatarButtonProps) {
       {menuVisible && (
         <div ref={menuRef} style={menuStyle}>
           {token && <div style={usernameStyle}>Hi, {token.user}!</div>}
-          <div style={optionsStyle}>
+          <div>
             {token ? (
-              <>
-                <Link
-                  href="/new-and-popular"
-                  className={styles.menuItem}
-                  style={menuItemStyle}
-                >
+              <div style={optionsStyle}>
+                <Link href="/new-and-popular" className={styles.userMenuItem}>
                   New & Popular
                 </Link>
-                <Link
-                  href="/my-list"
-                  className={styles.menuItem}
-                  style={menuItemStyle}
-                >
+                <Link href="/my-list" className={styles.userMenuItem}>
                   My List
                 </Link>
-                <Link
-                  href="/notifications"
-                  className={styles.menuItem}
-                  style={menuItemStyle}
-                >
+                <Link href="/notifications" className={styles.userMenuItem}>
                   Notifications
                 </Link>
                 <LogOutButton />
-              </>
+              </div>
             ) : (
-              <>
-                <Link
-                  href="/signup"
-                  className={styles.menuItem}
-                  style={menuItemStyle}
-                >
+              <div style={optionsStyle}>
+                <Link href="/signup" className={styles.userMenuItem}>
                   Sign up
                 </Link>
-                <Link
-                  href="/login"
-                  className={styles.menuItem}
-                  style={menuItemStyle}
-                >
+                <Link href="/login" className={styles.userMenuItem}>
                   Log in
                 </Link>
-              </>
+              </div>
             )}
           </div>
         </div>

@@ -73,6 +73,31 @@
   opacity: 0.8;
 }
 
+.userMenuItem {
+  color: rgb(224, 232, 241);
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: transparent;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  display: block;
+  width: 90%;
+  text-align: right;
+  transition: background-color 0.3s ease;
+}
+
+.userMenuItem:hover {
+  background-color: darkred;
+}
+
+.userMenuItem:active {
+  transform: scale(0.95);
+}
+
 .menuItem,
 .menuItemSelected {
   color: rgb(224, 232, 241);
