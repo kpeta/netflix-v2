@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect, ReactNode } from "react";
 import styles from "../styles/Carousel.module.css";
 
 const TOLERANCE_FACTOR_PX = 3; // tolerance factor to account for rounding errors
+const BACKGROUND_COLOR_CHANGE_INTERVAL_MS = 1000;
 
 interface CarouselProps {
   items: ReactNode[];
@@ -17,7 +18,7 @@ const carouselOuterContainerStyle: React.CSSProperties = {
   alignItems: "center",
 };
 
-const carouselContainerStyle: React.CSSProperties = {
+const carouselContainerBaseStyle: React.CSSProperties = {
   display: "flex",
   flexDirection: "row",
   justifyContent: "center",
@@ -26,8 +27,9 @@ const carouselContainerStyle: React.CSSProperties = {
   msOverflowStyle: "none", // IE and Edge
   scrollbarWidth: "none",
   width: "100%",
-  backgroundColor: "rgb(23,23,23)",
   borderRadius: "0.5rem",
+  backgroundColor: "rgb(23,23,23)", // base color (initial)
+  transition: "background-color 3s ease", // smooth transition
 };
 
 const carouselItemsContainerStyle: React.CSSProperties = {
@@ -74,6 +76,29 @@ function Carousel({ items }: CarouselProps) {
   const [itemWidth, setItemWidth] = useState(0);
   const [prevButtonVisible, setPrevButtonVisible] = useState(false);
   const [nextButtonVisible, setNextButtonVisible] = useState(false);
+  const [backgroundColor, setBackgroundColor] = useState("rgb(23,23,23)"); // Initial background color
+
+  const colors = ["rgb(23,23,23)", "rgb(46,46,46)"];
+
+  // cycle through colors every BACKGROUND_COLOR_CHANGE_INTERVAL_MS
+  useEffect(() => {
+    const changeBackgroundColor = () => {
+      setBackgroundColor((prevColor) => {
+        const currentIndex = colors.indexOf(prevColor);
+        const nextIndex = (currentIndex + 1) % colors.length;
+        return colors[nextIndex];
+      });
+    };
+
+    const intervalId = setInterval(
+      changeBackgroundColor,
+      BACKGROUND_COLOR_CHANGE_INTERVAL_MS
+    );
+
+    return () => {
+      clearInterval(intervalId); // cleanup on unmount
+    };
+  }, []);
 
   // Calculate carousel item width on mount and resize
   useEffect(() => {
@@ -86,7 +111,7 @@ function Carousel({ items }: CarouselProps) {
     calculateItemWidth();
     window.addEventListener("resize", calculateItemWidth);
 
-    //when component unmounts, remove event listener
+    // Remove event listener on unmount
     return () => {
       window.removeEventListener("resize", calculateItemWidth);
     };
@@ -131,7 +156,10 @@ function Carousel({ items }: CarouselProps) {
       >
         {"<"}
       </button>
-      <div style={carouselContainerStyle} ref={containerRef}>
+      <div
+        style={{ ...carouselContainerBaseStyle, backgroundColor }} // Apply dynamic background color
+        ref={containerRef}
+      >
         <div style={carouselItemsContainerStyle}>
           {items.map((item, index) => (
             <div key={index} style={carouselItemStyle} ref={itemRef}>
