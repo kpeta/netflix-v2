@@ -8,6 +8,7 @@ import { TMDBMovie, TMDBTVShow } from "@/types";
 import SearchResult from "./SearchResult";
 
 const NUMBER_OF_DROPDOWN_SEARCH_RESULTS = 3;
+const SEARCH_DEBOUNCE_DELAY_MS = 250;
 
 type SearchResultItem = TMDBMovie | TMDBTVShow;
 
@@ -52,6 +53,7 @@ export default function Search() {
   const [searchResults, setSearchResults] = useState<SearchResultItem[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const debounceTimeoutRef = useRef<number | undefined>();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -73,7 +75,13 @@ export default function Search() {
   }, []);
 
   useEffect(() => {
-    (async () => {
+    // clear the previous timeout if the user types/deletes quickly
+    if (debounceTimeoutRef.current) {
+      clearTimeout(debounceTimeoutRef.current);
+    }
+
+    // delay the search until the user stops typing for SEARCH_DEBOUNCE_DELAY_MS (to avoid making too many requests)
+    debounceTimeoutRef.current = window.setTimeout(async () => {
       if (searchTerm) {
         try {
           const data = await searchTMDBContent(searchTerm);
@@ -84,7 +92,11 @@ export default function Search() {
       } else {
         setSearchResults([]);
       }
-    })();
+    }, SEARCH_DEBOUNCE_DELAY_MS);
+
+    return () => {
+      clearTimeout(debounceTimeoutRef.current);
+    };
   }, [searchTerm]);
 
   const handleIconClick = () => {
