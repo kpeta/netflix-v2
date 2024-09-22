@@ -1,14 +1,13 @@
 "use client";
 import signup from "@/server/auth/signup";
 import { useFormState } from "react-dom";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { verifyCaptcha } from "@/server/actions/recaptcha";
-import Link from "next/link";
+import { pageContainer } from "../page";
 
 export default function Page() {
   const [state, formAction] = useFormState(signup, null);
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
   const [isVerified, setIsverified] = useState<boolean>(false);
 
   async function handleCaptchaSubmission(token: string | null) {
@@ -19,7 +18,7 @@ export default function Page() {
   }
 
   return (
-    <>
+    <div style={pageContainer()}>
       <h1>Create an account</h1>
       <form action={formAction}>
         <label htmlFor="username">Username</label>
@@ -34,13 +33,12 @@ export default function Page() {
         <br />
         <ReCAPTCHA
           sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
-          ref={recaptchaRef}
           onChange={handleCaptchaSubmission}
         />
         <button type="submit" disabled={!isVerified}>
           Continue
         </button>
       </form>
-    </>
+    </div>
   );
 }

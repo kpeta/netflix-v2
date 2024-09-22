@@ -4,6 +4,7 @@ import { useFormState } from "react-dom";
 import { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { verifyCaptcha } from "@/server/actions/recaptcha";
+import { pageContainer } from "../page";
 
 export default function Page() {
   const [state, formAction] = useFormState(login, null);
@@ -17,7 +18,7 @@ export default function Page() {
   }
 
   return (
-    <>
+    <div style={pageContainer()}>
       <h1>Log in</h1>
       <form action={formAction}>
         <label htmlFor="username">Username</label>
@@ -38,6 +39,6 @@ export default function Page() {
           Continue
         </button>
       </form>
-    </>
+    </div>
   );
 }
