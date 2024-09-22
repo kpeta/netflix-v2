@@ -34,7 +34,6 @@ const menuStyle: React.CSSProperties = {
   right: 0,
   display: "flex",
   flexDirection: "column",
-  width: "6.5rem",
   borderRadius: "8px",
   backgroundColor: "black",
   boxShadow: "0px 1px 2px rgb(163, 164, 167)",
@@ -54,6 +53,8 @@ const usernameStyle: React.CSSProperties = {
 const optionsStyle: React.CSSProperties = {
   display: "flex",
   flexDirection: "column",
+  justifyContent: "flex-end",
+  alignItems: "flex-end",
   gap: "10px",
   whiteSpace: "nowrap",
 };
@@ -108,7 +109,10 @@ function UserAvatarButton({ token }: UserAvatarButtonProps) {
         </div>
       </button>
       {menuVisible && (
-        <div ref={menuRef} style={menuStyle}>
+        <div
+          ref={menuRef}
+          style={{ ...menuStyle, width: token ? "150px" : "100px" }}
+        >
           {token && <div style={usernameStyle}>Hi, {token.user}!</div>}
           <div>
             {token ? (
