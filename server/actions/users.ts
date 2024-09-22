@@ -10,14 +10,29 @@ export async function createUser(name: string, password: string) {
     name,
     created_at: new Date(),
     password,
+    favorite_media: [],
   };
 
-  const { data, error } = await supabase.from("users").insert(newUser);
+  const { error } = await supabase.from("users").insert(newUser);
 
   if (error) {
     console.error("Error creating user", error);
     throw error;
-  } else {
-    console.log(data);
+  }
+}
+
+export async function addUserFavoriteMedia(
+  userId: User["id"],
+  mediaId: number,
+  userExistingFavoriteMedia: number[]
+) {
+  const { error } = await supabase
+    .from("users")
+    .update({ favorite_media: [...userExistingFavoriteMedia, mediaId] })
+    .eq("id", userId);
+
+  if (error) {
+    console.error("Error adding favorite media to user", error);
+    throw error;
   }
 }
