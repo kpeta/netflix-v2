@@ -36,3 +36,24 @@ export async function addUserFavoriteMedia(
     throw error;
   }
 }
+
+export async function removeUserFavoriteMedia(
+  userId: User["id"],
+  mediaId: number,
+  userExistingFavoriteMedia: number[]
+) {
+  // filter out the mediaId to remove it from the existing favorites
+  const updatedFavoriteMedia = userExistingFavoriteMedia.filter(
+    (id) => id !== mediaId
+  );
+
+  const { error } = await supabase
+    .from("users")
+    .update({ favorite_media: updatedFavoriteMedia })
+    .eq("id", userId);
+
+  if (error) {
+    console.error("Error removing favorite media from user", error);
+    throw error;
+  }
+}
