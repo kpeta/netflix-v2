@@ -245,7 +245,7 @@
   }
 
   .responsiveDropdownMenuHidden {
-    display: flex;
+    display: flex !important;
   }
 
   .userAvatarHide {
