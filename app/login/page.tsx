@@ -1,13 +1,12 @@
 "use client";
 import login from "@/server/auth/login";
 import { useFormState } from "react-dom";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { verifyCaptcha } from "@/server/actions/recaptcha";
 
 export default function Page() {
   const [state, formAction] = useFormState(login, null);
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
   const [isVerified, setIsverified] = useState<boolean>(false);
 
   async function handleCaptchaSubmission(token: string | null) {
@@ -33,7 +32,6 @@ export default function Page() {
         <br />
         <ReCAPTCHA
           sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
-          ref={recaptchaRef}
           onChange={handleCaptchaSubmission}
         />
         <button type="submit" disabled={!isVerified}>
