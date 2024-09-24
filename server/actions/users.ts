@@ -24,8 +24,14 @@ export async function createUser(name: string, password: string) {
 export async function addUserFavoriteMedia(
   userId: User["id"],
   mediaId: number,
-  userExistingFavoriteMedia: number[]
+  userExistingFavoriteMedia?: number[]
 ) {
+  // if user has no existing favorite media, set it to an empty array
+  if (!userExistingFavoriteMedia) userExistingFavoriteMedia = [];
+
+  // if mediaId is already in the user's favorite media, return
+  if (userExistingFavoriteMedia.includes(mediaId)) return;
+
   const { error } = await supabase
     .from("users")
     .update({ favorite_media: [...userExistingFavoriteMedia, mediaId] })
@@ -40,8 +46,11 @@ export async function addUserFavoriteMedia(
 export async function removeUserFavoriteMedia(
   userId: User["id"],
   mediaId: number,
-  userExistingFavoriteMedia: number[]
+  userExistingFavoriteMedia?: number[]
 ) {
+  // if user has no existing favorite media, set it to an empty array
+  if (!userExistingFavoriteMedia) userExistingFavoriteMedia = [];
+
   // filter out the mediaId to remove it from the existing favorites
   const updatedFavoriteMedia = userExistingFavoriteMedia.filter(
     (id) => id !== mediaId
