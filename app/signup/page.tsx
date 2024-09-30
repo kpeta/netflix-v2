@@ -11,6 +11,6 @@ export default async function SignupPage() {
   }
 
   return (
-    <AuthForm formTitle="Sign Up" formAction={signup} buttonText="Continue" />
+    <AuthForm formTitle="Sign Up" formAction={signup} buttonText="Sign Up" />
   );
 }
