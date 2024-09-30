@@ -1,4 +1,5 @@
 "use client";
+
 import login from "@/server/auth/login";
 import { useFormState } from "react-dom";
 import { useState } from "react";
@@ -84,7 +85,8 @@ const errorMessageContainerStyle: React.CSSProperties = {
   padding: "10px",
   backgroundColor: "darkred",
   border: "1px solid rgb(100, 10, 10)",
-  width: "95%",
+  boxSizing: "border-box",
+  width: "310px",
 };
 
 const errorMessageTextContainerStyle: React.CSSProperties = {
