@@ -96,7 +96,9 @@ const Footer = () => {
           ))}
         </div>
 
-        <div>© 2024 Netflix v2</div>
+        <Link href="https://github.com/kpeta" className={styles.footerItem}>
+          © 2024 Netflix v2 | kpeta
+        </Link>
       </div>
     </footer>
   );
