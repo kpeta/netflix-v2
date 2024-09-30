@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { checkIfValidUsername, checkIfValidPassword } from "@/utils/validation";
 import { createToken } from ".";
 import { getUser } from "../fetchers/users";
+import { PostgrestError } from "@supabase/supabase-js";
 
 interface ActionResult {
   error: string;
@@ -36,13 +37,21 @@ export default async function login(
   try {
     existingUser = await getUser(username as string);
     if (existingUser.data === null) {
-      console.error("User doesn't exist");
+      console.error("Username doesn't exist");
       return {
-        error: "User doesn't exist",
+        error: "Username doesn't exist",
       };
     }
   } catch (error) {
+    const errorData = error as PostgrestError;
+
     console.error("An error occurred while fetching user:", error);
+    // if code: 'PGRST116', return a more user-friendly error message
+    if (errorData.code === "PGRST116") {
+      return {
+        error: "Username doesn't exist",
+      };
+    }
     return {
       error: "An error occurred while fetching user",
     };
