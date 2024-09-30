@@ -1,0 +1,18 @@
+.button {
+  background-color: rgb(190, 10, 10);
+  border: none;
+}
+
+.button:hover {
+  background-color: darkred;
+}
+
+.button:active {
+  transform: scale(0.95);
+}
+
+.disabledButton {
+  background-color: grey !important;
+  transform: none !important;
+  transition: none !important;
+}

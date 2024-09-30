@@ -1,6 +1,6 @@
 import styles from "../../../styles/Header.module.css";
 
-function ResponsiveMenuIcon() {
+function ResponsiveMenuIcon({ style }: { style?: React.CSSProperties }) {
   return (
     <svg
       aria-hidden="true"
@@ -9,6 +9,7 @@ function ResponsiveMenuIcon() {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       className={styles.responsiveMenuIcon}
+      style={style}
     >
       <path
         fill="currentColor"
