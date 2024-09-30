@@ -24,12 +24,3 @@ export const checkIfValidPassword = (password: string | undefined) => {
   }
   return true;
 };
-
-export const checkIfUserExists = async (username: string) => {
-  const { data } = await getUser(username);
-  // if user does not exist, data will be null
-  if (data === null) {
-    return false;
-  }
-  return true;
-};

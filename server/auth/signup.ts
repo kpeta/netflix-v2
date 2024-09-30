@@ -1,13 +1,11 @@
 "use server";
 import bcrypt from "bcryptjs";
 import { redirect } from "next/navigation";
-import {
-  checkIfValidUsername,
-  checkIfValidPassword,
-  checkIfUserExists,
-} from "@/utils/validation";
+import { checkIfValidUsername, checkIfValidPassword } from "@/utils/validation";
 import { createUser } from "../actions/users";
 import { createToken } from ".";
+import { getUser } from "../fetchers/users";
+import { PostgrestError } from "@supabase/supabase-js";
 
 interface ActionResult {
   error: string;
@@ -26,11 +24,29 @@ export default async function signup(
     };
   }
 
-  if ((await checkIfUserExists(username as string)) === true) {
-    console.error("Username already exists");
-    return {
-      error: "Username already exists",
-    };
+  let existingUser;
+  try {
+    existingUser = await getUser(username as string);
+    if (existingUser.data !== null) {
+      console.error("Username already exists");
+      return {
+        error: "Username already exists",
+      };
+    }
+  } catch (error) {
+    const errorData = error as PostgrestError;
+
+    // if code: 'PGRST116', username isn't taken
+    if (errorData.code !== "PGRST116") {
+      console.error(
+        "An error occurred while checking if username exists:",
+        error
+      );
+
+      return {
+        error: "An error occurred while checking if username exists",
+      };
+    }
   }
 
   const password = formData.get("password")?.toString();
