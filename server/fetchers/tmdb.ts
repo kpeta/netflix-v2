@@ -1,4 +1,4 @@
-"use server";
+"use server"; // needed for searchTMDBContent function which is called in client component
 
 import { TMDB_BASE_URL } from "@/constants";
 import { TMDBMovie, TMDBTVShow, TMDBVideo } from "@/types";
@@ -11,10 +11,18 @@ interface TMDBDataParams {
 
 type TMDBContentType = "movie" | "tv";
 
-const genreIds = {
+const movieGenreIDs = {
   action: 28,
   comedy: 35,
   scary: 27,
+  romance: 10749,
+  documentaries: 99,
+};
+
+const tvGenreIDs = {
+  action: 10759,
+  comedy: 35,
+  scary: 18,
   romance: 10749,
   documentaries: 99,
 };
@@ -43,8 +51,10 @@ export const getTMDBData = async ({
         }
         break;
       case "genre":
-        if (genre && genreIds[genre]) {
-          url += `/discover/${type}?with_genres=${genreIds[genre]}`;
+        if (genre && (movieGenreIDs[genre] || tvGenreIDs[genre])) {
+          url += `/discover/${type}?with_genres=${
+            type === "movie" ? movieGenreIDs[genre] : tvGenreIDs[genre]
+          }`;
         } else {
           throw new Error(
             "Invalid genre or genre not provided for category 'genre'."

@@ -40,11 +40,11 @@ export default async function Home() {
     type: "movie",
     category: "trending",
   });
+
   const randomTrendingMovie = await getTMDBContentDetails(
     trendingMovies[Math.floor(Math.random() * trendingMovies.length)].id,
     "movie"
   );
-  trendingMovies[Math.floor(Math.random() * trendingMovies.length)];
   const randomTrendingMovieTrailerID = (
     await getTMDBContentTrailers(randomTrendingMovie.id, "movie")
   )[0].key;
@@ -77,8 +77,8 @@ export default async function Home() {
   return (
     <main style={mainStyle}>
       <MainPageBackground
-        movie={randomTrendingMovie as TMDBMovie}
-        movieTrailerID={randomTrendingMovieTrailerID}
+        backgroundMedia={randomTrendingMovie}
+        backgroundMediaTrailerID={randomTrendingMovieTrailerID}
       />
 
       <div style={pageContainer(11)}>

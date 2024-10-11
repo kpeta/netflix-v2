@@ -1,6 +1,6 @@
 "use client";
 
-import { TMDBMovie } from "@/types";
+import { TMDBMovie, TMDBTVShow } from "@/types";
 import styles from "../styles/MainPage.module.css";
 import { useEffect, useState } from "react";
 import MediaImage from "./MediaImage";
@@ -22,8 +22,9 @@ import MediaImage from "./MediaImage";
 // 	shadowBottom -> position: "absolute", bottom: 0
 
 interface MainPageBackgroundProps {
-  movie: TMDBMovie;
-  movieTrailerID: string;
+  backgroundMedia: TMDBMovie | TMDBTVShow;
+  backgroundMediaTrailerID?: string;
+  backgroundTrailerEnabled?: boolean;
 }
 
 const containerStyle: React.CSSProperties = {
@@ -92,8 +93,9 @@ const shadowBottomStyle: React.CSSProperties = {
 };
 
 function MainPageBackground({
-  movie,
-  movieTrailerID,
+  backgroundMedia,
+  backgroundMediaTrailerID,
+  backgroundTrailerEnabled = true,
 }: MainPageBackgroundProps) {
   const [windowHeight, setWindowHeight] = useState(0);
   const [windowWidth, setWindowWidth] = useState(0);
@@ -109,17 +111,22 @@ function MainPageBackground({
     <div style={containerStyle}>
       <div style={shadowTopStyle} className={styles.shadowTopHeight} />
 
-      <div style={backgroundVideoContainerStyle}>
-        <iframe
-          style={iframeVideoStyle}
-          className={styles.backgroundVideo}
-          src={`https://www.youtube.com/embed/${movieTrailerID}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&modestbranding=0&rel=0&playsinline=1&enablejsapi=1&playlist=${movieTrailerID}`}
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-          title="Background Video"
-        />
-        <div style={shadowBottomStyle} className={styles.shadowBottomHeight} />
-      </div>
+      {backgroundTrailerEnabled && (
+        <div style={backgroundVideoContainerStyle}>
+          <iframe
+            style={iframeVideoStyle}
+            className={styles.backgroundVideo}
+            src={`https://www.youtube.com/embed/${backgroundMediaTrailerID}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&modestbranding=0&rel=0&playsinline=1&enablejsapi=1&playlist=${backgroundMediaTrailerID}`}
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+            title="Background Video"
+          />
+          <div
+            style={shadowBottomStyle}
+            className={styles.shadowBottomHeight}
+          />
+        </div>
+      )}
 
       <div
         style={backgroundImageContainerStyle}
@@ -128,7 +135,7 @@ function MainPageBackground({
         <div style={shadowTopStyle} className={styles.shadowTopHeight} />
         <MediaImage
           imageStyle={backgroundImageStyle}
-          media={movie}
+          media={backgroundMedia}
           skeletonHeight={windowHeight}
           skeletonWidth={windowWidth}
           quality="original"
