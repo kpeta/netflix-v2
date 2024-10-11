@@ -2,6 +2,7 @@ import { TMDBMovie, TMDBTVShow } from "@/types";
 import styles from "../styles/Carousel.module.css";
 import Link from "next/link";
 import MediaImage from "./MediaImage";
+import { circleStyle, getColorFromRating } from "./MediaInfo";
 
 interface CarouselItemProps {
   item: TMDBMovie | TMDBTVShow;
@@ -50,26 +51,6 @@ const imageStyle: React.CSSProperties = {
   height: "12rem",
   borderRadius: "0.5rem",
 };
-
-export const circleStyle: React.CSSProperties = {
-  width: "10px",
-  height: "10px",
-  borderRadius: "50%",
-};
-
-export function getColorFromRating(rating: number): string {
-  // Ensure rating is between 4 and 10
-  rating = Math.max(4, Math.min(rating, 10));
-
-  // Calculate the ratio (0 for red, 1 for green)
-  const ratio = (rating - 4) / 6;
-
-  // Interpolate between red (255, 0, 0) and green (0, 255, 0)
-  const red = Math.round(255 * (1 - ratio));
-  const green = Math.round(255 * ratio);
-
-  return `rgb(${red}, ${green}, 0)`;
-}
 
 function CarouselItem({ item }: CarouselItemProps) {
   const isMovie = "release_date" in item;

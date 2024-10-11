@@ -1,0 +1,94 @@
+.mainContainerPadding {
+  padding: 0 17vw;
+}
+
+.titleContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.titleText {
+  font-size: 34px;
+  font-weight: 900;
+}
+
+.mediaOverview {
+  width: 100%;
+}
+
+.mediaImageAndInfoContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+}
+
+.mediaInfoContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.trailerText {
+  font-size: 25px;
+  font-weight: 900;
+}
+
+.trailer {
+  height: 100%;
+  border: none;
+  width: 70%;
+}
+
+.epsiodesContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+@media (max-width: 1250px) {
+  .mainContainerPadding {
+    padding: 0 1vw;
+  }
+
+  .titleContainer {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .titleText {
+    font-size: 28px;
+    font-weight: 900;
+  }
+
+  .mediaOverview {
+    width: 90%;
+    text-align: center;
+  }
+
+  .mediaImageAndInfoContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mediaInfoContainer {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .trailer {
+    width: 100%;
+  }
+
+  .epsiodesContainer {
+    display: none;
+  }
+}

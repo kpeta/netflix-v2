@@ -1,5 +1,5 @@
 import { TMDBMovie } from "../types";
-import { circleStyle, getColorFromRating } from "./CarouselItem";
+import MediaInfo from "./MediaInfo";
 import styles from "../styles/MovieInfoCard.module.css";
 import React from "react";
 
@@ -18,19 +18,6 @@ const titleStyle: React.CSSProperties = {
   fontWeight: 900,
 };
 
-const ratingContainerStyle: React.CSSProperties = {
-  display: "flex",
-  flexDirection: "row",
-  gap: "10px",
-  alignItems: "center",
-  fontWeight: 900,
-};
-
-const releaseDateStyle: React.CSSProperties = {
-  whiteSpace: "nowrap",
-  color: "lightgray",
-};
-
 const overviewStyle: React.CSSProperties = {
   color: "lightgray",
 };
@@ -42,24 +29,7 @@ function MovieInfoCard({ movie }: MovieInfoCardProps) {
         {movie.title}
       </div>
 
-      <div style={ratingContainerStyle} className={styles.rating}>
-        <div style={{ color: getColorFromRating(movie.vote_average) }}>
-          {movie.vote_average.toFixed(2)}
-        </div>
-        <div
-          style={{
-            ...circleStyle,
-            backgroundColor: getColorFromRating(movie.vote_average),
-          }}
-        ></div>
-        <div style={releaseDateStyle}>
-          {new Date(movie.release_date).toLocaleDateString("en-GB", {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-          })}
-        </div>
-      </div>
+      <MediaInfo media={movie} />
 
       <div style={overviewStyle} className={styles.rating}>
         {movie.overview}

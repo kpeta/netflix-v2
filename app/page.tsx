@@ -3,7 +3,11 @@ import CarouselItem from "@/components/CarouselItem";
 import MainPageBackground from "@/components/MainPageBackground";
 import MovieInfoButton from "@/components/MovieInfoButton";
 import MovieInfoCard from "@/components/MovieInfoCard";
-import { getTMDBContentTrailers, getTMDBData } from "@/server/fetchers/tmdb";
+import {
+  getTMDBContentDetails,
+  getTMDBContentTrailers,
+  getTMDBData,
+} from "@/server/fetchers/tmdb";
 import { TMDBMovie } from "@/types";
 
 export const revalidate = 60 * 60 * 24 * 7; // fetch movies once a week
@@ -36,8 +40,11 @@ export default async function Home() {
     type: "movie",
     category: "trending",
   });
-  const randomTrendingMovie =
-    trendingMovies[Math.floor(Math.random() * trendingMovies.length)];
+  const randomTrendingMovie = await getTMDBContentDetails(
+    trendingMovies[Math.floor(Math.random() * trendingMovies.length)].id,
+    "movie"
+  );
+  trendingMovies[Math.floor(Math.random() * trendingMovies.length)];
   const randomTrendingMovieTrailerID = (
     await getTMDBContentTrailers(randomTrendingMovie.id, "movie")
   )[0].key;

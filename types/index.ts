@@ -7,6 +7,7 @@ export type TMDBMovie = {
   backdrop_path: string;
   vote_average: number;
   popularity: number;
+  runtime?: number;
 };
 
 export type TMDBTVShow = {

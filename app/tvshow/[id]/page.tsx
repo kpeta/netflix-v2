@@ -1,15 +1,13 @@
-import MediaImage from "@/components/MediaImage";
 import {
   getTMDBContentDetails,
   getTMDBContentTrailers,
 } from "@/server/fetchers/tmdb";
 import { TMDBTVShow, TMDBVideo } from "@/types";
+import MediaPage from "@/components/MediaPage";
+import { getToken } from "@/server/auth";
+import { getUser } from "@/server/fetchers/users";
 
-const thumbnailStyle: React.CSSProperties = {
-  width: "250px",
-  height: "400px",
-  marginBottom: "0.5rem",
-};
+export const revalidate = 0; // needed for correct user fav media display
 
 async function Page({ params }: { params: { id: string } }) {
   const tvShow = (await getTMDBContentDetails(
@@ -25,43 +23,19 @@ async function Page({ params }: { params: { id: string } }) {
     "tv"
   );
 
-  return (
-    <div style={{ color: "white" }}>
-      <div>
-        <h1>{tvShow.name}</h1>
-        <p>{tvShow.overview}</p>
-        <p>Rating: {tvShow.vote_average}</p>
-        <p>First Air Date: {tvShow.first_air_date}</p>
-        <p>Seasons: {tvShow.number_of_seasons}</p>
-        <p>Episodes: {tvShow.number_of_episodes}</p>
+  const token = await getToken();
+  const username = token?.user;
+  let userData = null;
+  if (username) {
+    try {
+      userData = await getUser(username as string);
+    } catch (error) {
+      console.error("No user data in tv show page:", error);
+      userData = null;
+    }
+  }
 
-        <MediaImage
-          media={tvShow}
-          imageStyle={thumbnailStyle}
-          skeletonWidth={250}
-          skeletonHeight={400}
-        />
-      </div>
-
-      <div>
-        {trailers.length > 0 ? (
-          <div>
-            <h2>Trailer</h2>
-            <iframe
-              src={`https://www.youtube.com/embed/${trailers[0].key}`}
-              width={640}
-              height={360}
-              allowFullScreen
-            />
-          </div>
-        ) : (
-          <div>
-            <h2>No Trailer Found</h2>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+  return <MediaPage media={tvShow} trailers={trailers} userData={userData} />;
 }
 
 export default Page;
