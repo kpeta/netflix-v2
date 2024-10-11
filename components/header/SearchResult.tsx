@@ -4,6 +4,7 @@ import Link from "next/link";
 import "react-loading-skeleton/dist/skeleton.css";
 import styles from "../../styles/Header.module.css";
 import MediaImage from "../MediaImage";
+import MediaLabel from "../MediaLabel";
 
 interface SearchResultsProps {
   searchResult: TMDBMovie | TMDBTVShow;
@@ -41,13 +42,6 @@ const thumbnailStyle: React.CSSProperties = {
   marginBottom: "0.5rem",
 };
 
-const labelStyle: React.CSSProperties = {
-  fontSize: "11px",
-  marginTop: "3px",
-  borderRadius: "20%",
-  padding: "1px 2px",
-};
-
 function SearchResult({ searchResult }: SearchResultsProps) {
   const isMovie = "release_date" in searchResult;
   const title = isMovie ? searchResult.title : searchResult.name;
@@ -74,15 +68,7 @@ function SearchResult({ searchResult }: SearchResultsProps) {
       <div style={searchResultItemStyle}>
         <div>{title}</div>
         <div>({new Date(releaseDate).getFullYear()})</div>
-        <div
-          style={{
-            ...labelStyle,
-            color: isMovie ? "purple" : "green",
-            border: `1px solid ${isMovie ? "purple" : "green"}`,
-          }}
-        >
-          {isMovie ? "Movie" : "TV Show"}
-        </div>
+        <MediaLabel isMovie={isMovie} />
       </div>
     </Link>
   );

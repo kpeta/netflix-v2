@@ -3,6 +3,7 @@ import styles from "../../../styles/Header.module.css";
 import Link from "next/link";
 import { pageContainer } from "@/app/page";
 import MediaImage from "@/components/MediaImage";
+import MediaLabel from "@/components/MediaLabel";
 
 const searchResultStyle: React.CSSProperties = {
   display: "flex",
@@ -79,15 +80,7 @@ async function Page({ params }: { params: { term: string } }) {
                   : `First Air Date: ${item.first_air_date}`}
               </div>
             </div>
-            <div
-              style={{
-                ...labelStyle,
-                color: isMovie ? "purple" : "green",
-                border: `1px solid ${isMovie ? "purple" : "green"}`,
-              }}
-            >
-              {isMovie ? "Movie" : "TV Show"}
-            </div>
+            <MediaLabel isMovie={isMovie} />
           </Link>
         );
       })}
