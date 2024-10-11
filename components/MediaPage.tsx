@@ -12,6 +12,7 @@ type UserData = { data: User | null; error: PostgrestError | null } | null;
 const thumbnailStyle: React.CSSProperties = {
   width: "250px",
   height: "400px",
+  borderRadius: "20px",
 };
 
 const containerStyle: React.CSSProperties = {
