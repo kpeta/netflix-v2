@@ -6,6 +6,7 @@ import { TMDBTVShow, TMDBVideo } from "@/types";
 import MediaPage from "@/components/MediaPage";
 import { getToken } from "@/server/auth";
 import { getUser } from "@/server/fetchers/users";
+import { checkIfValidDate } from "@/utils/validation";
 
 export const revalidate = 0; // needed for correct user fav media display
 
@@ -14,8 +15,9 @@ async function Page({ params }: { params: { id: string } }) {
     parseInt(params.id),
     "tv"
   )) as TMDBTVShow;
-  if (!tvShow) {
-    return <div>TV Show not found</div>;
+
+  if (!checkIfValidDate(tvShow.first_air_date)) {
+    return <h2 style={{ paddingTop: "95px" }}>TV Show not found.</h2>;
   }
 
   const trailers: TMDBVideo[] = await getTMDBContentTrailers(

@@ -6,6 +6,7 @@ import {
 import { getUser } from "@/server/fetchers/users";
 import { TMDBMovie, TMDBVideo } from "@/types";
 import MediaPage from "@/components/MediaPage";
+import { checkIfValidDate } from "@/utils/validation";
 
 export const revalidate = 0; // needed for correct user fav media display
 
@@ -14,8 +15,9 @@ async function Page({ params }: { params: { id: string } }) {
     parseInt(params.id),
     "movie"
   )) as TMDBMovie;
-  if (!movie) {
-    return <div>Movie not found</div>;
+
+  if (!checkIfValidDate(movie.release_date)) {
+    return <h2 style={{ paddingTop: "95px" }}>Movie not found.</h2>;
   }
 
   const trailers: TMDBVideo[] = await getTMDBContentTrailers(

@@ -4,6 +4,7 @@ import Link from "next/link";
 import MediaImage from "@/components/MediaImage";
 import MediaLabel from "@/components/MediaLabel";
 import { circleStyle, getColorFromRating } from "@/components/MediaInfo";
+import { checkIfValidDate } from "@/utils/validation";
 
 const containerStyle: React.CSSProperties = {
   display: "flex",
@@ -76,11 +77,6 @@ const releaseDateStyle: React.CSSProperties = {
   color: "lightgray",
 };
 
-function isValidDate(dateString: string) {
-  const date = new Date(dateString);
-  return !isNaN(date.getTime());
-}
-
 async function Page({ params }: { params: { term: string } }) {
   const results = await searchTMDBContent(params.term);
 
@@ -88,7 +84,7 @@ async function Page({ params }: { params: { term: string } }) {
   const filteredResults = results.filter((item) => {
     const isMovie = "release_date" in item;
     const date = isMovie ? item.release_date : item.first_air_date;
-    return date && isValidDate(date);
+    return date && checkIfValidDate(date);
   });
 
   if (filteredResults.length === 0) {
