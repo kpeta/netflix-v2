@@ -9,6 +9,7 @@ const labelStyle: React.CSSProperties = {
   padding: "2px 3px",
   color: "white",
   fontWeight: 600,
+  textAlign: "center",
 };
 
 const MediaLabel = ({ isMovie }: MediaLabelProps) => {
