@@ -87,7 +87,7 @@ function CarouselItem({ item }: CarouselItemProps) {
             item.vote_average > 0 &&
             item.vote_average < 10 && (
               <>
-                <div>{item.vote_average.toFixed(2)}</div>
+                <div>{item.vote_average?.toFixed(2)}</div>
                 <div
                   style={{
                     ...circleStyle,

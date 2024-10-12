@@ -52,7 +52,7 @@ const MediaInfo = ({ media }: MediaInfoProps) => {
   return (
     <div style={containerStyle}>
       <div style={{ color: getColorFromRating(media.vote_average) }}>
-        {media.vote_average.toFixed(2)}
+        {media.vote_average?.toFixed(2)}
       </div>
       <div
         style={{
