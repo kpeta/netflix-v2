@@ -5,7 +5,7 @@ import styles from "../styles/FavMediaButton.module.css";
 import {
   addUserFavoriteMedia,
   removeUserFavoriteMedia,
-} from "@/server/actions/users";
+} from "@/server/modifiers/users";
 
 const ERROR_MESSAGE_TIMEOUT = 1500;
 

@@ -7,7 +7,7 @@ import WarningIcon from "@/components/icons/WarningIcon";
 import CloseIcon from "@/components/icons/CloseIcon";
 import styles from "../styles/Login.module.css";
 import ResponsiveMenuIcon from "@/components/header/icons/ResponsiveMenuIcon";
-import { verifyCaptcha } from "@/server/actions/recaptcha";
+import { verifyCaptcha } from "@/server/modifiers/recaptcha";
 
 const containerStyle: React.CSSProperties = {
   display: "flex",

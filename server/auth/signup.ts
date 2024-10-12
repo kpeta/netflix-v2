@@ -2,7 +2,7 @@
 import bcrypt from "bcryptjs";
 import { redirect } from "next/navigation";
 import { checkIfValidUsername, checkIfValidPassword } from "@/utils/validation";
-import { createUser } from "../actions/users";
+import { createUser } from "../modifiers/users";
 import { createToken } from ".";
 import { getUser } from "../fetchers/users";
 import { PostgrestError } from "@supabase/supabase-js";
