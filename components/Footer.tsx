@@ -97,8 +97,9 @@ const Footer = () => {
         </div>
 
         <Link href="https://github.com/kpeta" className={styles.footerItem}>
-          © 2024 Netflix v2 | kpeta
+          © 2024 Netflix Redesigned | kpeta
         </Link>
+        <div style={{ marginTop: "5px" }}>{process.env.COMMIT_HASH}</div>
       </div>
     </footer>
   );
