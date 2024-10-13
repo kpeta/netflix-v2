@@ -10,7 +10,7 @@ export type TokenPayload = {
   exp: number;
 };
 
-const TOKEN_EXPIRATION = 300; // 300 seconds
+const TOKEN_EXPIRATION = 7 * 24 * 60 * 60; // 1 week in seconds
 
 const secretKey = "secret";
 const key = new TextEncoder().encode(secretKey);
