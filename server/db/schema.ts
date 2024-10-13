@@ -3,5 +3,5 @@ export type User = {
   name: string;
   created_at: Date;
   password: string;
-  favorite_media: number[];
+  favorite_media: string[];
 };

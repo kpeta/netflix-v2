@@ -6,13 +6,14 @@ import {
   addUserFavoriteMedia,
   removeUserFavoriteMedia,
 } from "@/server/modifiers/users";
+import { User } from "@/server/db/schema";
 
 const ERROR_MESSAGE_TIMEOUT = 1500;
 
 interface FavMediaButtonProps {
-  mediaID: number;
-  userID?: number;
-  userFavoriteMedia?: number[];
+  mediaID: string;
+  userID?: User["id"];
+  userFavoriteMedia?: User["favorite_media"];
 }
 
 const FavMediaButton: React.FC<FavMediaButtonProps> = ({

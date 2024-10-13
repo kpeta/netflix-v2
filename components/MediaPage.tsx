@@ -39,6 +39,7 @@ interface MediaPageProps {
 
 const MediaPage: React.FC<MediaPageProps> = ({ media, trailers, userData }) => {
   const isMovie = "release_date" in media;
+  const mediaID = isMovie ? `movie${media.id}` : `tv${media.id}`;
 
   return (
     <div style={containerStyle} className={styles.mainContainerPadding}>
@@ -47,7 +48,7 @@ const MediaPage: React.FC<MediaPageProps> = ({ media, trailers, userData }) => {
           {isMovie ? (media as TMDBMovie).title : (media as TMDBTVShow).name}
         </div>
         <FavMediaButton
-          mediaID={media.id}
+          mediaID={mediaID}
           userID={userData?.data?.id}
           userFavoriteMedia={userData?.data?.favorite_media}
         />

@@ -23,8 +23,8 @@ export async function createUser(name: string, password: string) {
 
 export async function addUserFavoriteMedia(
   userId: User["id"],
-  mediaId: number,
-  userExistingFavoriteMedia?: number[]
+  mediaId: string,
+  userExistingFavoriteMedia?: User["favorite_media"]
 ) {
   // if user has no existing favorite media, set it to an empty array
   if (!userExistingFavoriteMedia) userExistingFavoriteMedia = [];
@@ -45,8 +45,8 @@ export async function addUserFavoriteMedia(
 
 export async function removeUserFavoriteMedia(
   userId: User["id"],
-  mediaId: number,
-  userExistingFavoriteMedia?: number[]
+  mediaId: string,
+  userExistingFavoriteMedia?: User["favorite_media"]
 ) {
   // if user has no existing favorite media, set it to an empty array
   if (!userExistingFavoriteMedia) userExistingFavoriteMedia = [];
