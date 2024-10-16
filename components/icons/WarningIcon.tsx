@@ -2,8 +2,8 @@ const warningIconStyle = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  height: "1.5em",
-  width: "1.5em",
+  height: "24px",
+  width: "24px",
 };
 
 function WarningIcon() {

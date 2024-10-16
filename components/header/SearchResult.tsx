@@ -29,7 +29,7 @@ const searchResultItemStyle: React.CSSProperties = {
   padding: "15px",
   color: "rgb(224, 232, 241)",
   fontFamily: "inherit",
-  fontSize: "0.8rem",
+  fontSize: "13px",
   cursor: "pointer",
   width: "100%",
   textAlign: "center",
@@ -39,7 +39,7 @@ const thumbnailStyle: React.CSSProperties = {
   width: "80px",
   height: "50px",
   cursor: "pointer",
-  marginBottom: "0.5rem",
+  marginBottom: "8px",
 };
 
 function SearchResult({ searchResult }: SearchResultsProps) {

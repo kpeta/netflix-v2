@@ -6,12 +6,13 @@ const notFoundStyle: React.CSSProperties = {
   flexDirection: "row",
   alignItems: "center",
   justifyContent: "center",
-  fontWeight: "bold",
-  fontSize: "2.5vh",
-  whiteSpace: "nowrap",
 };
 
-const textStyle: React.CSSProperties = {};
+const textStyle: React.CSSProperties = {
+  fontWeight: "bold",
+  fontSize: "16px",
+  whiteSpace: "nowrap",
+};
 
 function NotFound() {
   return (

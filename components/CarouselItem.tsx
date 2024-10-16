@@ -31,10 +31,10 @@ const infoStyle: React.CSSProperties = {
 };
 
 const titleStyle: React.CSSProperties = {
-  margin: "0.2rem",
-  padding: "0.2rem",
+  margin: "3px",
+  padding: "3px",
   fontWeight: "bolder",
-  fontSize: "0.8rem",
+  fontSize: "13px",
 };
 
 const subInfoStyle: React.CSSProperties = {
@@ -47,9 +47,9 @@ const subInfoStyle: React.CSSProperties = {
 };
 
 const imageStyle: React.CSSProperties = {
-  width: "8.5rem",
-  height: "12rem",
-  borderRadius: "0.5rem",
+  width: "136px",
+  height: "192px",
+  borderRadius: "8px",
 };
 
 function CarouselItem({ item }: CarouselItemProps) {

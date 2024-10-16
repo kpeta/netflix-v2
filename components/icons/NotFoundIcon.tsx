@@ -1,7 +1,7 @@
 const notFoundIconStyle = {
   marginRight: "10px",
-  height: "2em",
-  width: "2em",
+  height: "34px",
+  width: "34px",
 };
 
 function NotFoundIcon() {

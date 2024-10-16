@@ -33,7 +33,7 @@ const searchResultStyle: React.CSSProperties = {
   right: 0,
   display: "flex",
   flexDirection: "column",
-  width: "10rem",
+  width: "160px",
   paddingLeft: "10px",
   backgroundColor: "black",
   boxShadow: "0px 1px 2px rgb(163, 164, 167)",

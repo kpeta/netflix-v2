@@ -27,7 +27,7 @@ const carouselContainerBaseStyle: React.CSSProperties = {
   msOverflowStyle: "none", // IE and Edge
   scrollbarWidth: "none",
   width: "100%",
-  borderRadius: "0.5rem",
+  borderRadius: "8px",
   backgroundColor: "rgb(23,23,23)", // base color (initial)
   transition: "background-color 3s ease", // smooth transition
 };
@@ -41,7 +41,7 @@ const carouselItemsContainerStyle: React.CSSProperties = {
 
 const carouselItemStyle: React.CSSProperties = {
   boxSizing: "border-box", // padding and border are included in the width
-  padding: "0.4rem 0.4rem",
+  padding: "7px",
 };
 
 const buttonStyle: React.CSSProperties = {
@@ -50,10 +50,10 @@ const buttonStyle: React.CSSProperties = {
   backgroundColor: "black",
   color: "white",
   cursor: "pointer",
-  padding: "0.5rem",
+  padding: "8px",
   height: "100%",
   zIndex: 1,
-  borderRadius: "0.5rem",
+  borderRadius: "8px",
 };
 
 const prevButtonStyle: React.CSSProperties = {

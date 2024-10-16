@@ -238,7 +238,7 @@
 
   .searchInputOpen {
     visibility: visible;
-    width: 4rem;
+    width: 64px;
     margin-left: 0;
     transition: width 1s ease, visibility 1s ease, margin-left 1s ease;
   }
