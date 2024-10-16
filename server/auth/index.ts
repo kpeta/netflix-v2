@@ -15,7 +15,7 @@ const TOKEN_EXPIRATION = 7 * 24 * 60 * 60; // 1 week in seconds
 const secretKey = "secret";
 const key = new TextEncoder().encode(secretKey);
 
-export async function encrypt(payload: any) {
+export async function encrypt(payload: Pick<TokenPayload, "user" | "expires">) {
   try {
     const signedJWT = await new SignJWT(payload)
       .setProtectedHeader({ alg: "HS256" })
@@ -67,17 +67,25 @@ export async function getToken(): Promise<TokenPayload | null> {
 
 export async function updateToken(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
-  if (!token) return;
+  if (!token) return null;
 
   // refresh the token so it doesn't expire (TOKEN_EXPIRATION seconds), this function is called on every request in middleware to keep the token alive
   const parsed = await decrypt(token);
   if (!parsed) return;
-
   parsed.expires = new Date(Date.now() + TOKEN_EXPIRATION * 1000);
+
+  let tokenString;
+  try {
+    tokenString = await encrypt(parsed);
+  } catch (error) {
+    console.error("An error occurred while updating the token:", error);
+    return null;
+  }
+
   const res = NextResponse.next();
   res.cookies.set({
     name: "token",
-    value: await encrypt(parsed),
+    value: tokenString,
     httpOnly: true,
     expires: parsed.expires,
   });
