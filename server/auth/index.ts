@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export type TokenPayload = {
   user: string;
-  expires: string;
+  expires: Date;
   iat: number;
   exp: number;
 };
@@ -30,11 +30,16 @@ export async function encrypt(payload: any) {
   }
 }
 
-async function decrypt(input: string): Promise<any> {
-  const { payload } = await jwtVerify(input, key, {
-    algorithms: ["HS256"],
-  });
-  return payload;
+async function decrypt(input: string): Promise<TokenPayload | null> {
+  try {
+    const { payload } = await jwtVerify(input, key, {
+      algorithms: ["HS256"],
+    });
+    return payload as TokenPayload;
+  } catch (error) {
+    console.error(`JWT verification failed in decrypt():`, error);
+    return null;
+  }
 }
 
 export async function createToken(user: string) {
@@ -66,6 +71,8 @@ export async function updateToken(request: NextRequest) {
 
   // refresh the token so it doesn't expire (TOKEN_EXPIRATION seconds), this function is called on every request in middleware to keep the token alive
   const parsed = await decrypt(token);
+  if (!parsed) return;
+
   parsed.expires = new Date(Date.now() + TOKEN_EXPIRATION * 1000);
   const res = NextResponse.next();
   res.cookies.set({
