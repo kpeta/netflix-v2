@@ -6,7 +6,7 @@ import { createToken } from ".";
 import { getUser } from "../fetchers/users";
 import { PostgrestError } from "@supabase/supabase-js";
 
-interface ActionResult {
+export interface ActionResult {
   error: string;
 }
 

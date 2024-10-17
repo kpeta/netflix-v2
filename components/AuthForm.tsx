@@ -8,6 +8,7 @@ import CloseIcon from "@/components/icons/CloseIcon";
 import styles from "../styles/Login.module.css";
 import ResponsiveMenuIcon from "@/components/header/icons/ResponsiveMenuIcon";
 import { verifyCaptcha } from "@/server/modifiers/recaptcha";
+import { ActionResult } from "@/server/auth/login";
 
 const containerStyle: React.CSSProperties = {
   display: "flex",
@@ -107,7 +108,7 @@ const closeButtonStyle: React.CSSProperties = {
 
 interface AuthFormProps {
   formTitle: string;
-  formAction: (prevState: any, formData: FormData) => Promise<any>;
+  formAction: (prevState: any, formData: FormData) => Promise<ActionResult>;
   buttonText: string;
 }
 
