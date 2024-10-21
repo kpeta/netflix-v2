@@ -10,8 +10,8 @@ const font = Open_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Netflix v2",
-  description: "Next version of Netflix",
+  title: "Netflix Redesigned",
+  description: "Redesigned version of Netflix",
 };
 
 const bodyStyle: React.CSSProperties = {
