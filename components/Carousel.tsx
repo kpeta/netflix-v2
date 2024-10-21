@@ -78,10 +78,10 @@ function Carousel({ items }: CarouselProps) {
   const [nextButtonVisible, setNextButtonVisible] = useState(false);
   const [backgroundColor, setBackgroundColor] = useState("rgb(23,23,23)");
 
-  const colors = ["rgb(23,23,23)", "rgb(55,55,55)"];
-
   // cycle through colors every BACKGROUND_COLOR_CHANGE_INTERVAL_MS
   useEffect(() => {
+    const colors = ["rgb(23,23,23)", "rgb(55,55,55)"];
+
     const changeBackgroundColor = () => {
       setBackgroundColor((prevColor) => {
         const currentIndex = colors.indexOf(prevColor);
@@ -119,9 +119,11 @@ function Carousel({ items }: CarouselProps) {
 
   // Update button visibility based on scroll position
   useEffect(() => {
+    const container = containerRef.current; // Capture the ref value (eslint)
+
     const handleScroll = () => {
-      if (containerRef.current) {
-        const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
+      if (container) {
+        const { scrollLeft, scrollWidth, clientWidth } = container;
 
         // Calculate whether buttons should be visible
         setPrevButtonVisible(scrollLeft > 0);
@@ -132,10 +134,10 @@ function Carousel({ items }: CarouselProps) {
     };
 
     handleScroll(); // Initial check
-    containerRef.current?.addEventListener("scroll", handleScroll);
+    container?.addEventListener("scroll", handleScroll);
 
     return () => {
-      containerRef.current?.removeEventListener("scroll", handleScroll);
+      container?.removeEventListener("scroll", handleScroll);
     };
   }, []);
 

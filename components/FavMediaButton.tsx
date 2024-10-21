@@ -53,7 +53,7 @@ const FavMediaButton: React.FC<FavMediaButtonProps> = ({
       setIsAdd(false);
     }
     setLoading(false);
-  }, [userFavoriteMedia]);
+  }, [userFavoriteMedia, mediaID]);
 
   // hide error message after a timeout
   useEffect(() => {
