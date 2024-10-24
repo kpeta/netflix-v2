@@ -1,7 +1,6 @@
 //barebones JWT auth implementation
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
 
 export type TokenPayload = {
   user: string;
@@ -47,7 +46,12 @@ export async function createToken(user: string) {
     const expires = new Date(Date.now() + TOKEN_EXPIRATION * 1000);
     const token = await encrypt({ user, expires });
 
-    cookies().set("token", token, { expires, httpOnly: true });
+    cookies().set("token", token, {
+      httpOnly: true, // prevents JavaScript from accessing the cookie
+      secure: process.env.NODE_ENV !== "development", // use 'secure' in production
+      sameSite: "lax", // helps mitigate CSRF attacks
+      path: "/", // cookie will be available across the site
+    });
   } catch (error) {
     console.error("An error occurred while creating the token:", error);
     throw error;
@@ -63,32 +67,4 @@ export async function getToken(): Promise<TokenPayload | null> {
   if (!token) return null;
 
   return await decrypt(token);
-}
-
-export async function updateToken(request: NextRequest) {
-  const token = request.cookies.get("token")?.value;
-  if (!token) return null;
-
-  // refresh the token so it doesn't expire (TOKEN_EXPIRATION seconds), this function is called on every request in middleware to keep the token alive
-  const parsed = await decrypt(token);
-  if (!parsed) return;
-  parsed.expires = new Date(Date.now() + TOKEN_EXPIRATION * 1000);
-
-  let tokenString;
-  try {
-    tokenString = await encrypt(parsed);
-  } catch (error) {
-    console.error("An error occurred while updating the token:", error);
-    return null;
-  }
-
-  const res = NextResponse.next();
-  res.cookies.set({
-    name: "token",
-    value: tokenString,
-    httpOnly: true,
-    expires: parsed.expires,
-  });
-
-  return res;
 }
