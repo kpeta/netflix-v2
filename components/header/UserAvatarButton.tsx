@@ -1,14 +1,13 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { TokenPayload } from "@/server/auth";
 import styles from "../../styles/Header.module.css";
 import LogOutButton from "../LogOutButton";
 import Link from "next/link";
 import UserIcon from "./icons/UserIcon";
 
 type UserAvatarButtonProps = {
-  token?: TokenPayload;
+  username?: string;
 };
 
 const containerStyle: React.CSSProperties = {
@@ -59,7 +58,7 @@ const optionsStyle: React.CSSProperties = {
   whiteSpace: "nowrap",
 };
 
-function UserAvatarButton({ token }: UserAvatarButtonProps) {
+function UserAvatarButton({ username }: UserAvatarButtonProps) {
   const [menuVisible, setMenuVisible] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -97,8 +96,8 @@ function UserAvatarButton({ token }: UserAvatarButtonProps) {
       >
         <div className={styles.userAvatar}>
           <div style={buttonTextStyle}>
-            {token ? (
-              token.user
+            {username ? (
+              username
                 .split(" ")
                 .map((word) => word.charAt(0))
                 .join("")
@@ -111,11 +110,11 @@ function UserAvatarButton({ token }: UserAvatarButtonProps) {
       {menuVisible && (
         <div
           ref={menuRef}
-          style={{ ...menuStyle, width: token ? "150px" : "100px" }}
+          style={{ ...menuStyle, width: username ? "150px" : "100px" }}
         >
-          {token && <div style={usernameStyle}>Hi, {token.user}!</div>}
+          {username && <div style={usernameStyle}>Hi, {username}!</div>}
           <div>
-            {token ? (
+            {username ? (
               <div style={optionsStyle}>
                 <Link href="/new-and-popular" className={styles.userMenuItem}>
                   New & Popular

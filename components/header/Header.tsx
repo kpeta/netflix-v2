@@ -76,7 +76,7 @@ export default async function Header() {
           <NotificationsIcon />
         </Link>
         {token ? (
-          <UserAvatarButton token={token} />
+          <UserAvatarButton username={token.user} />
         ) : (
           <>
             <div className={styles.userAvatarHide}>
