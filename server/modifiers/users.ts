@@ -1,5 +1,6 @@
 "use server";
 
+import { getToken } from "../auth";
 import supabase from "../db";
 import { User } from "../db/schema";
 
@@ -23,9 +24,22 @@ export async function createUser(name: string, password: string) {
 
 export async function addUserFavoriteMedia(
   userId: User["id"],
+  username: User["name"],
   mediaId: string,
   userExistingFavoriteMedia?: User["favorite_media"]
 ) {
+  // get the current user from the session
+  const token = await getToken();
+
+  if (!token) {
+    throw new Error("Unauthorized: User must be logged in to add favorites.");
+  }
+
+  // if the user in the token is not the same as the user being modified, throw an error
+  if (token.user !== username) {
+    throw new Error("Unauthorized: User cannot modify another user's data.");
+  }
+
   // if user has no existing favorite media, set it to an empty array
   if (!userExistingFavoriteMedia) userExistingFavoriteMedia = [];
 
@@ -45,9 +59,24 @@ export async function addUserFavoriteMedia(
 
 export async function removeUserFavoriteMedia(
   userId: User["id"],
+  username: User["name"],
   mediaId: string,
   userExistingFavoriteMedia?: User["favorite_media"]
 ) {
+  // get the current user from the session
+  const token = await getToken();
+
+  if (!token) {
+    throw new Error(
+      "Unauthorized: User must be logged in to remove favorites."
+    );
+  }
+
+  // if the user in the token is not the same as the user being modified, throw an error
+  if (token.user !== username) {
+    throw new Error("Unauthorized: User cannot modify another user's data.");
+  }
+
   // if user has no existing favorite media, set it to an empty array
   if (!userExistingFavoriteMedia) userExistingFavoriteMedia = [];
 

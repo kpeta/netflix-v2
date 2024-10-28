@@ -49,6 +49,7 @@ const MediaPage: React.FC<MediaPageProps> = ({ media, trailers, userData }) => {
         </div>
         <FavMediaButton
           mediaID={mediaID}
+          username={userData?.data?.name}
           userID={userData?.data?.id}
           userFavoriteMedia={userData?.data?.favorite_media}
         />

@@ -13,12 +13,14 @@ const ERROR_MESSAGE_TIMEOUT = 1500;
 interface FavMediaButtonProps {
   mediaID: string;
   userID?: User["id"];
+  username?: User["name"];
   userFavoriteMedia?: User["favorite_media"];
 }
 
 const FavMediaButton: React.FC<FavMediaButtonProps> = ({
   mediaID,
   userID,
+  username,
   userFavoriteMedia,
 }) => {
   const [isAdd, setIsAdd] = useState(true);
@@ -27,7 +29,7 @@ const FavMediaButton: React.FC<FavMediaButtonProps> = ({
   const [errorVisible, setErrorVisible] = useState(false);
 
   const handleClick = async () => {
-    if (!userID) {
+    if (!userID || !username) {
       setErrorMessage("Please log in to add to favorites");
       setErrorVisible(true);
       return;
@@ -36,9 +38,19 @@ const FavMediaButton: React.FC<FavMediaButtonProps> = ({
     setLoading(true);
     try {
       if (isAdd) {
-        await addUserFavoriteMedia(userID, mediaID, userFavoriteMedia);
+        await addUserFavoriteMedia(
+          userID,
+          username,
+          mediaID,
+          userFavoriteMedia
+        );
       } else {
-        await removeUserFavoriteMedia(userID, mediaID, userFavoriteMedia);
+        await removeUserFavoriteMedia(
+          userID,
+          username,
+          mediaID,
+          userFavoriteMedia
+        );
       }
       setIsAdd(!isAdd);
     } catch (error) {
