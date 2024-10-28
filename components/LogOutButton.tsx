@@ -1,5 +1,5 @@
 import logout from "@/server/auth/logout";
-import styles from "/styles/Header.module.css";
+import styles from "@/styles/Header.module.css";
 
 const buttonStyle = {
   marginBottom: "10px",
@@ -17,7 +17,7 @@ const buttonTextStyle = {
   whiteSpace: "nowrap",
 };
 
-function LogOutButton(): JSX.Element {
+function LogOutButton() {
   return (
     <form action={logout}>
       <button className={styles.redButton} style={buttonStyle} type="submit">

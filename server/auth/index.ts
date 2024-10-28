@@ -46,7 +46,7 @@ export async function createToken(user: string) {
     const expires = new Date(Date.now() + TOKEN_EXPIRATION * 1000);
     const token = await encrypt({ user, expires });
 
-    cookies().set("token", token, {
+    (await cookies()).set("token", token, {
       httpOnly: true, // prevents JavaScript from accessing the cookie
       secure: process.env.NODE_ENV !== "development", // use 'secure' in production
       sameSite: "lax", // helps mitigate CSRF attacks
@@ -59,11 +59,11 @@ export async function createToken(user: string) {
 }
 
 export async function removeToken() {
-  cookies().set("token", "", { expires: new Date(0) });
+  (await cookies()).set("token", "", { expires: new Date(0) });
 }
 
 export async function getToken(): Promise<TokenPayload | null> {
-  const token = cookies().get("token")?.value;
+  const token = (await cookies()).get("token")?.value;
   if (!token) return null;
 
   return await decrypt(token);

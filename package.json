@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "set-commit-hash": "sed -i '/^COMMIT_HASH=/d' .env.local && echo COMMIT_HASH=$(git rev-parse HEAD  | cut -c1-8) >> .env.local",
-    "dev": "npm run set-commit-hash && next dev",
+    "dev": "npm run set-commit-hash && next dev --turbopack",
     "build": "npm run set-commit-hash && next build",
     "start": "next start",
     "lint": "next lint"
@@ -14,9 +14,9 @@
     "@types/uuid": "^9.0.8",
     "bcryptjs": "^2.4.3",
     "jose": "^5.2.3",
-    "next": "^14.2.3",
-    "react": "^18",
-    "react-dom": "^18",
+    "next": "15.0.1",
+    "react": "19.0.0-rc-69d4b800-20241021",
+    "react-dom": "19.0.0-rc-69d4b800-20241021",
     "react-google-recaptcha": "^3.1.0",
     "react-loading-skeleton": "^3.4.0",
     "uuid": "^10.0.0"
@@ -24,14 +24,18 @@
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react": "npm:types-react@19.0.0-rc.1",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
     "@types/react-google-recaptcha": "^2.1.9",
     "autoprefixer": "^10.0.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.1.0",
+    "eslint": "^9.13.0",
+    "eslint-config-next": "^15.0.1",
     "postcss": "^8",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
+  },
+  "overrides": {
+    "@types/react": "npm:types-react@19.0.0-rc.1",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
   }
 }

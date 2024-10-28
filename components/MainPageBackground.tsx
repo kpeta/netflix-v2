@@ -111,7 +111,7 @@ function MainPageBackground({
     <div style={containerStyle}>
       <div style={shadowTopStyle} className={styles.shadowTopHeight} />
 
-      {backgroundTrailerEnabled && (
+      {backgroundTrailerEnabled && backgroundMediaTrailerID && (
         <div style={backgroundVideoContainerStyle}>
           <iframe
             style={iframeVideoStyle}

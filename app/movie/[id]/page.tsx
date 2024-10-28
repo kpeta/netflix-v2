@@ -8,9 +8,8 @@ import { TMDBMovie, TMDBVideo } from "@/types";
 import MediaPage from "@/components/MediaPage";
 import { checkIfValidDate } from "@/utils/validation";
 
-export const revalidate = 0; // needed for correct user fav media display
-
-async function Page({ params }: { params: { id: string } }) {
+async function Page(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const movie = (await getTMDBContentDetails(
     parseInt(params.id),
     "movie"

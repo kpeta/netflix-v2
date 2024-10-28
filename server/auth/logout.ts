@@ -3,6 +3,6 @@ import { redirect } from "next/navigation";
 import { removeToken } from ".";
 
 export default async function logout() {
-  removeToken();
+  await removeToken();
   return redirect("/");
 }

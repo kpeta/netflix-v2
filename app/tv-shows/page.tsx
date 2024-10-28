@@ -4,8 +4,6 @@ import { pageContainer } from "../page";
 import Carousel from "@/components/Carousel";
 import CarouselItem from "@/components/CarouselItem";
 
-export const revalidate = 60 * 60 * 24 * 7; // fetch tv shows once in a week
-
 const carouselTitleStyle: React.CSSProperties = {
   fontSize: "20px",
   fontWeight: 900,

@@ -1,7 +1,6 @@
 "use client";
 
-import { useFormState } from "react-dom";
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import WarningIcon from "@/components/icons/WarningIcon";
 import CloseIcon from "@/components/icons/CloseIcon";
@@ -117,7 +116,7 @@ export default function AuthForm({
   formAction,
   buttonText,
 }: AuthFormProps) {
-  const [state, formSubmit] = useFormState(formAction, null);
+  const [state, formSubmit] = useActionState(formAction, null);
   const [isVerified, setIsVerified] = useState<boolean>(false);
   const [errorClosed, setErrorClosed] = useState<boolean>(false);
 

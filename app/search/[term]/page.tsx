@@ -15,7 +15,8 @@ const titleTextStyle: React.CSSProperties = {
   fontWeight: "900",
 };
 
-async function Page({ params }: { params: { term: string } }) {
+async function Page(props: { params: Promise<{ term: string }> }) {
+  const params = await props.params;
   const results = await searchTMDBContent(params.term);
 
   // filter out results with invalid or missing dates

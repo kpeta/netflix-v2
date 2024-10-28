@@ -10,8 +10,6 @@ import {
 } from "@/server/fetchers/tmdb";
 import { TMDBMovie } from "@/types";
 
-export const revalidate = 60 * 60 * 24 * 7; // fetch movies once a week
-
 export const pageContainer = (topPadding: number = 5): React.CSSProperties => ({
   display: "flex",
   flexDirection: "column",
@@ -45,9 +43,13 @@ export default async function Home() {
     trendingMovies[Math.floor(Math.random() * trendingMovies.length)].id,
     "movie"
   );
-  const randomTrendingMovieTrailerID = (
-    await getTMDBContentTrailers(randomTrendingMovie.id, "movie")
-  )[0].key;
+  const trailers = await getTMDBContentTrailers(
+    randomTrendingMovie.id,
+    "movie"
+  );
+  const randomTrendingMovieTrailerID = trailers[0]
+    ? trailers[0].key
+    : undefined; // if no trailers are available, show only movie poster in MainPageBackground
 
   const topRatedMovies = await getTMDBData({
     type: "movie",

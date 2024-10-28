@@ -53,7 +53,7 @@ export default function Search() {
   const [searchResults, setSearchResults] = useState<SearchResultItem[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const debounceTimeoutRef = useRef<number | undefined>();
+  const debounceTimeoutRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

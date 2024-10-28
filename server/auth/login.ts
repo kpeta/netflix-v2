@@ -11,7 +11,7 @@ export interface ActionResult {
 }
 
 export default async function login(
-  prevState: any, //this argument is not used in this function, but it is required by the useFormState hook
+  prevState: any, //this argument is not used in this function, but it is required by the useActionState hook
   formData: FormData
 ): Promise<ActionResult> {
   const username = formData.get("username")?.toString();

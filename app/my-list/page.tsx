@@ -24,8 +24,6 @@ const titleTextStyle: React.CSSProperties = {
   fontWeight: "900",
 };
 
-export const revalidate = 0; // always revalidate to get the latest user favorites
-
 export default async function Page() {
   const token = await getToken();
 
