@@ -85,7 +85,6 @@ const Footer = () => {
             <YTIcon />
           </Link>
         </div>
-
         <div className={styles.footerContainer}>
           {footerItems.map((item, index) => (
             <div key={index}>
@@ -95,11 +94,14 @@ const Footer = () => {
             </div>
           ))}
         </div>
-
         <Link href="https://github.com/kpeta" className={styles.footerItem}>
           © 2024 Netflix Redesigned | kpeta
         </Link>
-        <div style={{ marginTop: "5px" }}>{process.env.COMMIT_HASH}</div>
+        <div style={{ marginTop: "5px" }}>
+          {process.env.NODE_ENV === "production"
+            ? process.env.VERCEL_GIT_COMMIT_SHA
+            : process.env.COMMIT_HASH}
+        </div>
       </div>
     </footer>
   );
