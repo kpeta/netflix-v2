@@ -5,7 +5,7 @@
   "scripts": {
     "set-commit-hash": "sed -i '/^COMMIT_HASH=/d' .env.local && echo COMMIT_HASH=$(git rev-parse HEAD  | cut -c1-8) >> .env.local",
     "dev": "npm run set-commit-hash && next dev --turbopack",
-    "build": "npm run set-commit-hash && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
