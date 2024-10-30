@@ -5,6 +5,8 @@ import styles from "../../styles/Header.module.css";
 import LogOutButton from "../LogOutButton";
 import Link from "next/link";
 import UserIcon from "./icons/UserIcon";
+import { usePathname } from "next/navigation";
+import path from "path";
 
 type UserAvatarButtonProps = {
   username?: string;
@@ -62,6 +64,7 @@ function UserAvatarButton({ username }: UserAvatarButtonProps) {
   const [menuVisible, setMenuVisible] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
   const handleButtonClick = () => {
     setMenuVisible(!menuVisible);
@@ -86,6 +89,10 @@ function UserAvatarButton({ username }: UserAvatarButtonProps) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    setMenuVisible(false);
+  }, [pathname]);
 
   return (
     <div style={containerStyle}>
