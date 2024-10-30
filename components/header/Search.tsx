@@ -147,7 +147,7 @@ export default function Search() {
             value={searchTerm}
             onChange={handleInputChange}
             className={isOpen ? styles.searchInputOpen : styles.searchInput}
-            placeholder="Search..."
+            placeholder="Search ↵"
             onClick={handleInputClick}
           />
         </form>
