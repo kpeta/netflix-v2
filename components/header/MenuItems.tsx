@@ -15,20 +15,23 @@ function MenuItems() {
 
   return (
     <div className={styles.menuItemsContainer}>
-      {menuItems.map((item, index) => (
-        <Link
-          href={item.link}
-          className={
-            selectedItem === item.link
-              ? styles.menuItemSelected
-              : styles.menuItem
-          }
-          key={index}
-          onClick={() => setSelectedItem(item.name)}
-        >
-          {item.name}
-        </Link>
-      ))}
+      {menuItems.map((item, index) =>
+        // if the item is selected, it's not a link
+        selectedItem === item.link ? (
+          <div className={styles.menuItemSelected} key={index}>
+            {item.name}
+          </div>
+        ) : (
+          <Link
+            href={item.link}
+            className={styles.menuItem}
+            key={index}
+            onClick={() => setSelectedItem(item.link)}
+          >
+            {item.name}
+          </Link>
+        )
+      )}
     </div>
   );
 }

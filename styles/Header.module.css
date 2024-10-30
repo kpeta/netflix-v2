@@ -110,6 +110,7 @@
 
 .menuItemSelected {
   font-weight: 900;
+  cursor: pointer;
 }
 
 .menuItem:hover {

@@ -30,6 +30,13 @@ const responsiveMenuTextStyle = {
   fontSize: "15px",
 };
 
+const responsiveMenuIconStyle: React.CSSProperties = {
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  gap: "10px",
+};
+
 function ResponsiveMenu() {
   const [selectedItem, setSelectedItem] = useState<string>("");
   const [dropdownMenuOpen, setDropdownMenuOpen] = useState<boolean>(false);
@@ -78,30 +85,31 @@ function ResponsiveMenu() {
           style={responsiveDropdownMenuStyle}
           className={styles.responsiveDropdownMenuHidden}
         >
-          {menuItems.map((item, index) => (
-            <Link
-              href={item.link}
-              className={
-                selectedItem === item.link
-                  ? styles.menuItemSelected
-                  : styles.menuItem
-              }
-              key={index}
-              onClick={() => setSelectedItem(item.name)}
-            >
+          {menuItems.map((item, index) =>
+            // if the item is selected, it's not a link
+            selectedItem === item.link ? (
               <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: "10px",
-                }}
+                className={styles.menuItemSelected}
+                key={index}
+                style={responsiveMenuIconStyle}
               >
                 {item.icon}
                 {item.name}
               </div>
-            </Link>
-          ))}
+            ) : (
+              <Link
+                href={item.link}
+                className={styles.menuItem}
+                key={index}
+                onClick={() => setSelectedItem(item.link)}
+              >
+                <div style={responsiveMenuIconStyle}>
+                  {item.icon}
+                  {item.name}
+                </div>
+              </Link>
+            )
+          )}
         </div>
       )}
     </div>
