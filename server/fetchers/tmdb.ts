@@ -11,6 +11,11 @@ interface TMDBDataParams {
 
 type TMDBContentType = "movie" | "tv";
 
+const TMDB_DATA_ISR_SECONDS = 7 * 24 * 60 * 60; // 1 week
+const TMDB_CONTENT_DETAILS_ISR_SECONDS = 7 * 24 * 60 * 60; // 1 week
+const TMDB_CONTENT_TRAILERS_ISR_SECONDS = 7 * 24 * 60 * 60; // 1 week
+const TMDB_SEARCH_ISR_SECONDS = 0; // no caching
+
 const movieGenreIDs = {
   action: 28,
   comedy: 35,
@@ -70,7 +75,9 @@ export const getTMDBData = async ({
       process.env.TMDB_API_KEY
     }`;
 
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      next: { revalidate: TMDB_DATA_ISR_SECONDS },
+    });
     if (!response.ok) {
       throw new Error(`Failed to fetch ${category} ${type}s`);
     }
@@ -91,7 +98,10 @@ export const getTMDBContentDetails = async (
 ): Promise<TMDBMovie | TMDBTVShow> => {
   try {
     const response = await fetch(
-      `${TMDB_BASE_URL}/${contentType}/${id}?api_key=${process.env.TMDB_API_KEY}`
+      `${TMDB_BASE_URL}/${contentType}/${id}?api_key=${process.env.TMDB_API_KEY}`,
+      {
+        next: { revalidate: TMDB_CONTENT_DETAILS_ISR_SECONDS },
+      }
     );
     if (!response.ok) {
       throw new Error(`Failed to fetch ${contentType} details`);
@@ -110,7 +120,10 @@ export const getTMDBContentTrailers = async (
 ): Promise<TMDBVideo[]> => {
   try {
     const response = await fetch(
-      `${TMDB_BASE_URL}/${contentType}/${id}/videos?api_key=${process.env.TMDB_API_KEY}`
+      `${TMDB_BASE_URL}/${contentType}/${id}/videos?api_key=${process.env.TMDB_API_KEY}`,
+      {
+        next: { revalidate: TMDB_CONTENT_TRAILERS_ISR_SECONDS },
+      }
     );
     if (!response.ok) {
       throw new Error(`Failed to fetch ${contentType} videos`);
@@ -133,7 +146,10 @@ export const searchTMDBContent = async (
     const movieResponse = await fetch(
       `${TMDB_BASE_URL}/search/movie?api_key=${
         process.env.TMDB_API_KEY
-      }&query=${encodeURIComponent(query)}`
+      }&query=${encodeURIComponent(query)}`,
+      {
+        next: { revalidate: TMDB_SEARCH_ISR_SECONDS },
+      }
     );
     if (!movieResponse.ok) {
       throw new Error(
@@ -146,7 +162,10 @@ export const searchTMDBContent = async (
     const tvShowResponse = await fetch(
       `${TMDB_BASE_URL}/search/tv?api_key=${
         process.env.TMDB_API_KEY
-      }&query=${encodeURIComponent(query)}`
+      }&query=${encodeURIComponent(query)}`,
+      {
+        next: { revalidate: TMDB_SEARCH_ISR_SECONDS },
+      }
     );
     if (!tvShowResponse.ok) {
       throw new Error(

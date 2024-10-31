@@ -6,6 +6,7 @@ export async function verifyCaptcha(token: string | null): Promise<string> {
   try {
     const response = await fetch(url, {
       method: "POST",
+      next: { revalidate: 0 }, // no caching
     });
 
     if (!response.ok) {
