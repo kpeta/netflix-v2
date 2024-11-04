@@ -17,11 +17,6 @@ export const metadata: Metadata = {
 const bodyStyle: React.CSSProperties = {
   backgroundColor: "rgb(23 23 23)",
   margin: 0,
-};
-
-const childrenStyle: React.CSSProperties = {
-  display: "flex",
-  justifyContent: "center",
   color: "white",
 };
 
@@ -37,7 +32,7 @@ export default function RootLayout({
       </head>
       <body style={bodyStyle}>
         <Header />
-        <div style={childrenStyle}>{children}</div>
+        <div>{children}</div>
         <Footer />
       </body>
     </html>
