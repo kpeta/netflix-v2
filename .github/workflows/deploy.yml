@@ -34,9 +34,9 @@ jobs:
         run: |
           DEPLOYMENT_URL=${{ steps.deploy.outputs.deploy_url }}
           echo "Deployment URL: $DEPLOYMENT_URL"
-          STATUS=$(vercel inspect $DEPLOYMENT_URL --token ${{ secrets.VERCEL_TOKEN }} | grep 'State' | awk '{print $2}')
+          STATUS=$(vercel inspect $DEPLOYMENT_URL --token ${{ secrets.VERCEL_TOKEN }} | grep 'status' | awk '{print $3}')
 
-          if [ "$STATUS" != "READY" ]; then
+          if [ "$STATUS" != "Ready" ]; then
             echo "Deployment failed with status: $STATUS"
             exit 1
           else
