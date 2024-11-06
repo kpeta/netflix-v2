@@ -21,12 +21,6 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Install dependencies
-        run: npm install --legacy-peer-deps # --legacy-peer-deps is required because certain dependencies are not compatible with the React 19 RC, which is used by Next.js 15
-
-      - name: Build Next.js App
-        run: npm run build
-
       - name: Install Vercel CLI
         run: npm install -g vercel
 
