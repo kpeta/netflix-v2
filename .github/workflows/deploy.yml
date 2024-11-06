@@ -31,10 +31,12 @@ jobs:
 
       - name: Check Vercel Deployment Status
         run: |
-          DEPLOYMENT_ID=$(echo "$VERCEL_DEPLOY_URL" | grep -o 'deployment_id=[^&]*' | cut -d '=' -f 2)
-          echo "Deployment ID: $DEPLOYMENT_ID"
+          # Extract the deployment URL (it looks like my-deployment.vercel.app)
+          DEPLOYMENT_URL=$(echo "$VERCEL_DEPLOY_URL" | sed 's/.*\(https:\/\/[^ ]*\).*/\1/')
+          echo "Deployment URL: $DEPLOYMENT_URL"
 
-          STATUS=$(vercel inspect $DEPLOYMENT_ID --token ${{ secrets.VERCEL_TOKEN }} | grep 'State' | awk '{print $2}')
+          # Inspect the deployment using the URL directly
+          STATUS=$(vercel inspect $DEPLOYMENT_URL --token ${{ secrets.VERCEL_TOKEN }} | grep 'State' | awk '{print $2}')
 
           if [ "$STATUS" != "READY" ]; then
             echo "Deployment failed with status: $STATUS"
