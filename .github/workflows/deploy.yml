@@ -26,16 +26,17 @@ jobs:
 
       - name: Deploy to Vercel
         run: |
-          VERCEL_DEPLOY_URL=$(vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes)
-          echo "Deployment URL: $VERCEL_DEPLOY_URL"
+          # Capture the full output of the deployment command
+          VERCEL_OUTPUT=$(vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes)
+          echo "Deployment output: $VERCEL_OUTPUT"
+
+          # Extract the deployment URL from the output
+          DEPLOYMENT_URL=$(echo "$VERCEL_OUTPUT" | grep -oP 'https:\/\/[^\s]+\.vercel\.app')
+          echo "Deployment URL: $DEPLOYMENT_URL"
 
       - name: Check Vercel Deployment Status
         run: |
-          # Extract the deployment URL (it looks like my-deployment.vercel.app)
-          DEPLOYMENT_URL=$(echo "$VERCEL_DEPLOY_URL" | sed 's/.*\(https:\/\/[^ ]*\).*/\1/')
-          echo "Deployment URL: $DEPLOYMENT_URL"
-
-          # Inspect the deployment using the URL directly
+          # Inspect the deployment using the URL
           STATUS=$(vercel inspect $DEPLOYMENT_URL --token ${{ secrets.VERCEL_TOKEN }} | grep 'State' | awk '{print $2}')
 
           if [ "$STATUS" != "READY" ]; then
