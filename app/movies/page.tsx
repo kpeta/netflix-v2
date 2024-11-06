@@ -63,7 +63,7 @@ async function MoviesPage() {
         backgroundTrailerEnabled={false}
       />
 
-      <div style={pageContainer(8)}>
+      <div style={pageContainer(128)}>
         <div style={carouselTitleStyle}>Top Rated Movies</div>
         <Carousel
           items={topRatedMovies.map((movie) => (

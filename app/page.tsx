@@ -10,7 +10,9 @@ import {
 } from "@/server/fetchers/tmdb";
 import { TMDBMovie } from "@/types";
 
-export const pageContainer = (topPadding: number = 5): React.CSSProperties => ({
+export const pageContainer = (
+  topPadding: number = 80
+): React.CSSProperties => ({
   display: "flex",
   flexDirection: "column",
   alignItems: "flex-start",
@@ -18,7 +20,7 @@ export const pageContainer = (topPadding: number = 5): React.CSSProperties => ({
   paddingRight: "13.5vw",
   paddingLeft: "13.5vw",
   gap: "2vh",
-  paddingTop: `${topPadding}rem`,
+  paddingTop: `${topPadding}px`,
 });
 
 const mainStyle: React.CSSProperties = {
@@ -83,7 +85,7 @@ export default async function Home() {
         backgroundMediaTrailerID={randomTrendingMovieTrailerID}
       />
 
-      <div style={pageContainer(11)}>
+      <div style={pageContainer(190)}>
         <MediaInfoCard media={randomTrendingMovie as TMDBMovie} />
         <MovieInfoButton movie={randomTrendingMovie as TMDBMovie} />
 

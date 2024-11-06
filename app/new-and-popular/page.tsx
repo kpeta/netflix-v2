@@ -48,7 +48,7 @@ async function Page() {
         backgroundTrailerEnabled={false}
       />
 
-      <div style={pageContainer(8)}>
+      <div style={pageContainer(128)}>
         <div style={carouselTitleStyle}>Trending Movies</div>
         <Carousel
           items={trendingMovies.map((movie) => (
