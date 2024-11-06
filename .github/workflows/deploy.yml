@@ -28,11 +28,11 @@ jobs:
         id: deploy
         run: |
           VERCEL_DEPLOY_URL=$(vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes)
-          echo "::set-output name=deploy_url::$VERCEL_DEPLOY_URL"
+          echo "VERCEL_DEPLOY_URL=$VERCEL_DEPLOY_URL" >> $GITHUB_ENV
 
       - name: Check Vercel Deployment Status
         run: |
-          DEPLOYMENT_URL=${{ steps.deploy.outputs.deploy_url }}
+          DEPLOYMENT_URL=${{ env.VERCEL_DEPLOY_URL }}
           echo "Deployment URL: $DEPLOYMENT_URL"
           STATUS=$(vercel inspect $DEPLOYMENT_URL --token ${{ secrets.VERCEL_TOKEN }} 2>&1 | grep 'status' | awk '{print $3}')
           echo "Status: $STATUS"
