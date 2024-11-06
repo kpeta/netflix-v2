@@ -1,5 +1,7 @@
 const notFoundIconStyle = {
-  marginRight: "10px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
   height: "34px",
   width: "34px",
 };

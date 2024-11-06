@@ -1,26 +1,25 @@
 import NotFoundIcon from "@/components/icons/NotFoundIcon";
-import { pageContainer } from "./page";
 
 const notFoundStyle: React.CSSProperties = {
   display: "flex",
   flexDirection: "row",
   alignItems: "center",
   justifyContent: "center",
+  gap: "10px",
+  paddingTop: "95px",
 };
 
 const textStyle: React.CSSProperties = {
-  fontWeight: "bold",
-  fontSize: "16px",
+  fontSize: "24px",
+  fontWeight: "900",
   whiteSpace: "nowrap",
 };
 
 function NotFound() {
   return (
-    <div style={pageContainer()}>
-      <div style={notFoundStyle}>
-        <NotFoundIcon />
-        <div style={textStyle}> | This page could not be found</div>
-      </div>
+    <div style={notFoundStyle}>
+      <NotFoundIcon />
+      <div style={textStyle}> Page not found.</div>
     </div>
   );
 }
