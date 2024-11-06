@@ -1,5 +1,5 @@
 import { TMDBMovie } from "@/types";
-import styles from "../styles/MovieInfoCard.module.css";
+import styles from "../styles/MediaInfoCard.module.css";
 import InfoIcon from "@/components/icons/InfoIcon";
 import Link from "next/link";
 

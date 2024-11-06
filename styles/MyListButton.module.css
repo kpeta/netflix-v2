@@ -1,0 +1,77 @@
+.button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: rgb(225, 225, 225);
+  padding: 12px 60px;
+  font-size: 15px;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  width: 80px;
+  margin-top: 10px;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.1s ease;
+}
+
+.button:hover {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  color: white !important;
+}
+
+.button:active {
+  transform: scale(0.95);
+}
+
+.spinner {
+  border: 2px solid transparent;
+  border-top: 2px solid #e6dede;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.favButtonWrapper {
+  position: relative;
+}
+
+.errorPopup,
+.errorPopupHidden {
+  position: absolute;
+  top: -30px;
+  left: -30%;
+  background-color: rgba(53, 50, 50, 0.8);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  z-index: 1;
+}
+
+.errorPopup {
+  opacity: 1;
+  visibility: visible;
+}
+
+.errorPopupHidden {
+  opacity: 0;
+  visibility: hidden;
+}

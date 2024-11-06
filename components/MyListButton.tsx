@@ -1,29 +1,45 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import styles from "../styles/FavMediaButton.module.css";
+import styles from "../styles/MyListButton.module.css";
 import {
   addUserFavoriteMedia,
   removeUserFavoriteMedia,
 } from "@/server/modifiers/users";
 import { User } from "@/server/db/schema";
+import PlusIcon from "./icons/PlusIcon";
+import TickIcon from "./icons/TickIcon";
 
 const ERROR_MESSAGE_TIMEOUT = 1500;
 
-interface FavMediaButtonProps {
+interface MyListButtonProps {
   mediaID: string;
   userID?: User["id"];
   username?: User["name"];
   userFavoriteMedia?: User["favorite_media"];
 }
 
-const FavMediaButton: React.FC<FavMediaButtonProps> = ({
+const buttonStyle: React.CSSProperties = {
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: "10px",
+};
+
+const spinnerStyle: React.CSSProperties = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+};
+
+const MyListButton: React.FC<MyListButtonProps> = ({
   mediaID,
   userID,
   username,
   userFavoriteMedia,
 }) => {
-  const [isAdd, setIsAdd] = useState(true);
+  const [isAdded, setIsAdded] = useState(true);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [errorVisible, setErrorVisible] = useState(false);
@@ -37,7 +53,7 @@ const FavMediaButton: React.FC<FavMediaButtonProps> = ({
 
     setLoading(true);
     try {
-      if (isAdd) {
+      if (isAdded) {
         await addUserFavoriteMedia(
           userID,
           username,
@@ -52,7 +68,7 @@ const FavMediaButton: React.FC<FavMediaButtonProps> = ({
           userFavoriteMedia
         );
       }
-      setIsAdd(!isAdd);
+      setIsAdded(!isAdded);
     } catch (error) {
       setErrorMessage("An error occurred while adding to favorites");
       setErrorVisible(true);
@@ -62,7 +78,7 @@ const FavMediaButton: React.FC<FavMediaButtonProps> = ({
 
   useEffect(() => {
     if (userFavoriteMedia && userFavoriteMedia.includes(mediaID)) {
-      setIsAdd(false);
+      setIsAdded(false);
     }
     setLoading(false);
   }, [userFavoriteMedia, mediaID]);
@@ -86,23 +102,25 @@ const FavMediaButton: React.FC<FavMediaButtonProps> = ({
       </div>
 
       <button
-        className={`${styles.favButton} ${isAdd ? styles.add : styles.remove}`}
+        className={styles.button}
         style={{
-          backgroundColor: loading ? "rgb(151, 147, 147)" : undefined,
-          borderColor: loading ? "rgb(219, 211, 211)" : undefined,
-          cursor: loading ? "not-allowed" : undefined,
+          cursor: loading ? "not-allowed" : "pointer",
+          ...buttonStyle,
         }}
         onClick={handleClick}
         disabled={loading}
       >
         {loading ? (
-          <div className={styles.spinner} />
+          <div style={spinnerStyle}>
+            <div className={styles.spinner} />
+          </div>
         ) : (
-          <span>{isAdd ? "Add to favorites" : "Remove from favorites"}</span>
+          <div>{isAdded ? <PlusIcon /> : <TickIcon />}</div>
         )}
+        <div>My List</div>
       </button>
     </div>
   );
 };
 
-export default FavMediaButton;
+export default MyListButton;

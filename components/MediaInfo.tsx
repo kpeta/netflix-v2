@@ -86,13 +86,11 @@ const MediaInfo = ({ media }: MediaInfoProps) => {
           <div style={releaseDateStyle}>{(media as TMDBMovie).runtime} min</div>
         </div>
       ) : (
-        <div style={runtimeContainerStyle}>
+        <div style={runtimeContainerStyle} className={styles.epsiodesContainer}>
           <CalendarIcon />
           Seasons: {(media as TMDBTVShow).number_of_seasons}
-          <div className={styles.epsiodesContainer}>
-            <div style={{ ...circleStyle, backgroundColor: "lightgray" }} />
-            Episodes: {(media as TMDBTVShow).number_of_episodes}
-          </div>
+          <div style={{ ...circleStyle, backgroundColor: "lightgray" }} />
+          Episodes: {(media as TMDBTVShow).number_of_episodes}
         </div>
       )}
     </div>

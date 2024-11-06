@@ -1,5 +1,14 @@
 .mainContainerPadding {
-  padding: 0 17vw;
+  padding: 450px 17vw;
+}
+
+.buttonsContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 50%;
+  gap: 20px;
 }
 
 .titleContainer {
@@ -53,7 +62,7 @@
 
 @media (max-width: 1250px) {
   .mainContainerPadding {
-    padding: 0 1vw;
+    padding: 150px 13.5vw;
   }
 
   .titleContainer {
@@ -91,6 +100,6 @@
   }
 
   .epsiodesContainer {
-    display: none;
+    display: none !important;
   }
 }

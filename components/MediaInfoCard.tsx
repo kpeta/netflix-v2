@@ -1,10 +1,10 @@
-import { TMDBMovie } from "../types";
+import { TMDBMovie, TMDBTVShow } from "../types";
 import MediaInfo from "./MediaInfo";
-import styles from "../styles/MovieInfoCard.module.css";
+import styles from "../styles/MediaInfoCard.module.css";
 import React from "react";
 
-interface MovieInfoCardProps {
-  movie: TMDBMovie;
+interface MediaInfoCardProps {
+  media: TMDBMovie | TMDBTVShow;
 }
 
 const containerStyle: React.CSSProperties = {
@@ -22,20 +22,22 @@ const overviewStyle: React.CSSProperties = {
   color: "lightgray",
 };
 
-function MovieInfoCard({ movie }: MovieInfoCardProps) {
+function MediaInfoCard({ media }: MediaInfoCardProps) {
+  const isMovie = "release_date" in media;
+
   return (
     <div style={containerStyle}>
       <div style={titleStyle} className={styles.title}>
-        {movie.title}
+        {isMovie ? (media as TMDBMovie).title : (media as TMDBTVShow).name}
       </div>
 
-      <MediaInfo media={movie} />
+      <MediaInfo media={media} />
 
       <div style={overviewStyle} className={styles.rating}>
-        {movie.overview}
+        {media.overview}
       </div>
     </div>
   );
 }
 
-export default MovieInfoCard;
+export default MediaInfoCard;

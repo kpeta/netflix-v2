@@ -2,7 +2,7 @@ import Carousel from "@/components/Carousel";
 import CarouselItem from "@/components/CarouselItem";
 import MainPageBackground from "@/components/MainPageBackground";
 import MovieInfoButton from "@/components/MovieInfoButton";
-import MovieInfoCard from "@/components/MovieInfoCard";
+import MediaInfoCard from "@/components/MediaInfoCard";
 import {
   getTMDBContentDetails,
   getTMDBContentTrailers,
@@ -84,7 +84,7 @@ export default async function Home() {
       />
 
       <div style={pageContainer(11)}>
-        <MovieInfoCard movie={randomTrendingMovie as TMDBMovie} />
+        <MediaInfoCard media={randomTrendingMovie as TMDBMovie} />
         <MovieInfoButton movie={randomTrendingMovie as TMDBMovie} />
 
         <div style={{ marginTop: "75px" }} />

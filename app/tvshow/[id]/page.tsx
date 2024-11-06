@@ -8,6 +8,12 @@ import { getToken } from "@/server/auth";
 import { getUser } from "@/server/fetchers/users";
 import { checkIfValidDate } from "@/utils/validation";
 
+const notFoundStyle: React.CSSProperties = {
+  display: "flex",
+  justifyContent: "center",
+  paddingTop: "95px",
+};
+
 async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   const tvShow = (await getTMDBContentDetails(
@@ -16,7 +22,7 @@ async function Page(props: { params: Promise<{ id: string }> }) {
   )) as TMDBTVShow;
 
   if (!checkIfValidDate(tvShow.first_air_date)) {
-    return <h2 style={{ paddingTop: "95px" }}>TV Show not found.</h2>;
+    return <h2 style={notFoundStyle}>TV Show not found.</h2>;
   }
 
   const trailers: TMDBVideo[] = await getTMDBContentTrailers(
