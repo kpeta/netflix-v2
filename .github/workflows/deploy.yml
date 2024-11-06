@@ -26,13 +26,15 @@ jobs:
 
       - name: Deploy to Vercel
         run: |
-          VERCEL_DEPLOY_URL=$(vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --confirm)
+          VERCEL_DEPLOY_URL=$(vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes)
           echo "Deployment URL: $VERCEL_DEPLOY_URL"
 
       - name: Check Vercel Deployment Status
         run: |
           DEPLOYMENT_ID=$(echo "$VERCEL_DEPLOY_URL" | grep -o 'deployment_id=[^&]*' | cut -d '=' -f 2)
-          STATUS=$(vercel inspect $DEPLOYMENT_ID --token ${{ secrets.VERCEL_TOKEN }} --json | jq -r '.status')
+          echo "Deployment ID: $DEPLOYMENT_ID"
+
+          STATUS=$(vercel inspect $DEPLOYMENT_ID --token ${{ secrets.VERCEL_TOKEN }} | grep 'State' | awk '{print $2}')
 
           if [ "$STATUS" != "READY" ]; then
             echo "Deployment failed with status: $STATUS"
