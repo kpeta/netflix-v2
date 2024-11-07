@@ -17,6 +17,7 @@ const containerStyle: React.CSSProperties = {
   boxSizing: "border-box",
   textDecoration: "none",
   color: "white",
+  width: "136px",
 };
 
 const infoStyle: React.CSSProperties = {

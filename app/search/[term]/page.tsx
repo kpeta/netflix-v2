@@ -3,21 +3,26 @@ import MediaList from "@/components/MediaList";
 import { checkIfValidDate } from "@/utils/validation";
 
 const containerStyle: React.CSSProperties = {
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "flex-start",
-  gap: "20px",
-  paddingTop: "89px",
+  paddingTop: "95px",
+};
+
+const errorContainerStyle: React.CSSProperties = {
+  textAlign: "center",
+  paddingTop: "95px",
 };
 
 const titleTextStyle: React.CSSProperties = {
   fontSize: "24px",
   fontWeight: "900",
+  paddingBottom: "20px",
+  paddingLeft: "13.5vw",
+  paddingRight: "13.5vw",
 };
 
 async function Page(props: { params: Promise<{ term: string }> }) {
   const params = await props.params;
   const results = await searchTMDBContent(params.term);
+  const searchTerm = params.term.replace(/-/g, " "); // replace hyphens with spaces
 
   // filter out results with invalid or missing dates
   const filteredResults = results.filter((item) => {
@@ -27,16 +32,12 @@ async function Page(props: { params: Promise<{ term: string }> }) {
   });
 
   if (filteredResults.length === 0) {
-    return (
-      <div style={containerStyle}>
-        <h2>No results found.</h2>
-      </div>
-    );
+    return <h2 style={errorContainerStyle}>No search results found.</h2>;
   }
 
   return (
     <div style={containerStyle}>
-      <div style={titleTextStyle}>Search Results</div>
+      <div style={titleTextStyle}>Search Results for "{searchTerm}"</div>
       <MediaList mediaItems={filteredResults} />
     </div>
   );

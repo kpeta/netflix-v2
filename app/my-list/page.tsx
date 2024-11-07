@@ -12,16 +12,14 @@ const errorTextStyle: React.CSSProperties = {
 };
 
 const containerStyle: React.CSSProperties = {
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "flex-start",
-  gap: "20px",
   paddingTop: "89px",
 };
 
 const titleTextStyle: React.CSSProperties = {
   fontSize: "24px",
   fontWeight: "900",
+  paddingBottom: "20px",
+  paddingLeft: "13.5vw",
 };
 
 export default async function Page() {
