@@ -39,12 +39,26 @@ const searchResultStyle: React.CSSProperties = {
   boxShadow: "0px 1px 2px rgb(163, 164, 167)",
   borderRadius: "8px",
   zIndex: 1,
+  overflowY: "scroll",
+  overflowX: "hidden",
 };
 
 const buttonInputStyle: React.CSSProperties = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+};
+
+const showAllResultsStyle: React.CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: "10px",
+  border: "none",
+  fontSize: "13px",
+  color: "rgb(224, 232, 241)",
+  backgroundColor: "transparent",
+  cursor: "pointer",
 };
 
 export default function Search() {
@@ -153,10 +167,20 @@ export default function Search() {
         </form>
       </div>
       {isOpen && searchTerm && searchResults.length > 0 && (
-        <div style={searchResultStyle}>
+        <div style={searchResultStyle} className={styles.searchResultHeight}>
           {searchResults.map((item) => (
             <SearchResult searchResult={item} key={item.id} />
           ))}
+          <div
+            style={{ border: "1px solid rgb(163, 164, 167)", margin: "2px" }}
+          />
+          <button
+            style={showAllResultsStyle}
+            className={styles.netflixLogoImage}
+            onClick={handleOnSubmit}
+          >
+            Show All Results
+          </button>
         </div>
       )}
     </div>

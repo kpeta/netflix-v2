@@ -204,6 +204,10 @@
   display: none;
 }
 
+.searchResultHeight {
+  max-height: 590px;
+}
+
 @media (max-width: 1250px) {
   .netflixLogoImage {
     display: none;
@@ -254,5 +258,9 @@
 
   .userAvatarHide {
     display: flex;
+  }
+
+  .searchResultHeight {
+    max-height: 400px;
   }
 }

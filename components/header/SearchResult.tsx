@@ -14,7 +14,7 @@ const searchResultsButtonStyle: React.CSSProperties = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  gap: "10px",
+  gap: "20px",
   backgroundColor: "transparent",
   border: "none",
   width: "100%",
@@ -31,15 +31,12 @@ const searchResultItemStyle: React.CSSProperties = {
   fontFamily: "inherit",
   fontSize: "13px",
   cursor: "pointer",
-  width: "100%",
+  width: "40%",
   textAlign: "center",
 };
 
 const thumbnailStyle: React.CSSProperties = {
-  width: "80px",
   height: "50px",
-  cursor: "pointer",
-  marginBottom: "8px",
 };
 
 function SearchResult({ searchResult }: SearchResultsProps) {
