@@ -1,8 +1,8 @@
 import MainPageBackground from "@/components/MainPageBackground";
 import { getTMDBContentDetails, getTMDBData } from "@/server/fetchers/tmdb";
-import { pageContainer } from "../page";
 import Carousel from "@/components/Carousel";
 import CarouselItem from "@/components/CarouselItem";
+import { pageContainer } from "@/styles/PageContainer";
 
 const carouselTitleStyle: React.CSSProperties = {
   fontSize: "20px",

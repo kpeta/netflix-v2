@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import { pageContainer } from "./page";
 import WarningIcon from "@/components/icons/WarningIcon";
+import { pageContainer } from "@/styles/PageContainer";
 
 const titleContainerStyle: React.CSSProperties = {
   display: "flex",
