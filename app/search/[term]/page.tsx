@@ -37,7 +37,9 @@ async function Page(props: { params: Promise<{ term: string }> }) {
 
   return (
     <div style={containerStyle}>
-      <div style={titleTextStyle}>Search Results for '{searchTerm}'</div>
+      <div style={titleTextStyle}>
+        Search Results for &#39;{searchTerm}&#39;
+      </div>
       <MediaList mediaItems={filteredResults} />
     </div>
   );
