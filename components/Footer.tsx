@@ -5,6 +5,7 @@ import IGIcon from "./icons/IGIcon";
 import TwitterIcon from "./icons/TwitterIcon";
 import YTIcon from "./icons/YTIcon";
 import React from "react";
+import GitHubIcon from "./icons/GithubIcon";
 
 const footerItems = [
   "Audio Description",
@@ -45,6 +46,12 @@ const socialButtonsContainerStyle: React.CSSProperties = {
   alignItems: "center",
   gap: "15px",
   marginBottom: "20px",
+};
+
+const githubLinkStyle: React.CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  gap: "5px",
 };
 
 const Footer = () => {
@@ -94,9 +101,17 @@ const Footer = () => {
             </div>
           ))}
         </div>
-        <Link href="https://github.com/kpeta" className={styles.footerItem}>
-          © 2024 Netflix Redesigned | kpeta
+        <Link
+          href="https://github.com/kpeta/netflix-v2"
+          className={styles.footerItem}
+          style={githubLinkStyle}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <GitHubIcon />
+          Netflix Redesigned | kpeta
         </Link>
+
         <div style={{ marginTop: "5px" }}>
           {process.env.NODE_ENV === "production"
             ? process.env.VERCEL_GIT_COMMIT_SHA?.substring(0, 8)
