@@ -2,7 +2,9 @@
 
 Redesigned version of Netflix made with [Next.js](https://nextjs.org/) and [Supabase](https://supabase.com/).
 
-![screenshot](./public/screenshot.png)
+<a href="https://netflix-redesigned.vercel.app/">
+  <img src="./public/screenshot.png" alt="screenshot" />
+</a>
 
 ## Features
 
@@ -12,6 +14,8 @@ Redesigned version of Netflix made with [Next.js](https://nextjs.org/) and [Supa
 - Search functionality
 - Responsive design
 - CI/CD with [Github Actions](https://github.com/kpeta/netflix-v2/tree/master/.github/workflows), deployed with [Vercel](https://vercel.com/)
+
+---
 
 ## Known issues with App Router
 
