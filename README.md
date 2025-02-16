@@ -1,8 +1,8 @@
-# [Netflix Redesigned](https://netflix-redesigned.vercel.app/)
+# [Netflix Clone](https://netflix-kpeta.vercel.app/)
 
-Redesigned version of Netflix made with [Next.js](https://nextjs.org/) and [Supabase](https://supabase.com/).
+Netflix clone made with [Next.js](https://nextjs.org/) and [Supabase](https://supabase.com/).
 
-<a href="https://netflix-redesigned.vercel.app/">
+<a href="https://netflix-kpeta.vercel.app/" target="_blank">
   <img src="./public/screenshot.png" alt="screenshot" />
 </a>
 

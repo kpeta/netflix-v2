@@ -109,7 +109,7 @@ const Footer = () => {
           rel="noopener noreferrer"
         >
           <GitHubIcon />
-          Netflix Redesigned | kpeta
+          Netflix Clone | kpeta
         </Link>
 
         <div style={{ marginTop: "5px" }}>
