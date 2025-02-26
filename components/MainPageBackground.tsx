@@ -1,8 +1,5 @@
-"use client";
-
 import { TMDBMovie, TMDBTVShow } from "@/types";
 import styles from "../styles/MainPage.module.css";
-import { useEffect, useState } from "react";
 import MediaImage from "./MediaImage";
 
 // layout structure:
@@ -97,16 +94,6 @@ function MainPageBackground({
   backgroundMediaTrailerID,
   backgroundTrailerEnabled = true,
 }: MainPageBackgroundProps) {
-  const [windowHeight, setWindowHeight] = useState(0);
-  const [windowWidth, setWindowWidth] = useState(0);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setWindowHeight(window.innerHeight);
-      setWindowWidth(window.innerWidth);
-    }
-  }, []);
-
   return (
     <div style={containerStyle}>
       <div style={shadowTopStyle} className={styles.shadowTopHeight} />
@@ -136,8 +123,9 @@ function MainPageBackground({
         <MediaImage
           imageStyle={backgroundImageStyle}
           media={backgroundMedia}
-          skeletonHeight={windowHeight}
-          skeletonWidth={windowWidth}
+          // show empty background if no img
+          skeletonHeight={100}
+          skeletonWidth={100}
           quality="original"
         />
       </div>

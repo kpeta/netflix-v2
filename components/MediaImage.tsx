@@ -1,7 +1,4 @@
-"use client";
-
 import { TMDBMovie, TMDBTVShow } from "@/types";
-import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 
 const DEFAULT_IMAGE_QUALITY = "w500";
@@ -14,7 +11,7 @@ interface MediaImageProps {
   quality?: "w500" | "original";
 }
 
-function MediaImage({
+export default async function MediaImage({
   media,
   imageStyle,
   skeletonWidth,
@@ -24,42 +21,21 @@ function MediaImage({
   const isMovie = "release_date" in media;
   const title = isMovie ? media.title : media.name;
 
-  const [imageError, setImageError] = useState(false);
-  const [imageLoaded, setImageLoaded] = useState(false);
-
-  useEffect(() => {
-    setImageLoaded(false);
-    setImageError(false);
-
-    if (media.poster_path) {
-      const img = new Image();
-      img.src = `https://image.tmdb.org/t/p/${quality}/${media.poster_path}`;
-      img.onload = () => {
-        setImageLoaded(true);
-      };
-      img.onerror = () => {
-        setImageError(true);
-      };
-    }
-  }, [media, quality]);
+  if (!media.poster_path) {
+    return (
+      <Skeleton
+        width={skeletonWidth}
+        height={skeletonHeight}
+        style={{ filter: "invert(1)" }}
+      />
+    );
+  }
 
   return (
-    <>
-      {imageError || !imageLoaded || !media.poster_path ? (
-        <Skeleton
-          width={skeletonWidth}
-          height={skeletonHeight}
-          style={{ filter: "invert(1)" }}
-        />
-      ) : (
-        <img
-          src={`https://image.tmdb.org/t/p/${quality}/${media.poster_path}`}
-          alt={title}
-          style={imageStyle}
-        />
-      )}
-    </>
+    <img
+      src={`https://image.tmdb.org/t/p/${quality}/${media.poster_path}`}
+      alt={title}
+      style={imageStyle}
+    />
   );
 }
-
-export default MediaImage;
