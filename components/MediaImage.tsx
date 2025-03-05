@@ -11,7 +11,7 @@ interface MediaImageProps {
   quality?: "w500" | "original";
 }
 
-export default async function MediaImage({
+export default function MediaImage({
   media,
   imageStyle,
   skeletonWidth,
