@@ -29,7 +29,7 @@ const carouselContainerBaseStyle: React.CSSProperties = {
   width: "100%",
   borderRadius: "8px",
   backgroundColor: "rgb(23,23,23)", // base color (initial)
-  transition: "background-color 3s ease", // smooth transition
+  transition: "background-color 0.8s ease", // smooth transition
 };
 
 const carouselItemsContainerStyle: React.CSSProperties = {
